@@ -326,6 +326,10 @@ export class PagesService {
     return this.repo.findOneBy({ id });
   }
 
+  getTotalCount() {
+    return this.repo.count();
+  }
+
   async findMyPage(user: User) {
     if (!user) return null;
 

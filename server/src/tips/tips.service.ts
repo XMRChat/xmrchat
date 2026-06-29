@@ -428,4 +428,22 @@ export class TipsService {
 
     await this.repo.save(expiredTips);
   }
+
+  async getTotalTips() {
+    const { tipsCount, totalAmount } = await this.repo
+      .createQueryBuilder('tip')
+      .innerJoin('tip.payment', 'payment')
+      .where('payment.paid_at IS NOT NULL')
+      .select('COUNT(tip.id)', 'tipsCount')
+      .addSelect('COALESCE(SUM(payment.paid_amount::NUMERIC), 0)', 'totalAmount')
+      .getRawOne();
+
+    const pagesCount = await this.pagesService.getTotalCount();
+
+    return {
+      tipsCount: parseInt(tipsCount, 10) || 0,
+      totalAmount: MoneroUtils.atomicUnitsToXmr(totalAmount?.toString() || '0'),
+      pagesCount,
+    };
+  }
 }
