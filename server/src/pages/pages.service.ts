@@ -13,7 +13,7 @@ import { ReserveSlugDto } from './dtos/reserve-slug.dto';
 import { User } from 'src/users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Page } from './page.entity';
-import { In, QueryBuilder, Repository, SelectQueryBuilder } from 'typeorm';
+import { In, Not, QueryBuilder, Repository, SelectQueryBuilder } from 'typeorm';
 import { makeIntegratedAddress } from 'src/shared/utils/monero';
 import { LwsService } from 'src/lws/lws.service';
 import { ConfigService } from '@nestjs/config';
@@ -327,7 +327,13 @@ export class PagesService {
   }
 
   getTotalCount() {
-    return this.repo.count();
+    const testPagePaths =
+      this.configService.get('TEST_PAGE_PATHS')?.split(' ') || [];
+    return this.repo.count({
+      where: {
+        path: Not(In(testPagePaths)),
+      },
+    });
   }
 
   async findMyPage(user: User) {

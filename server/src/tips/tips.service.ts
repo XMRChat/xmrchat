@@ -430,12 +430,21 @@ export class TipsService {
   }
 
   async getTotalTips() {
+    const testPagePaths =
+      this.configService.get('TEST_PAGE_PATHS')?.split(' ') || [];
     const { tipsCount, totalAmount } = await this.repo
       .createQueryBuilder('tip')
       .innerJoin('tip.payment', 'payment')
+      .innerJoin('tip.page', 'page')
       .where('payment.paid_at IS NOT NULL')
       .select('COUNT(tip.id)', 'tipsCount')
-      .addSelect('COALESCE(SUM(payment.paid_amount::NUMERIC), 0)', 'totalAmount')
+      .addSelect(
+        'COALESCE(SUM(payment.paid_amount::NUMERIC), 0)',
+        'totalAmount',
+      )
+      .andWhere('page.path NOT IN (:...testPagePaths)', {
+        testPagePaths,
+      })
       .getRawOne();
 
     const pagesCount = await this.pagesService.getTotalCount();
