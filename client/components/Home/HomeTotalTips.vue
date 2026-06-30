@@ -24,9 +24,9 @@ const totalAmountFiat = computed(() => {
         <USkeleton v-if="pending" class="skeleton-inline w-8" />
         <span v-else class="font-bold">{{ totalTips?.tipsCount }}</span>
         superchats totaling
-        <USkeleton v-if="pending" class="skeleton-inline w-16" />
+        <USkeleton v-if="pending" class="skeleton-inline w-12" />
         <span v-else class="font-bold">{{
-          totalTips?.totalAmount?.toFixed(4)
+          totalTips?.totalAmount?.toFixed(2)
         }}</span>
         Monero
         <USkeleton v-if="pending" class="skeleton-inline w-12" />
