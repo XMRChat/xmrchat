@@ -24,6 +24,11 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.UPSCROLLED,
   ContentLinkPlatformEnum.BITCHUTE,
   ContentLinkPlatformEnum.DISCORD,
+  ContentLinkPlatformEnum.PATREON,
+  ContentLinkPlatformEnum.SUBSCRIBESTAR,
+  ContentLinkPlatformEnum.GITHUB,
+  ContentLinkPlatformEnum.MONERO_JOBS,
+  ContentLinkPlatformEnum.FACEBOOK,
 ];
 
 export const SWAP_STATUSES = {

@@ -41,6 +41,11 @@ export enum ContentLinkPlatformEnum {
   UPSCROLLED = "upscrolled",
   BITCHUTE = "bitchute",
   DISCORD = "discord",
+  PATREON = "patreon",
+  SUBSCRIBESTAR = "subscribestar",
+  GITHUB = "github",
+  MONERO_JOBS = "monero-jobs",
+  FACEBOOK = "facebook",
 }
 
 export enum TipDisplayMode {
