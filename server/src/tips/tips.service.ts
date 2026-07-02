@@ -319,6 +319,30 @@ export class TipsService {
     } catch (error) {}
   }
 
+  // Add creating test tip:
+  async createTestTip(dto: CreateTipDto) {
+    const testTipEnabled = this.configService.get('TEST_TIP') === 'true';
+    if (!testTipEnabled)
+      throw new BadRequestException('Test tip is not enabled');
+
+    const result = await this.createTip(dto);
+
+    const tip = await this.repo.findOne({
+      where: { id: result.tip.id },
+      relations: { payment: true },
+    });
+
+    const paymentEventId = tip.payment.eventId;
+
+    const payment = await this.paymentsService.findOneByEventId(paymentEventId);
+    if (!payment) throw new NotFoundException('Payment not found');
+
+    await this.handleTipPayment(
+      payment,
+      Number(MoneroUtils.xmrToAtomicUnits('0.001')),
+    );
+  }
+
   @Cron(CronExpression.EVERY_MINUTE)
   async deleteExpiredTips() {
     const query = this.repo

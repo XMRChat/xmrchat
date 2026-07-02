@@ -19,6 +19,8 @@ const props = defineProps<{
 const { required, minLength, maxLength, minValue } = useValidations();
 const { toSuperDmCreate } = useRouteLocation();
 const { sendTipToStreamer: sendTipToStreamerApi } = useServices();
+const { axios } = useApp();
+const config = useRuntimeConfig();
 const coins = useState<Coin[]>("coins");
 const swapActive = useState<boolean>("swapActive");
 const { t } = useI18n();
@@ -49,6 +51,7 @@ interface State {
   loading: boolean;
   errorMessage?: string;
   selectedCoin?: number;
+  loadingTestTip: boolean;
 }
 
 const state = reactive<State>({
@@ -62,7 +65,10 @@ const state = reactive<State>({
   loading: false,
   errorMessage: undefined,
   selectedCoin: undefined,
+  loadingTestTip: false,
 });
+
+const testTip = computed(() => Boolean(config.public.testTip));
 
 const v = useVuelidate<State["form"]>(
   computed(() => {
@@ -118,6 +124,33 @@ const handleSubmit = async () => {
     state.errorMessage = getErrorMessage(error);
   } finally {
     state.loading = false;
+  }
+};
+
+const handleSendTestTip = async () => {
+  const valid = await v.value.$validate();
+  if (!valid) return;
+
+  state.errorMessage = undefined;
+  state.loadingTestTip = true;
+  try {
+    let xmrAmount;
+    if (generalState.tipDisplayValue === TipDisplayMode.XMR) {
+      xmrAmount = state.form.amount;
+    } else {
+      xmrAmount = (state.form.amount / (price.value as number)).toFixed(8);
+    }
+    const {} = await axios.post(`/tips/create-test-tip`, {
+      path: props.streamerId,
+      ...state.form,
+      message: state.form.message || undefined,
+      amount: xmrAmount,
+      coinId: state.selectedCoin,
+    });
+  } catch (error) {
+    state.errorMessage = getErrorMessage(error);
+  } finally {
+    state.loadingTestTip = false;
   }
 };
 
@@ -300,6 +333,16 @@ const renderInputPadding = computed(
           >
             {{ $t("sendTip") }}
             <DirectionalArrow />
+          </UButton>
+          <UButton
+            v-if="testTip"
+            size="lg"
+            variant="outline"
+            :loading="state.loadingTestTip"
+            class="flex items-center gap-2 w-fit"
+            @click="handleSendTestTip"
+          >
+            Send Test Tip
           </UButton>
           <!-- <UButton
             v-if="superDmActive"

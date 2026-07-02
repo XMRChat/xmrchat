@@ -34,6 +34,12 @@ export class TipsController {
     return serialized;
   }
 
+  @Post(`/create-test-tip`)
+  async createTestTip(@Body() body: CreateTipDto) {
+    await this.tipsService.createTestTip(body);
+    return { message: 'Test tip created.' };
+  }
+
   @Put('/:id')
   updateTip(
     @CurrentUser() user: User,

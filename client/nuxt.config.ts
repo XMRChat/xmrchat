@@ -16,6 +16,7 @@ export default defineNuxtConfig({
       showPremiumPages: "",
       showTipSplits: "",
       moneroNetwork: "mainnet",
+      testTip: "",
     },
   },
 
