@@ -44,6 +44,7 @@ export enum ContentLinkPlatformEnum {
   PATREON = "patreon",
   SUBSCRIBESTAR = "subscribestar",
   GITHUB = "github",
+  MONERO_JOBS = "monero-jobs",
   FACEBOOK = "facebook",
 }
 

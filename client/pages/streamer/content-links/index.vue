@@ -67,6 +67,7 @@ const state = reactive<State>({
       patreon: {},
       subscribestar: {},
       github: {},
+      "monero-jobs": {},
       facebook: {},
     },
     name: undefined,
@@ -113,6 +114,7 @@ const rules = computed(() => {
     DISCORD,
     PATREON,
     SUBSCRIBESTAR,
+    MONERO_JOBS,
     ...rest
   } = ContentLinkPlatformEnum;
 
@@ -139,6 +141,7 @@ const rules = computed(() => {
       [DISCORD]: { value: { url } },
       [PATREON]: { value: { url } },
       [SUBSCRIBESTAR]: { value: { url } },
+      [MONERO_JOBS]: { value: { url } },
       ...notUrls,
     },
     rumbleLiveStreamUrl: { url, rumbleApiUrl },

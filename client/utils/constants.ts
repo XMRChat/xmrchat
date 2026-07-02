@@ -27,6 +27,7 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.PATREON,
   ContentLinkPlatformEnum.SUBSCRIBESTAR,
   ContentLinkPlatformEnum.GITHUB,
+  ContentLinkPlatformEnum.MONERO_JOBS,
   ContentLinkPlatformEnum.FACEBOOK,
 ];
 
