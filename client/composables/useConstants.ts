@@ -146,7 +146,7 @@ export const useConstants = () => {
       colorClassName: "",
       iconClassName: "",
       icon: "i-icon-peertube",
-      inputLabel: 'Peertube link (enter full URL)',
+      inputLabel: "Peertube link (enter full URL)",
       linkCreator: (v?: string) => `${v}`,
     },
     [ContentLinkPlatformEnum.UPSCROLLED]: {
@@ -162,8 +162,40 @@ export const useConstants = () => {
       colorClassName: "text-[#FF6600]",
       iconClassName: "",
       icon: "i-icon-bitchute",
-      inputLabel: 'Bitchute link (enter full URL)',
+      inputLabel: "Bitchute link (enter full URL)",
       linkCreator: (v?: string) => `${v}`,
+    },
+    [ContentLinkPlatformEnum.PATREON]: {
+      name: "Patreon",
+      colorClassName: "text-[#FF424D]",
+      iconClassName: "max-w-5 max-h-5",
+      icon: "i-tabler-brand-patreon",
+      inputLabel: "Patreon link (enter full URL)",
+      linkCreator: (v?: string) => `${v}`,
+    },
+    [ContentLinkPlatformEnum.SUBSCRIBESTAR]: {
+      name: "SubscribeStar",
+      colorClassName: "text-[#6E3BCE]",
+      iconClassName: "",
+      icon: "i-icon-subscribestar",
+      inputLabel: "SubscribeStar link (enter full URL)",
+      linkCreator: (v?: string) => `${v}`,
+    },
+    [ContentLinkPlatformEnum.GITHUB]: {
+      name: "GitHub",
+      colorClassName: "",
+      iconClassName: "",
+      icon: "i-tabler-brand-github",
+      inputLabel: t("xUsername", { platform: "GitHub" }),
+      linkCreator: (v?: string) => `https://github.com/${v}`,
+    },
+    [ContentLinkPlatformEnum.FACEBOOK]: {
+      name: "Facebook",
+      colorClassName: "text-[#1877F2]",
+      iconClassName: "",
+      icon: "i-tabler-brand-facebook",
+      inputLabel: t("xUsername", { platform: "Facebook" }),
+      linkCreator: (v?: string) => `https://facebook.com/${v}`,
     },
   };
   const getContentLink = (v: ContentLinkPlatformEnum) => {
@@ -313,31 +345,31 @@ export const useConstants = () => {
     return PAGE_TIER_COLORS[v];
   };
 
-
-
-
-  const NETWORK_CONFIGS: Record<MoneroNetworkTypeEnum, { type: MoneroNetworkTypeEnum, validationCharacters: string[] }> = {
+  const NETWORK_CONFIGS: Record<
+    MoneroNetworkTypeEnum,
+    { type: MoneroNetworkTypeEnum; validationCharacters: string[] }
+  > = {
     [MoneroNetworkTypeEnum.MAINNET]: {
       type: MoneroNetworkTypeEnum.MAINNET,
-      validationCharacters: ['4'],
+      validationCharacters: ["4"],
     },
     [MoneroNetworkTypeEnum.TESTNET]: {
       type: MoneroNetworkTypeEnum.TESTNET,
-      validationCharacters: ['9', 'A'],
+      validationCharacters: ["9", "A"],
     },
     [MoneroNetworkTypeEnum.STAGENET]: {
       type: MoneroNetworkTypeEnum.STAGENET,
-      validationCharacters: ['5'],
+      validationCharacters: ["5"],
     },
     [MoneroNetworkTypeEnum.STRESSNET]: {
       type: MoneroNetworkTypeEnum.STRESSNET,
-      validationCharacters: ['9', 'A'],
-    }
-  }
+      validationCharacters: ["9", "A"],
+    },
+  };
 
   const getNetworkConfig = (v: MoneroNetworkTypeEnum) => {
     return NETWORK_CONFIGS[v];
-  }
+  };
 
   return {
     getContentLink,
@@ -355,6 +387,6 @@ export const useConstants = () => {
     getPageTierColorsList,
     getPageTierColor,
     NETWORK_CONFIGS,
-    getNetworkConfig
+    getNetworkConfig,
   };
 };
