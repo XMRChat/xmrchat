@@ -26,6 +26,8 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.DISCORD,
   ContentLinkPlatformEnum.PATREON,
   ContentLinkPlatformEnum.SUBSCRIBESTAR,
+  ContentLinkPlatformEnum.GITHUB,
+  ContentLinkPlatformEnum.FACEBOOK,
 ];
 
 export const SWAP_STATUSES = {

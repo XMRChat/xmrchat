@@ -43,6 +43,8 @@ export enum ContentLinkPlatformEnum {
   DISCORD = "discord",
   PATREON = "patreon",
   SUBSCRIBESTAR = "subscribestar",
+  GITHUB = "github",
+  FACEBOOK = "facebook",
 }
 
 export enum TipDisplayMode {

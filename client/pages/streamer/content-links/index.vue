@@ -66,6 +66,8 @@ const state = reactive<State>({
       discord: {},
       patreon: {},
       subscribestar: {},
+      github: {},
+      facebook: {},
     },
     name: undefined,
     searchTerms: undefined,

@@ -181,6 +181,22 @@ export const useConstants = () => {
       inputLabel: "SubscribeStar link (enter full URL)",
       linkCreator: (v?: string) => `${v}`,
     },
+    [ContentLinkPlatformEnum.GITHUB]: {
+      name: "GitHub",
+      colorClassName: "",
+      iconClassName: "",
+      icon: "i-tabler-brand-github",
+      inputLabel: t("xUsername", { platform: "GitHub" }),
+      linkCreator: (v?: string) => `https://github.com/${v}`,
+    },
+    [ContentLinkPlatformEnum.FACEBOOK]: {
+      name: "Facebook",
+      colorClassName: "text-[#1877F2]",
+      iconClassName: "",
+      icon: "i-tabler-brand-facebook",
+      inputLabel: t("xUsername", { platform: "Facebook" }),
+      linkCreator: (v?: string) => `https://facebook.com/${v}`,
+    },
   };
   const getContentLink = (v: ContentLinkPlatformEnum) => {
     return CONTENT_LINKS[v];

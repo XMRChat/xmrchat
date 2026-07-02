@@ -80,6 +80,8 @@ export enum LinkPlatformEnum {
   DISCORD = 'discord',
   PATREON = 'patreon',
   SUBSCRIBESTAR = 'subscribestar',
+  GITHUB = 'github',
+  FACEBOOK = 'facebook',
 }
 
 export enum TrocadorStatusEnum {
