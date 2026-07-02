@@ -24,6 +24,7 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.UPSCROLLED,
   ContentLinkPlatformEnum.BITCHUTE,
   ContentLinkPlatformEnum.DISCORD,
+  ContentLinkPlatformEnum.PATREON,
 ];
 
 export const SWAP_STATUSES = {

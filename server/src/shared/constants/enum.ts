@@ -78,6 +78,7 @@ export enum LinkPlatformEnum {
   UPSCROLLED = 'upscrolled',
   BITCHUTE = 'bitchute',
   DISCORD = 'discord',
+  PATREON = 'patreon',
 }
 
 export enum TrocadorStatusEnum {

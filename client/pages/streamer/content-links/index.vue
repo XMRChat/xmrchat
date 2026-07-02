@@ -64,6 +64,7 @@ const state = reactive<State>({
       upscrolled: {},
       bitchute: {},
       discord: {},
+      patreon: {},
     },
     name: undefined,
     searchTerms: undefined,
@@ -107,6 +108,7 @@ const rules = computed(() => {
     UPSCROLLED,
     BITCHUTE,
     DISCORD,
+    PATREON,
     ...rest
   } = ContentLinkPlatformEnum;
 
@@ -131,6 +133,7 @@ const rules = computed(() => {
       [UPSCROLLED]: { value: { url } },
       [BITCHUTE]: { value: { url } },
       [DISCORD]: { value: { url } },
+      [PATREON]: { value: { url } },
       ...notUrls,
     },
     rumbleLiveStreamUrl: { url, rumbleApiUrl },
