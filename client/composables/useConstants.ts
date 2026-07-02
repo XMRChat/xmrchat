@@ -337,6 +337,11 @@ export const useConstants = () => {
       icon: "i-tabler-brand-rumble",
       colorClassName: "text-[#85c742]",
     },
+    [LiveStreamPlatformEnum.PEERTUBE]: {
+      name: "Peertube",
+      icon: "i-icon-peertube",
+      colorClassName: "",
+    },
   };
 
   const getLiveStreamPlatform = (v?: LiveStreamPlatformEnum) => {

@@ -18,6 +18,7 @@ import { Page } from 'src/pages/page.entity';
 import { RumbleProvider } from './providers/rumble.provider';
 import { Link } from 'src/links/link.entity';
 import { Tip } from 'src/tips/tip.entity';
+import { PeertubeProvider } from './providers/peertube.provider';
 
 @Injectable()
 export class LiveStreamsService implements OnModuleInit {
@@ -28,6 +29,7 @@ export class LiveStreamsService implements OnModuleInit {
     private youtubeProvider: YoutubeProvider,
     private twitchProvider: TwitchProvider,
     private rumbleProvider: RumbleProvider,
+    private peertubeProvider: PeertubeProvider,
     private config: ConfigService,
     @InjectRepository(LiveStream) private repo: Repository<LiveStream>,
     @InjectRepository(Page) private pagesRepo: Repository<Page>,
@@ -53,9 +55,10 @@ export class LiveStreamsService implements OnModuleInit {
       .addOrderBy(
         `CASE 
           WHEN liveStream.platform = '${LiveStreamPlatformEnum.TWITCH}' THEN 1
-          WHEN liveStream.platform = '${LiveStreamPlatformEnum.YOUTUBE}' THEN 2
-          WHEN liveStream.platform = '${LiveStreamPlatformEnum.RUMBLE}' THEN 3
-          ELSE 4
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.PEERTUBE}' THEN 2
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.YOUTUBE}' THEN 3
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.RUMBLE}' THEN 4
+          ELSE 5
         END`,
         'ASC',
       )
@@ -92,8 +95,14 @@ export class LiveStreamsService implements OnModuleInit {
     const youtube = await this.getYoutubeLiveStreams();
     const twitch = await this.getTwitchLiveStreams();
     const rumble = await this.getRumbleLiveStreams();
+    const peertube = await this.getPeertubeLiveStreams();
 
-    await this.updateLiveStreams([...youtube, ...twitch, ...rumble]);
+    await this.updateLiveStreams([
+      ...youtube,
+      ...twitch,
+      ...rumble,
+      ...peertube,
+    ]);
     const result = await this.findAll();
     return result;
   }
@@ -197,5 +206,9 @@ export class LiveStreamsService implements OnModuleInit {
     }));
 
     return this.rumbleProvider.getLiveStreams(params);
+  }
+
+  async getPeertubeLiveStreams() {
+    return this.peertubeProvider.getLiveStreams();
   }
 }
