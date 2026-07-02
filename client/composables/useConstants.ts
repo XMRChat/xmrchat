@@ -173,6 +173,14 @@ export const useConstants = () => {
       inputLabel: "Patreon link (enter full URL)",
       linkCreator: (v?: string) => `${v}`,
     },
+    [ContentLinkPlatformEnum.SUBSCRIBESTAR]: {
+      name: "SubscribeStar",
+      colorClassName: "text-[#6E3BCE]",
+      iconClassName: "",
+      icon: "i-icon-subscribestar",
+      inputLabel: "SubscribeStar link (enter full URL)",
+      linkCreator: (v?: string) => `${v}`,
+    },
   };
   const getContentLink = (v: ContentLinkPlatformEnum) => {
     return CONTENT_LINKS[v];

@@ -65,6 +65,7 @@ const state = reactive<State>({
       bitchute: {},
       discord: {},
       patreon: {},
+      subscribestar: {},
     },
     name: undefined,
     searchTerms: undefined,
@@ -109,6 +110,7 @@ const rules = computed(() => {
     BITCHUTE,
     DISCORD,
     PATREON,
+    SUBSCRIBESTAR,
     ...rest
   } = ContentLinkPlatformEnum;
 
@@ -134,6 +136,7 @@ const rules = computed(() => {
       [BITCHUTE]: { value: { url } },
       [DISCORD]: { value: { url } },
       [PATREON]: { value: { url } },
+      [SUBSCRIBESTAR]: { value: { url } },
       ...notUrls,
     },
     rumbleLiveStreamUrl: { url, rumbleApiUrl },
@@ -159,6 +162,8 @@ const getLink = (platform: ContentLinkPlatformEnum) => {
       :title="t('contentLinks')"
       :description="t('contentLinksDescription')"
     />
+
+    <UIcon name="i-icon-subscribestar" class="w-10 h-10" />
 
     <!-- <div class="grid md:grid-cols-2 gap-4">
       <UFormGroup :label="t('brandName')" :help="t('brandNameHelp')">

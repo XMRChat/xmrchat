@@ -42,6 +42,7 @@ export enum ContentLinkPlatformEnum {
   BITCHUTE = "bitchute",
   DISCORD = "discord",
   PATREON = "patreon",
+  SUBSCRIBESTAR = "subscribestar",
 }
 
 export enum TipDisplayMode {
