@@ -14,12 +14,15 @@ import { TwitchModule } from 'src/integrations/twitch/twitch.module';
 import { RumbleModule } from 'src/integrations/rumble/rumble.module';
 import { RumbleProvider } from './providers/rumble.provider';
 import { QueuesModule } from 'src/queues/queues.module';
+import { PeertubeModule } from 'src/integrations/peertube/peertube.module';
+import { PeertubeProvider } from './providers/peertube.provider';
 
 @Module({
   imports: [
     YoutubeModule,
     TwitchModule,
     RumbleModule,
+    PeertubeModule,
     LinksModule,
     TypeOrmModule.forFeature([LiveStream, Link, Page]),
     QueuesModule,
@@ -30,6 +33,7 @@ import { QueuesModule } from 'src/queues/queues.module';
     YoutubeProvider,
     TwitchProvider,
     RumbleProvider,
+    PeertubeProvider,
     LiveStreamProcessor,
   ],
   exports: [LiveStreamsService],

@@ -111,6 +111,7 @@ export enum LiveStreamPlatformEnum {
   TWITCH = "twitch",
   X = "x",
   RUMBLE = "rumble",
+  PEERTUBE = "peertube",
 }
 
 export enum CohostInvitationStatusEnum {

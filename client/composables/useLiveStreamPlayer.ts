@@ -24,6 +24,12 @@ export const useLiveStreamPlayer = (
     )
   );
 
+  const peertube = computed(() =>
+    streams.value?.find(
+      (stream) => stream.platform === LiveStreamPlatformEnum.PEERTUBE
+    )
+  );
+
   const livePlatforms = computed<LiveStreamPlatformEnum[]>(
     () =>
       streams.value?.map((stream) => stream.platform).filter((p) => !!p) || []
@@ -31,6 +37,7 @@ export const useLiveStreamPlayer = (
 
   const liveStreamComputed = computed(() => {
     if (twitch.value) return twitch.value;
+    if (peertube.value) return peertube.value;
     if (youtube.value) return youtube.value;
     if (rumble.value) return rumble.value;
   });
