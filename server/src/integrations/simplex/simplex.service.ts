@@ -74,8 +74,7 @@ export class SimplexService implements IIntegrationVerifier {
 
       this.chat.enableAddressAutoAccept();
     } catch (error) {
-      console.log('Init error:', error.response);
-      console.log(error);
+      this.logger.error('SimpleX init failed', error);
     }
   }
 
