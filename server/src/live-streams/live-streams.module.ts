@@ -16,11 +16,14 @@ import { RumbleProvider } from './providers/rumble.provider';
 import { QueuesModule } from 'src/queues/queues.module';
 import { PeertubeModule } from 'src/integrations/peertube/peertube.module';
 import { PeertubeProvider } from './providers/peertube.provider';
+import { KickModule } from 'src/integrations/kick/kick.module';
+import { KickProvider } from './providers/kick.provider';
 
 @Module({
   imports: [
     YoutubeModule,
     TwitchModule,
+    KickModule,
     RumbleModule,
     PeertubeModule,
     LinksModule,
@@ -32,6 +35,7 @@ import { PeertubeProvider } from './providers/peertube.provider';
     LiveStreamsService,
     YoutubeProvider,
     TwitchProvider,
+    KickProvider,
     RumbleProvider,
     PeertubeProvider,
     LiveStreamProcessor,
