@@ -132,6 +132,17 @@ export const useValidations = (generalV?: Ref<Validation>) => {
     notStartingWithAtBase
   );
 
+  const matrixIdBase = (v: any) => {
+    if (!v) return true;
+    if (typeof v !== "string") return false;
+    return /^@[^\s:]+:[^\s:]+$/.test(v.trim());
+  };
+
+  const matrixId = helpers.withMessage(
+    "Enter a Matrix ID like @user:matrix.org.",
+    matrixIdBase
+  );
+
   const getValidationAttrs = (path: string, v?: MaybeRef<Validation>) => {
     v = unref(v || generalV);
     const instance = getProperty(v, path);
@@ -172,6 +183,7 @@ export const useValidations = (generalV?: Ref<Validation>) => {
     moneroPrimaryAddress,
     rumbleApiUrl,
     notStartingWithAt,
+    matrixId,
     getValidationAttrs,
     validate,
   };

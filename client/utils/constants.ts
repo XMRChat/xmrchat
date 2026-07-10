@@ -13,7 +13,6 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.INSTAGRAM,
   ContentLinkPlatformEnum.WEBSITE,
   ContentLinkPlatformEnum.YOUTUBE,
-  ContentLinkPlatformEnum.RUMBLE,
   ContentLinkPlatformEnum.TWITCH,
   ContentLinkPlatformEnum.TIKTOK,
   ContentLinkPlatformEnum.ODYSEE,
@@ -27,8 +26,11 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.PATREON,
   ContentLinkPlatformEnum.SUBSCRIBESTAR,
   ContentLinkPlatformEnum.GITHUB,
+  ContentLinkPlatformEnum.GITLAB,
+  ContentLinkPlatformEnum.MATRIX,
   ContentLinkPlatformEnum.MONERO_JOBS,
   ContentLinkPlatformEnum.FACEBOOK,
+  ContentLinkPlatformEnum.RUMBLE,
 ];
 
 export const SWAP_STATUSES = {

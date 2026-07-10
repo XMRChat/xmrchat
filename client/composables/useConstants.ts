@@ -189,6 +189,22 @@ export const useConstants = () => {
       inputLabel: "GitHub link (enter full URL)",
       linkCreator: (v?: string) => `${v}`,
     },
+    [ContentLinkPlatformEnum.GITLAB]: {
+      name: "GitLab",
+      colorClassName: "text-[#FC6D26]",
+      iconClassName: "",
+      icon: "i-tabler-brand-gitlab",
+      inputLabel: "GitLab link (enter full URL)",
+      linkCreator: (v?: string) => `${v}`,
+    },
+    [ContentLinkPlatformEnum.MATRIX]: {
+      name: "Matrix",
+      colorClassName: "",
+      iconClassName: "",
+      icon: "i-simple-icons-matrix",
+      inputLabel: "Matrix ID (for example @user:matrix.org)",
+      linkCreator: (v?: string) => `https://matrix.to/#/${v}`,
+    },
     [ContentLinkPlatformEnum.MONERO_JOBS]: {
       name: "Monero Jobs",
       colorClassName: "text-[#FF6600]",
