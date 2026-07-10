@@ -114,6 +114,7 @@ const rules = computed(() => {
     DISCORD,
     PATREON,
     SUBSCRIBESTAR,
+    GITHUB,
     MONERO_JOBS,
     ...rest
   } = ContentLinkPlatformEnum;
@@ -141,6 +142,7 @@ const rules = computed(() => {
       [DISCORD]: { value: { url } },
       [PATREON]: { value: { url } },
       [SUBSCRIBESTAR]: { value: { url } },
+      [GITHUB]: { value: { url } },
       [MONERO_JOBS]: { value: { url } },
       ...notUrls,
     },
