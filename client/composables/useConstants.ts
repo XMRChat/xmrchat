@@ -186,8 +186,8 @@ export const useConstants = () => {
       colorClassName: "",
       iconClassName: "",
       icon: "i-tabler-brand-github",
-      inputLabel: t("xUsername", { platform: "GitHub" }),
-      linkCreator: (v?: string) => `https://github.com/${v}`,
+      inputLabel: "GitHub link (enter full URL)",
+      linkCreator: (v?: string) => `${v}`,
     },
     [ContentLinkPlatformEnum.MONERO_JOBS]: {
       name: "Monero Jobs",
