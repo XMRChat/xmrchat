@@ -3,6 +3,7 @@ import { Command, CommandRunner } from 'nest-commander';
 import { TwitchTokenService } from 'src/integrations/twitch/twitch-token.service';
 import { LinkVerificationsService } from 'src/link-verifications/link-verifications.service';
 import { LiveStreamsService } from 'src/live-streams/live-streams.service';
+import { NotificationTestsService } from 'src/notifications/notification-tests.service';
 
 @Command({
   name: 'config',
@@ -16,6 +17,7 @@ export class ConfigCommand extends CommandRunner {
     private twitchTokenService: TwitchTokenService,
     private liveStreamsService: LiveStreamsService,
     private linkVerificationsService: LinkVerificationsService,
+    private notificationTestsService: NotificationTestsService,
   ) {
     super();
   }
@@ -53,6 +55,11 @@ export class ConfigCommand extends CommandRunner {
       return;
     }
 
+    if (config === 'test-simplex') {
+      await this.testSimplex();
+      return;
+    }
+
     this.logger.error(`Parameter is invalid: ${config}`);
   }
 
@@ -85,5 +92,10 @@ export class ConfigCommand extends CommandRunner {
   async validateLinkVerifications() {
     this.logger.log('validating link verifications');
     await this.linkVerificationsService.validateAll();
+  }
+
+  async testSimplex() {
+    this.logger.log('Testing Simplex');
+    await this.notificationTestsService.testSimplex();
   }
 }
