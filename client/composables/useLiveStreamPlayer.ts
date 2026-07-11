@@ -18,6 +18,12 @@ export const useLiveStreamPlayer = (
     )
   );
 
+  const kick = computed(() =>
+    streams.value?.find(
+      (stream) => stream.platform === LiveStreamPlatformEnum.KICK
+    )
+  );
+
   const rumble = computed(() =>
     streams.value?.find(
       (stream) => stream.platform === LiveStreamPlatformEnum.RUMBLE
@@ -37,6 +43,7 @@ export const useLiveStreamPlayer = (
 
   const liveStreamComputed = computed(() => {
     if (twitch.value) return twitch.value;
+    if (kick.value) return kick.value;
     if (peertube.value) return peertube.value;
     if (youtube.value) return youtube.value;
     if (rumble.value) return rumble.value;
