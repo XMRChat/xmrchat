@@ -23,6 +23,7 @@ import { User } from 'src/users/user.entity';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { LinkVerification } from 'src/link-verifications/link-verification.entity';
 import { TipReply } from 'src/tip-replies/tip-reply.entity';
+import { TipGoal } from 'src/tip-goals/tip-goal.entity';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { TipReply } from 'src/tip-replies/tip-reply.entity';
           SuperDmMessage,
           LinkVerification,
           TipReply,
+          TipGoal,
         ],
         namingStrategy: new SnakeNamingStrategy(),
         migrationsRun: process.env.NODE_ENV === 'production',

@@ -33,13 +33,28 @@ export class TipGoalsService {
     return tipGoal;
   }
 
+  async findMyTipGoal(user: User) {
+    const page = await this.pagesService.findMyPage(user);
+    if (!page) throw new NotFoundException('Page not found');
+
+    const tipGoal = await this.findOneByPageIdOptional(page.id);
+    return tipGoal;
+  }
+
   async findOneByPageId(pageId: number) {
+    if (!pageId) throw new BadRequestException('Page id is required');
+
+    const tipGoal = await this.findOneByPageIdOptional(pageId);
+    if (!tipGoal) throw new NotFoundException('Tip goal not found');
+    return tipGoal;
+  }
+
+  async findOneByPageIdOptional(pageId: number) {
     if (!pageId) throw new BadRequestException('Page id is required');
 
     const tipGoal = await this.repo.findOne({
       where: { page: { id: pageId } },
     });
-    if (!tipGoal) throw new NotFoundException('Tip goal not found');
     return tipGoal;
   }
 
