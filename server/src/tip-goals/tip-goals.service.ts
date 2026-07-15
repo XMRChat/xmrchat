@@ -34,11 +34,11 @@ export class TipGoalsService {
 
     const startTime = new Date(dto.startTime);
     if (startTime < new Date())
-      throw new BadRequestException('Start time must be a date after today.');
+      throw new BadRequestException('Start time should be a date after today.');
 
     if (dto.endTime && new Date(dto.endTime) < startTime)
       throw new BadRequestException(
-        'End time must be a date after start time.',
+        'End time should be a date after start time.',
       );
 
     const created = this.repo.create({
