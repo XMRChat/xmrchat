@@ -14,6 +14,7 @@ import { PageTipTier } from 'src/page-tip-tiers/page-tip-tier.entity';
 import { Page } from 'src/pages/page.entity';
 import { Action, PageSettingKey, RolesEnum } from 'src/shared/constants/enum';
 import { SuperDm } from 'src/super-dms/super-dm.entity';
+import { TipGoal } from 'src/tip-goals/tip-goal.entity';
 import { TipReply } from 'src/tip-replies/tip-reply.entity';
 import { Tip } from 'src/tips/tip.entity';
 import { User } from 'src/users/user.entity';
@@ -28,6 +29,7 @@ type Subjects =
       | typeof PageSetting
       | typeof PageTipTier
       | typeof TipReply
+      | typeof TipGoal
     >
   | 'notification'
   | 'cohost'
@@ -68,6 +70,7 @@ export class CaslAbilityFactory {
 
       // TIP REPLY ACTIONS
       can(Action.Manage, TipReply, { 'tip.pageId': pageResult?.id } as any);
+      can(Action.Manage, TipGoal, { pageId: pageResult?.id });
     }
 
     // OBS ACTIONS
