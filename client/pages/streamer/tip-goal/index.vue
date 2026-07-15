@@ -1,8 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { TipGoal } from "~/types";
+
+const { axios } = useApp();
+
+const { data, pending, error, refresh } = useLazyAsyncData(
+  async () => {
+    const { data } = await axios.get<{ tipGoal: TipGoal[] }>(`/tip-goals`);
+    return data.tipGoal;
+  },
+  {
+    server: false,
+  },
+);
+</script>
 
 <template>
   <div>
-    Page: streamer/tip-goal/index
+    <PageTitle title="Tip Goal" description="Manage your tip goal" />
+
+    <div v-if="pending">Pending...</div>
+    <div v-else-if="error">Error: {{ error }}</div>
+    <div v-else-if="data">
+      <TipGoalModifyForm editable />
+    </div>
+    <div v-else>
+      <TipGoalModifyForm />
+    </div>
   </div>
 </template>
 
