@@ -2,7 +2,11 @@
 
 <template>
   <div>
-    Page: streamer/tip-goal/edit
+    <PageTitle
+      :title="$t('editTipGoal')"
+      :description="$t('editTipGoalDetails')"
+    />
+    <TipGoalModifyForm editable />
   </div>
 </template>
 
