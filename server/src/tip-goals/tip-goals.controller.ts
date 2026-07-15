@@ -10,7 +10,7 @@ export class TipGoalsController {
 
   @Post('/')
   async create(@Body() dto: CreateTipGoalDto, @CurrentUser() user: User) {
-    const result = await this.tipGoalsService.createTipGoal(dto, user);
+    const result = await this.tipGoalsService.create(dto, user);
     return {
       message: 'Tip goal created successfully',
     };
