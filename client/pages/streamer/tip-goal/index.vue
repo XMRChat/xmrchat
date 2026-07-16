@@ -21,10 +21,10 @@ const { data, pending, error, refresh } = useLazyAsyncData(
     <div v-if="pending">Pending...</div>
     <div v-else-if="error">Error: {{ error }}</div>
     <div v-else-if="data">
-      <TipGoalModifyForm editable />
+      <TipGoalModifyForm editable @update="refresh" />
     </div>
     <div v-else>
-      <TipGoalModifyForm />
+      <TipGoalModifyForm @update="refresh" />
     </div>
   </div>
 </template>
