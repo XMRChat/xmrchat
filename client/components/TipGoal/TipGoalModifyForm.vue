@@ -138,7 +138,7 @@ const v = useVuelidate<any>(
     endTime: {
       afterDate: helpers.withMessage(
         "End should be after start.",
-        (value: any) => dayjs(value).isAfter(state.form.startTime),
+        (value: any) => value && dayjs(value).isAfter(state.form.startTime),
       ),
     },
     description: { maxLength: maxLength(255) },
