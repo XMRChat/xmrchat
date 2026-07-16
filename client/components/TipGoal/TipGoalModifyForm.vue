@@ -186,8 +186,12 @@ const { getValidationAttrs } = useValidations(v);
           />
         </UFormGroup>
 
-        <UFormGroup label="Is Active">
-          <UToggle v-model="state.form.isActive" size="lg" />
+        <UFormGroup>
+          <UCheckbox v-model="state.form.isActive" label="Is Active">
+            <template #help>
+              Deactive tip goal will not be displayed on your tip page.
+            </template>
+          </UCheckbox>
         </UFormGroup>
 
         <div class="mt-4">
