@@ -86,6 +86,27 @@ export class TipsService {
     return { tips, page };
   }
 
+  async getTipsInDateRange(pagePath: string, start: string, end?: string) {
+    const page = await this.pagesService.findByPath(pagePath);
+    if (!page) throw new NotFoundException('Page not found');
+
+    const query = this.repo
+      .createQueryBuilder('tip')
+      .leftJoin('tip.payment', 'payment')
+      .select('SUM(COALESCE(payment.paid_amount::NUMERIC, 0))', 'totalAmount')
+      .where('tip.page_id = :pageId', { pageId: page.id })
+      .andWhere('payment.paid_at IS NOT NULL')
+      .andWhere('tip.created_at >= :start', { start });
+
+    if (end) {
+      query.andWhere('tip.created_at <= :end', { end });
+    }
+
+    const result = await query.getRawOne();
+    this.logger.log(`Tips in date range: ${result.totalAmount}`);
+    return result.totalAmount ?? '0';
+  }
+
   async updateTip(id: number, payload: UpdateTipDto, user: User) {
     const tip = await this.findOneById(id);
     if (!tip) throw new NotFoundException('Tip not found');

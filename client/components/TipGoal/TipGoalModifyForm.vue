@@ -21,6 +21,10 @@ const props = defineProps<{
   editable?: boolean;
 }>();
 
+const emit = defineEmits<{
+  update: [];
+}>();
+
 const { required, maxLength, numberic } = useValidations();
 const { toStreamerTipGoal, toCreateStreamerTipGoal } = useRouteLocation();
 const { axios } = useApp();
@@ -110,7 +114,8 @@ const handleSubmit = async () => {
       description: props.editable ? "Tip goal updated" : "Tip goal created",
       color: "green",
     });
-    await navigateTo(toStreamerTipGoal());
+    // await navigateTo(toStreamerTipGoal());
+    emit("update");
   } catch (error) {
     toast.add({
       description: getErrorMessage(error),
@@ -138,7 +143,8 @@ const v = useVuelidate<any>(
     endTime: {
       afterDate: helpers.withMessage(
         "End should be after start.",
-        (value: any) => value && dayjs(value).isAfter(state.form.startTime),
+        (value: any) =>
+          value ? dayjs(value).isAfter(state.form.startTime) : true,
       ),
     },
     description: { maxLength: maxLength(255) },

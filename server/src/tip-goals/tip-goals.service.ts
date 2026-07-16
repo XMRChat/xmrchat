@@ -13,12 +13,14 @@ import { User } from 'src/users/user.entity';
 import { Action } from 'src/shared/constants';
 import { PagesService } from 'src/pages/pages.service';
 import { UpdateTipGoalDto } from './dtos/update-tip-goal.dto';
+import { TipsService } from 'src/tips/tips.service';
 
 @Injectable()
 export class TipGoalsService {
   constructor(
     private readonly pagesService: PagesService,
     private readonly casl: CaslAbilityFactory,
+    private readonly tipsService: TipsService,
     @InjectRepository(TipGoal)
     private repo: Repository<TipGoal>,
   ) {}
@@ -108,6 +110,21 @@ export class TipGoalsService {
     Object.assign(tipGoal, dto);
     const result = await this.repo.save(tipGoal);
     return result;
+  }
+
+  async findTipGoalAmount(pagePath: string) {
+    const page = await this.pagesService.findByPath(pagePath);
+    if (!page) throw new NotFoundException('Page not found');
+
+    const tipGoal = await this.findOneByPageId(page.id);
+    if (!tipGoal) return null;
+
+    const tipsAmount = await this.tipsService.getTipsInDateRange(
+      pagePath,
+      tipGoal.startTime.toISOString(),
+      tipGoal.endTime?.toISOString(),
+    );
+    return tipsAmount;
   }
 
   // For create base time is now, for edit base time is min of now and start time

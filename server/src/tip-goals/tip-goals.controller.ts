@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { TipGoalsService } from './tip-goals.service';
 import { CreateTipGoalDto } from './dtos/create-tip-goal.dto';
 import { User } from 'src/users/user.entity';
@@ -6,6 +6,7 @@ import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { TipGoalRO } from './dtos/tip-goal.dto';
 import { UpdateTipGoalDto } from './dtos/update-tip-goal.dto';
+import { IsPublic } from 'src/shared/decorators/is-public.decorator';
 
 @Controller('tip-goals')
 export class TipGoalsController {
@@ -17,6 +18,15 @@ export class TipGoalsController {
     const result = await this.tipGoalsService.findMyTipGoal(user);
     return {
       tipGoal: result,
+    };
+  }
+
+  @Get('/tips/:pagePath')
+  @IsPublic()
+  async findTipGoalAmount(@Param('pagePath') pagePath: string) {
+    const amount = await this.tipGoalsService.findTipGoalAmount(pagePath);
+    return {
+      amount,
     };
   }
 
