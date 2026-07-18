@@ -117,7 +117,7 @@ export class TipGoalsService {
     if (!page) throw new NotFoundException('Page not found');
 
     const tipGoal = await this.findOneByPageIdOptional(page.id);
-    if (!tipGoal) return null;
+    if (!tipGoal) return { tipsAmount: 0, tipGoal: null };
 
     const tipsAmount = await this.tipsService.getTipsInDateRange(
       pagePath,
