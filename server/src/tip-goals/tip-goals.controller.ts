@@ -7,6 +7,7 @@ import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { TipGoalRO } from './dtos/tip-goal.dto';
 import { UpdateTipGoalDto } from './dtos/update-tip-goal.dto';
 import { IsPublic } from 'src/shared/decorators/is-public.decorator';
+import { TipGoalAmountRO } from './dtos/tip-goal-amount.dto';
 
 @Controller('tip-goals')
 export class TipGoalsController {
@@ -22,11 +23,14 @@ export class TipGoalsController {
   }
 
   @Get('/tips/:pagePath')
+  @Serialize(TipGoalAmountRO)
   @IsPublic()
   async findTipGoalAmount(@Param('pagePath') pagePath: string) {
-    const amount = await this.tipGoalsService.findTipGoalAmount(pagePath);
+    const { tipsAmount, tipGoal } =
+      await this.tipGoalsService.findTipGoalAmount(pagePath);
     return {
-      amount,
+      tipsAmount,
+      tipGoal,
     };
   }
 
