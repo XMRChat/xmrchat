@@ -116,7 +116,7 @@ export class TipGoalsService {
     const page = await this.pagesService.findByPath(pagePath);
     if (!page) throw new NotFoundException('Page not found');
 
-    const tipGoal = await this.findOneByPageId(page.id);
+    const tipGoal = await this.findOneByPageIdOptional(page.id);
     if (!tipGoal) return null;
 
     const tipsAmount = await this.tipsService.getTipsInDateRange(
@@ -124,7 +124,10 @@ export class TipGoalsService {
       tipGoal.startTime.toISOString(),
       tipGoal.endTime?.toISOString(),
     );
-    return tipsAmount;
+    return {
+      tipsAmount,
+      tipGoal,
+    };
   }
 
   // For create base time is now, for edit base time is min of now and start time

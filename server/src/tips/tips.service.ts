@@ -35,6 +35,7 @@ import { PageTipTier } from 'src/page-tip-tiers/page-tip-tier.entity';
 import { getDefaultMessageLength, getTipTier } from 'src/shared/utils';
 import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
 import { TipsBroadcastGateway } from 'src/tips-broadcast/tips-broadcast.gateway';
+import { getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
 export class TipsService {
@@ -418,7 +419,7 @@ export class TipsService {
       await this.lwsService.deleteWebhook(eventIds);
     } catch (error) {
       this.logger.warn(
-        `Failed to delete webhook for tips: ${error?.message || error}`,
+        `Failed to delete webhook for tips: ${getErrorMessage(error)}`,
       );
     }
 
