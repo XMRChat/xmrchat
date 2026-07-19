@@ -74,10 +74,13 @@ const verified = computed(() => props.links?.some((l) => l.verification));
           />
         </div>
       </div>
-      <div v-if="bio" class="bio hidden md:block">
+      <!-- <div v-if="bio" class="bio hidden md:block">
         <p class="text-pale text-sm max-w-[400px]">
           {{ bio }}
         </p>
+      </div> -->
+      <div class="tip-goal flex-1 flex justify-end">
+        <TipGoal :path="streamerId" class="max-w-[380px] flex-1" />
       </div>
     </div>
   </div>
