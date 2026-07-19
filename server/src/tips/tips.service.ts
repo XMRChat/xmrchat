@@ -104,7 +104,6 @@ export class TipsService {
     }
 
     const result = await query.getRawOne();
-    this.logger.log(`Tips in date range: ${result.totalAmount}`);
     return result.totalAmount ?? '0';
   }
 
