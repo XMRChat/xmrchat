@@ -25,8 +25,22 @@ const { data } = useLazyAsyncData(
 const percentage = computed(() => {
   const amount = Number(data.value?.tipGoal.amount) ?? 0;
   const tipsAmount = Number(data.value?.tipsAmount) ?? 0;
+  if (!amount) return 0;
+  return (tipsAmount / amount) * 100;
+});
+
+const exceededAmount = computed(() => {
+  const amount = Number(data.value?.tipGoal.amount) ?? 0;
+  const tipsAmount = Number(data.value?.tipsAmount) ?? 0;
   if (!tipsAmount) return 0;
-  return (amount / tipsAmount) * 100;
+  return Math.max(tipsAmount - amount, 0);
+});
+
+const exceededPercentage = computed(() => {
+  if (!exceededAmount.value) return 0;
+  const amount = Number(data.value?.tipGoal.amount) ?? 0;
+  if (!amount) return 0;
+  return Math.min((exceededAmount.value / amount) * 100, 100);
 });
 
 const startLeft = computed(() => {
@@ -52,6 +66,10 @@ const timeLeft = computed(() => {
   if (!endTime) return "No end time";
   return `Ends ${dayjs(endTime).fromNow()}`;
 });
+
+const isCompleted = computed(() => {
+  return percentage.value >= 100;
+});
 </script>
 
 <template>
@@ -72,13 +90,21 @@ const timeLeft = computed(() => {
         <span class="">{{ data?.tipGoal.amount }} XMR</span>
       </div>
       <div
-        class="w-full flex justify-center items-center bg-background-2 rounded-full overflow-hidden h-4 relative"
+        :class="[
+          'w-full flex justify-center items-center bg-background-2 rounded-full overflow-hidden h-4 relative',
+          { 'tip-goal-progress--completed': isCompleted },
+        ]"
       >
         <div
           class="bg-primary h-full rounded-full absolute left-0 top-0 z-0 max-w-full"
-          :style="`width: ${percentage}%`"
+          :style="`width: ${Math.min(percentage, 100)}%`"
         ></div>
-        <div class="text-xs relative">
+        <div
+          v-if="exceededPercentage"
+          class="bg-red-500 h-full rounded-full absolute left-0 top-0 z-10 max-w-full"
+          :style="`width: ${Math.min(exceededPercentage, 100)}%`"
+        ></div>
+        <div class="text-xs relative z-40">
           {{ data?.tipsAmount }} XMR ({{ percentage }}%)
         </div>
       </div>
@@ -114,4 +140,18 @@ const timeLeft = computed(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tip-goal-progress--completed {
+  animation: tip-goal-shadow-pulse 1.8s infinite;
+}
+
+@keyframes tip-goal-shadow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(var(--color-primary-500) / 0.4);
+  }
+  70% {
+    box-shadow: 0 0 12px 4px rgb(var(--color-primary-500) / 0.25);
+  }
+}
+</style>
