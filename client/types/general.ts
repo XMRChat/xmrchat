@@ -115,6 +115,7 @@ export interface StreamerPage {
   ability?: any;
   bio?: string;
   searchTerms?: string;
+  tipGoal?: TipGoal;
 }
 
 interface TipPayment {
