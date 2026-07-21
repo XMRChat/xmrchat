@@ -313,6 +313,7 @@ export class PagesService {
         liveStreams: true,
         pageTipTiers: { sound: true },
         user: true,
+        tipGoal: true,
       },
       order: {
         pageTipTiers: { minAmount: { direction: 'ASC', nulls: 'LAST' } },
