@@ -29,20 +29,6 @@ const percentage = computed(() => {
   return (tipsAmount / amount) * 100;
 });
 
-const exceededAmount = computed(() => {
-  const amount = Number(data.value?.tipGoal.amount) ?? 0;
-  const tipsAmount = Number(data.value?.tipsAmount) ?? 0;
-  if (!tipsAmount) return 0;
-  return Math.max(tipsAmount - amount, 0);
-});
-
-const exceededPercentage = computed(() => {
-  if (!exceededAmount.value) return 0;
-  const amount = Number(data.value?.tipGoal.amount) ?? 0;
-  if (!amount) return 0;
-  return Math.min((exceededAmount.value / amount) * 100, 100);
-});
-
 const startLeft = computed(() => {
   const startTime = data.value?.tipGoal.startTime;
   if (!startTime) return undefined;
@@ -98,11 +84,6 @@ const isCompleted = computed(() => {
         <div
           class="bg-primary h-full rounded-full absolute left-0 top-0 z-0 max-w-full"
           :style="`width: ${Math.min(percentage, 100)}%`"
-        ></div>
-        <div
-          v-if="exceededPercentage"
-          class="bg-red-500 h-full rounded-full absolute left-0 top-0 z-10 max-w-full"
-          :style="`width: ${Math.min(exceededPercentage, 100)}%`"
         ></div>
         <div class="text-xs relative z-40">
           {{ data?.tipsAmount }} XMR ({{ percentage }}%)
