@@ -3,6 +3,7 @@ import type { TipGoal } from "~/types";
 
 const props = defineProps<{
   path?: string;
+  tipGoal?: TipGoal;
 }>();
 
 const { axios } = useApp();
@@ -13,7 +14,7 @@ const modalRef = ref(false);
 const { data } = useLazyAsyncData(
   `tip-goal-${props.path}`,
   async () => {
-    const { data } = await axios.get<{ tipsAmount: number; tipGoal: TipGoal }>(
+    const { data } = await axios.get<{ tipsAmount: number }>(
       `/tip-goals/tips/${props.path}`,
     );
 
@@ -23,14 +24,14 @@ const { data } = useLazyAsyncData(
 );
 
 const percentage = computed(() => {
-  const amount = Number(data.value?.tipGoal.amount) ?? 0;
+  const amount = Number(props.tipGoal?.amount) ?? 0;
   const tipsAmount = Number(data.value?.tipsAmount) ?? 0;
   if (!amount) return 0;
   return (tipsAmount / amount) * 100;
 });
 
 const startLeft = computed(() => {
-  const startTime = data.value?.tipGoal.startTime;
+  const startTime = props.tipGoal?.startTime;
   if (!startTime) return undefined;
 
   const startTimeDayjs = dayjs(startTime);
@@ -42,13 +43,13 @@ const startLeft = computed(() => {
 });
 
 const isEnded = computed(() => {
-  const endTime = data.value?.tipGoal.endTime;
+  const endTime = props.tipGoal?.endTime;
   if (!endTime) return false;
   return dayjs(endTime).isBefore(dayjs());
 });
 
 const timeLeft = computed(() => {
-  const endTime = data.value?.tipGoal.endTime;
+  const endTime = props.tipGoal?.endTime;
   if (!endTime) return "No end time";
   return `Ends ${dayjs(endTime).fromNow()}`;
 });
@@ -61,7 +62,7 @@ const isCompleted = computed(() => {
 <template>
   <div>
     <div class="flex items-center gap-2">
-      <span>{{ data?.tipGoal.name }}</span>
+      <span>{{ tipGoal?.name }}</span>
       <UButton
         icon="i-heroicons-information-circle"
         variant="ghost"
@@ -73,7 +74,7 @@ const isCompleted = computed(() => {
     <div class="flex flex-col gap-1">
       <div class="flex justify-between">
         <span></span>
-        <span class="">{{ data?.tipGoal.amount }} XMR</span>
+        <span class="">{{ tipGoal?.amount }} XMR</span>
       </div>
       <div
         :class="[
@@ -105,10 +106,10 @@ const isCompleted = computed(() => {
     <UModal v-model="modalRef">
       <UCard>
         <template #header>
-          <h2 class="text-lg font-medium">{{ data?.tipGoal.name }}</h2>
+          <h2 class="text-lg font-medium">{{ tipGoal?.name }}</h2>
         </template>
         <div class="">
-          <div>{{ data?.tipGoal.description }}</div>
+          <div>{{ tipGoal?.description }}</div>
         </div>
 
         <template #footer>
