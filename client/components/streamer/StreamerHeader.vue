@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ContentLink, LiveStream } from "~/types";
+import type { ContentLink, LiveStream, TipGoal } from "~/types";
 
 const props = withDefaults(
   defineProps<{
@@ -12,6 +12,7 @@ const props = withDefaults(
     streamerId?: string;
     superDmActive?: boolean;
     bio?: string;
+    tipGoal?: TipGoal;
   }>(),
   {
     showTitle: true,
