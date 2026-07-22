@@ -61,19 +61,19 @@ const isCompleted = computed(() => {
 
 <template>
   <div>
-    <div class="flex items-center gap-2">
-      <span>{{ tipGoal?.name }}</span>
-      <UButton
-        icon="i-heroicons-information-circle"
-        variant="ghost"
-        size="sm"
-        color="gray"
-        @click="modalRef = true"
-      />
-    </div>
     <div class="flex flex-col gap-1">
-      <div class="flex justify-between">
-        <span></span>
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span>{{ tipGoal?.name }}</span>
+          <UButton
+            v-if="tipGoal?.description"
+            icon="i-heroicons-information-circle"
+            variant="ghost"
+            size="sm"
+            color="gray"
+            @click="modalRef = true"
+          />
+        </div>
         <span class="">{{ tipGoal?.amount }} XMR</span>
       </div>
       <div
