@@ -62,9 +62,9 @@ const isCompleted = computed(() => {
 <template>
   <div>
     <div class="flex flex-col gap-1">
-      <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2">
-          <span>{{ tipGoal?.name }}</span>
+      <div class="flex justify-between items-center gap-2">
+        <div class="flex items-center gap-2 min-w-0 flex-1">
+          <span class="truncate">{{ tipGoal?.name }}</span>
           <UButton
             v-if="tipGoal?.description"
             icon="i-heroicons-information-circle"
@@ -74,7 +74,7 @@ const isCompleted = computed(() => {
             @click="modalRef = true"
           />
         </div>
-        <span class="">{{ tipGoal?.amount }} XMR</span>
+        <span class="whitespace-nowrap">{{ tipGoal?.amount }} XMR</span>
       </div>
       <div
         :class="[
