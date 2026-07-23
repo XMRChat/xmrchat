@@ -73,7 +73,6 @@ export class TipGoalsService {
     const { isValid, message } = await this.validateDates({
       startTime: new Date(dto.startTime),
       endTime: dto.endTime && new Date(dto.endTime),
-      baseTime: new Date(),
     });
     if (!isValid) throw new BadRequestException(message);
 
@@ -102,7 +101,6 @@ export class TipGoalsService {
     const { isValid, message } = await this.validateDates({
       startTime: new Date(dto.startTime),
       endTime: dto.endTime && new Date(dto.endTime),
-      baseTime: new Date(Math.min(Date.now(), tipGoal.startTime.getTime())),
     });
 
     if (!isValid) throw new BadRequestException(message);
@@ -134,17 +132,10 @@ export class TipGoalsService {
   async validateDates({
     startTime,
     endTime,
-    baseTime = new Date(),
   }: {
     startTime: Date;
     endTime?: Date;
-    baseTime?: Date;
   }) {
-    if (startTime < baseTime)
-      return {
-        isValid: false,
-        message: 'Start time should be a date after today.',
-      };
     if (endTime && endTime < startTime)
       return {
         isValid: false,
