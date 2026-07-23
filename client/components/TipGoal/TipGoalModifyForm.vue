@@ -126,15 +126,6 @@ const handleSubmit = async () => {
   }
 };
 
-const startMin = computed(() => {
-  const nowDayjs = dayjs();
-  if (state.tipGoal?.startTime)
-    return dayjs
-      .min(nowDayjs, dayjs(state.tipGoal.startTime))
-      .format(DEFAULT_FORMAT);
-  return nowDayjs.format(DEFAULT_FORMAT);
-});
-
 const v = useVuelidate<any>(
   computed(() => ({
     name: { required, maxLength: maxLength(80) },
@@ -182,7 +173,6 @@ const { getValidationAttrs } = useValidations(v);
         >
           <UInput
             v-model="state.form.startTime"
-            :min="startMin"
             type="datetime-local"
             @blur="getValidationAttrs('startTime').onBlur"
           />
