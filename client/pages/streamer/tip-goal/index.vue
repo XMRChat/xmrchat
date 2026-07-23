@@ -18,8 +18,20 @@ const { data, pending, error, refresh } = useLazyAsyncData(
   <div>
     <PageTitle title="Tip Goal" description="Manage your tip goal" />
 
-    <div v-if="pending">Pending...</div>
-    <div v-else-if="error">Error: {{ error }}</div>
+    <div v-if="pending" class="flex flex-col gap-4 w-full max-w-[600px] m-auto">
+      <USkeleton class="h-4 w-16" />
+      <USkeleton class="h-10 w-full" />
+      <USkeleton class="h-4 w-24" />
+      <USkeleton class="h-10 w-full" />
+      <USkeleton class="h-4 w-12" />
+      <USkeleton class="h-10 w-full" />
+      <USkeleton class="h-4 w-10" />
+      <USkeleton class="h-10 w-full" />
+      <USkeleton class="h-4 w-20" />
+      <USkeleton class="h-20 w-full" />
+      <USkeleton class="h-10 w-24 mt-4" />
+    </div>
+    <div v-else-if="error">{{ error }}</div>
     <div v-else-if="data">
       <TipGoalModifyForm editable @update="refresh" />
     </div>
