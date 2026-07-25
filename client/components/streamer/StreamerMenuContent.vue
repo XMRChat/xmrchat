@@ -106,6 +106,7 @@ const items = computed(() => {
             label: "Tip Tiers",
             icon: "i-heroicons-numbered-list-20-solid",
             to: toStreamerPageTiers(),
+            locked: true,
           },
           {
             label: "SuperDMs",
@@ -175,7 +176,7 @@ const items = computed(() => {
           variant="soft"
           :class="[
             'flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-primary transition-all',
-            { 'opacity-50 pointer-events-none': item.disabled },
+            { 'opacity-50': item.disabled },
           ]"
           activeClass="bg-primary !text-white "
           :disabled="item.disabled"
@@ -184,6 +185,11 @@ const items = computed(() => {
           <span>
             {{ item.label }}
           </span>
+          <UIcon
+            v-if="item.locked"
+            name="i-heroicons-lock-closed"
+            class="w-5 h-5 ms-auto"
+          />
         </ULink>
       </template>
 
