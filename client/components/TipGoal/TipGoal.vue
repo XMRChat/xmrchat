@@ -11,7 +11,7 @@ const { dayjs } = useDate();
 
 const modalRef = ref(false);
 
-const { data } = useLazyAsyncData(
+const { data, refresh } = useLazyAsyncData(
   `tip-goal-${props.path}`,
   async () => {
     const { data } = await axios.get<{ tipsAmount: number }>(
@@ -22,6 +22,23 @@ const { data } = useLazyAsyncData(
   },
   { server: false },
 );
+
+const interval = ref<NodeJS.Timeout | undefined>(undefined);
+
+onMounted(() => {
+  startTipsInterval();
+});
+
+const startTipsInterval = () => {
+  stopTipsInterval();
+  interval.value = setInterval(() => refresh(), 8000);
+};
+
+const stopTipsInterval = () => {
+  clearInterval(interval.value);
+};
+
+onBeforeUnmount(() => stopTipsInterval());
 
 const percentage = computed(() => {
   const amount = Number(props.tipGoal?.amount) ?? 0;
