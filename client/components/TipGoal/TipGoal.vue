@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Dayjs } from "dayjs";
 import type { TipGoal } from "~/types";
 
 const props = defineProps<{
@@ -10,6 +11,9 @@ const { axios } = useApp();
 const { dayjs } = useDate();
 
 const modalRef = ref(false);
+
+const nowDayjsRef = ref<Dayjs | undefined>(undefined);
+const nowDayjs = computed(() => nowDayjsRef.value ?? dayjs());
 
 const { data, refresh } = useLazyAsyncData(
   `tip-goal-${props.path}`,
@@ -24,9 +28,13 @@ const { data, refresh } = useLazyAsyncData(
 );
 
 const interval = ref<NodeJS.Timeout | undefined>(undefined);
+const nowInterval = ref<NodeJS.Timeout | undefined>(undefined);
 
 onMounted(() => {
   startTipsInterval();
+  nowInterval.value = setInterval(() => {
+    nowDayjsRef.value = dayjs();
+  }, 1000);
 });
 
 const startTipsInterval = () => {
@@ -38,12 +46,15 @@ const stopTipsInterval = () => {
   clearInterval(interval.value);
 };
 
-onBeforeUnmount(() => stopTipsInterval());
+onBeforeUnmount(() => {
+  stopTipsInterval();
+  clearInterval(nowInterval.value);
+});
 
 const percentage = computed(() => {
   const amount = Number(props.tipGoal?.amount) ?? 0;
   const tipsAmount = Number(data.value?.tipsAmount) ?? 0;
-  if (!amount) return 0;
+  if (!amount || !tipsAmount) return 0;
   return (tipsAmount / amount) * 100;
 });
 
@@ -52,9 +63,8 @@ const startLeft = computed(() => {
   if (!startTime) return undefined;
 
   const startTimeDayjs = dayjs(startTime);
-  const nowDayjs = dayjs();
 
-  if (startTimeDayjs.isBefore(nowDayjs)) return undefined;
+  if (startTimeDayjs.isBefore(nowDayjs.value)) return undefined;
 
   return `Starts ${dayjs(startTime).fromNow()}`;
 });
@@ -62,12 +72,14 @@ const startLeft = computed(() => {
 const isEnded = computed(() => {
   const endTime = props.tipGoal?.endTime;
   if (!endTime) return false;
-  return dayjs(endTime).isBefore(dayjs());
+  return dayjs(endTime).isBefore(nowDayjs.value);
 });
 
 const timeLeft = computed(() => {
   const endTime = props.tipGoal?.endTime;
   if (!endTime) return "No end time";
+  // Added to keep the timeLeft reactive
+  const now = nowDayjs.value;
   return `Ends ${dayjs(endTime).fromNow()}`;
 });
 
