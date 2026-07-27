@@ -34,7 +34,7 @@ onMounted(() => {
   startTipsInterval();
   nowInterval.value = setInterval(() => {
     nowDayjsRef.value = dayjs();
-  }, 1000);
+  }, 4000);
 });
 
 const startTipsInterval = () => {
