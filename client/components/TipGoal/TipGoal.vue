@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import type { Dayjs } from "dayjs";
 import type { TipGoal } from "~/types";
+import { TipDisplayMode, type FiatEnum } from "~/types/enums";
 
 const props = defineProps<{
   path?: string;
+  fiat?: FiatEnum;
   tipGoal?: TipGoal;
 }>();
 
 const { axios } = useApp();
 const { dayjs } = useDate();
+
+const { state: generalState } = useGeneralStore();
+const { xmrToFiat } = useXmrPrice();
+const { money } = useMoney();
 
 const modalRef = ref(false);
 
@@ -50,6 +56,14 @@ onBeforeUnmount(() => {
   stopTipsInterval();
   clearInterval(nowInterval.value);
 });
+
+const getComputedPrice = (xmr?: number) => {
+  if (!xmr) return 0;
+  const fiat = xmrToFiat(xmr, props.fiat);
+  return generalState.tipDisplayValue === TipDisplayMode.XMR
+    ? `${xmr} XMR`
+    : money(fiat.toFixed(2), props.fiat);
+};
 
 const percentage = computed(() => {
   const amount = Number(props.tipGoal?.amount) ?? 0;
@@ -103,7 +117,9 @@ const isCompleted = computed(() => {
             @click="modalRef = true"
           />
         </div>
-        <span class="whitespace-nowrap">{{ tipGoal?.amount }} XMR</span>
+        <span class="whitespace-nowrap">{{
+          getComputedPrice(Number(tipGoal?.amount))
+        }}</span>
       </div>
       <div
         :class="[
@@ -116,7 +132,7 @@ const isCompleted = computed(() => {
           :style="`width: ${Math.min(percentage, 100)}%`"
         ></div>
         <div class="text-xs relative z-40">
-          {{ data?.tipsAmount }} XMR ({{ percentage }}%)
+          {{ getComputedPrice(data?.tipsAmount) }} ({{ percentage }}%)
         </div>
       </div>
       <div class="flex justify-between">
