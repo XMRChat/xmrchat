@@ -58,6 +58,7 @@ onBeforeUnmount(() => {
 });
 
 const getComputedPrice = (xmr?: number) => {
+  if (!xmr) return 0;
   const fiat = xmrToFiat(xmr, props.fiat);
   return generalState.tipDisplayValue === TipDisplayMode.XMR
     ? `${xmr} XMR`
