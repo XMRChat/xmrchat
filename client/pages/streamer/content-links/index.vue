@@ -18,7 +18,8 @@ interface State {
 }
 
 const { getMyLinks: getMyLinksReq, updateLinks } = useServices();
-const { url, notUrl, rumbleApiUrl, notStartingWithAt } = useValidations();
+const { url, notUrl, rumbleApiUrl, notStartingWithAt, matrixId } =
+  useValidations();
 const toast = useToast();
 const { getContentLink } = useConstants();
 const { t } = useI18n();
@@ -67,6 +68,8 @@ const state = reactive<State>({
       patreon: {},
       subscribestar: {},
       github: {},
+      gitlab: {},
+      matrix: {},
       "monero-jobs": {},
       facebook: {},
     },
@@ -115,6 +118,8 @@ const rules = computed(() => {
     PATREON,
     SUBSCRIBESTAR,
     GITHUB,
+    GITLAB,
+    MATRIX,
     MONERO_JOBS,
     ...rest
   } = ContentLinkPlatformEnum;
@@ -143,6 +148,8 @@ const rules = computed(() => {
       [PATREON]: { value: { url } },
       [SUBSCRIBESTAR]: { value: { url } },
       [GITHUB]: { value: { url } },
+      [GITLAB]: { value: { url } },
+      [MATRIX]: { value: { matrixId } },
       [MONERO_JOBS]: { value: { url } },
       ...notUrls,
     },

@@ -48,12 +48,13 @@ export class LiveStreamsService implements OnModuleInit {
   }
 
   async findAll() {
-    return this.repo
+    const streams = await this.repo
       .createQueryBuilder('liveStream')
       .leftJoinAndSelect('liveStream.page', 'page')
       .leftJoinAndSelect('page.logo', 'logo')
       .distinctOn(['page.id'])
       .orderBy('page.id', 'ASC')
+      .addOrderBy('liveStream.startedAt', 'DESC', 'NULLS LAST')
       .addOrderBy(
         `CASE 
           WHEN liveStream.platform = '${LiveStreamPlatformEnum.TWITCH}' THEN 1
@@ -66,6 +67,10 @@ export class LiveStreamsService implements OnModuleInit {
         'ASC',
       )
       .getMany();
+
+    return streams.sort((a, b) => {
+      return (b.startedAt?.getTime() || 0) - (a.startedAt?.getTime() || 0);
+    });
   }
 
   async updateLiveStreams(dto: CreateLiveStreamDto[]) {
