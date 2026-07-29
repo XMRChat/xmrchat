@@ -119,16 +119,16 @@ watch(
   <UModal v-model="model" :ui="{ container: 'items-center' }">
     <UCard>
       <template #header>
-        <h2 class="text-lg font-medium">Reply</h2>
+        <h2 class="text-lg font-medium">{{ $t("reply") }}</h2>
       </template>
 
       <div class="text-sm">
-        <span class="text-pale">Reply to tip: </span>
+        <span class="text-pale">{{ $t("tipList.replyToTip") }}</span>
         <span>{{ tip?.name }}</span>
       </div>
 
       <div class="text-sm mt-2">
-        <span class="text-pale">Message: </span>
+        <span class="text-pale">{{ $t("tipList.message") }} </span>
         <span>{{ tip?.message }}</span>
       </div>
 
@@ -156,7 +156,7 @@ watch(
               :loading="state.loadingDelete"
               @click="handleDeleteClick"
             >
-              Delete
+              {{ $t("delete") }}
             </UButton>
           </div>
           <div class="flex gap-2">

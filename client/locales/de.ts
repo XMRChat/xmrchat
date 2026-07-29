@@ -467,4 +467,20 @@ export default {
   editTier: "Stufe bearbeiten",
   editTierDetails: "Stufendetails bearbeiten",
   manageYourTipTiers: "Verwalte deine Tipp-Stufen",
+
+  // TIP LIST
+  tipList: {
+    reply: "Antwort:",
+    replyToTip: "Auf Trinkgeld antworten:",
+    private: "Privat:",
+    obs: "OBS:",
+    message: "Nachricht:",
+  },
+  reply: "Antworten",
+  replyColors: "Antwortfarben",
+  backgroundColor: "Hintergrundfarbe",
+  textColor: "Textfarbe",
+  repliedMessagePreview: "Vorschau der beantworteten Nachricht",
+  action: "Aktion",
+  premium: "Premium",
 };

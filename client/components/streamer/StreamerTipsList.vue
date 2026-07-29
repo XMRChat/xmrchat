@@ -157,7 +157,7 @@ const columns = computed(() => {
     // },
     {
       key: "action",
-      label: "Action",
+      label: t("action"),
     },
   ];
 
@@ -398,7 +398,7 @@ const handleDelete = async (tipReply: TipReply) => {
         <div class="flex">
           <div class="grid gap-2 grid-cols-[auto_1fr] items-center">
             <div>
-              <span> OBS: </span>
+              <span>{{ $t("tipList.obs") }}</span>
             </div>
             <div class="flex">
               <UButton
@@ -420,11 +420,11 @@ const handleDelete = async (tipReply: TipReply) => {
 
             <template v-if="showReply">
               <div class="flex">
-                <span> Reply: </span>
+                <span> {{ $t("tipList.reply") }} </span>
               </div>
               <div class="flex items-center gap-1">
                 <UButton variant="ghost" @click="handleReplyClick(row)">
-                  {{ row.tipReplies?.[0] ? "Edit" : "Reply" }}
+                  {{ row.tipReplies?.[0] ? $t("edit") : $t("reply") }}
                 </UButton>
                 <!-- <UButton
                   v-if="row.tipReplies?.[0]"
@@ -437,7 +437,7 @@ const handleDelete = async (tipReply: TipReply) => {
               </div>
             </template>
 
-            <span> Private: </span>
+            <span> {{ $t("tipList.private") }} </span>
             <div class="py-1.5 px-2.5">
               <UCheckbox
                 :disabled="getPrivateDisabled(row.private)"

@@ -447,4 +447,20 @@ export default {
   editTier: "تعديل المستوى",
   editTierDetails: "تعديل تفاصيل المستوى",
   manageYourTipTiers: "إدارة مستويات الإكرامية الخاصة بك",
+
+  // TIP LIST
+  tipList: {
+    reply: "الرد:",
+    replyToTip: "الرد على الإكرامية:",
+    private: "خاص:",
+    obs: "OBS:",
+    message: "الرسالة:",
+  },
+  reply: "رد",
+  replyColors: "ألوان الرد",
+  backgroundColor: "لون الخلفية",
+  textColor: "لون النص",
+  repliedMessagePreview: "معاينة الرسالة المُرد عليها",
+  action: "إجراء",
+  premium: "بريميوم",
 };

@@ -162,7 +162,7 @@ const items = computed(() => {
 
         <VerifiedBadge :links="page?.links" />
       </div>
-      <UBadge v-if="authStore.isPremium">Premium</UBadge>
+      <UBadge v-if="authStore.isPremium">{{ $t("premium") }}</UBadge>
       <span class="text-pale text-sm">{{ state.user?.email }}</span>
     </div>
     <div class="flex flex-col gap-1 mt-6 px-4 pb-4 overflow-y-auto">
