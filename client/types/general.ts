@@ -293,6 +293,7 @@ export interface LiveStream {
   platform?: LiveStreamPlatformEnum;
   page?: StreamerPage;
   videoId?: string;
+  embedUrl?: string;
 }
 
 export interface CohostInvitation {

@@ -29,7 +29,7 @@ const { t } = useI18n();
 
 <style scoped lang="scss">
 .home-hero {
-  @apply flex flex-row items-center mt-8;
+  @apply flex flex-row items-center mt-4 md:mt-8;
 
   .image-side {
     @apply flex-1 flex py-3 p-10;
