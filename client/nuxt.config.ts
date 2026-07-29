@@ -101,7 +101,7 @@ export default defineNuxtConfig({
   },
 
   dayjs: {
-    plugins: ["localizedFormat"],
+    plugins: ["localizedFormat", "minMax"],
     locales: ["en", "fr", "es", "de", "ru", "fi", "ko", "ar"],
   },
 

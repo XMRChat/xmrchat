@@ -85,6 +85,7 @@ useStreamerIdSeoMeta(computed(() => data.value?.page));
           :superDmActive="data.superDmState.active"
           :streamerId="streamerId"
           :bio="data.page.bio"
+          :tipGoal="data.page.tipGoal"
         />
         <TipContent
           ref="contentRef"

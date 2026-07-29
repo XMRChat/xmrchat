@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ContentLink, LiveStream } from "~/types";
+import type { ContentLink, LiveStream, TipGoal } from "~/types";
 
 const props = withDefaults(
   defineProps<{
@@ -12,6 +12,7 @@ const props = withDefaults(
     streamerId?: string;
     superDmActive?: boolean;
     bio?: string;
+    tipGoal?: TipGoal;
   }>(),
   {
     showTitle: true,
@@ -25,6 +26,7 @@ const { liveStream, livePlatforms } = useLiveStreamPlayer(
 
 const showLogo = computed(() => !liveStream.value);
 const verified = computed(() => props.links?.some((l) => l.verification));
+const tipGoalActive = computed(() => props.tipGoal?.isActive);
 </script>
 
 <template>
@@ -33,7 +35,7 @@ const verified = computed(() => props.links?.some((l) => l.verification));
     <div v-else class="banner-container">
       <GeneralImage variant="banner" :url="bannerUrl" class="banner" />
     </div>
-    <div class="options gap-4">
+    <div :class="['options gap-4', { 'flex-col md:flex-row': tipGoalActive }]">
       <div class="logo-and-name">
         <div class="flex flex-col items-center ms-4">
           <GeneralImage
@@ -62,7 +64,7 @@ const verified = computed(() => props.links?.some((l) => l.verification));
           <div class="flex items-center gap-1">
             <span class="text-lg lg:text-2xl font-bold">{{ name }}</span>
             <VerifiedBadge :links="links" />
-            <div v-if="bio" class="md:hidden">
+            <div v-if="bio" :class="[{ 'md:hidden': !tipGoalActive }]">
               <StreamerBio :bio="bio" />
             </div>
           </div>
@@ -74,7 +76,11 @@ const verified = computed(() => props.links?.some((l) => l.verification));
           />
         </div>
       </div>
-      <div v-if="bio" class="bio hidden md:block">
+
+      <div v-if="tipGoalActive" class="tip-goal w-full md:max-w-[380px]">
+        <TipGoal :path="streamerId" :tipGoal="tipGoal" class="w-full" />
+      </div>
+      <div v-else-if="bio" class="bio hidden md:block">
         <p class="text-pale text-sm max-w-[400px]">
           {{ bio }}
         </p>
