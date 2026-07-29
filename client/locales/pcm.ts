@@ -451,4 +451,20 @@ export default {
   editTier: "Edit level",
   editTierDetails: "Edit level details",
   manageYourTipTiers: "Manage your tip levels",
+
+  // TIP LIST
+  tipList: {
+    reply: "Reply:",
+    replyToTip: "Reply to tip:",
+    private: "Private:",
+    obs: "OBS:",
+    message: "Message:",
+  },
+  reply: "Reply",
+  replyColors: "Reply colors",
+  backgroundColor: "Background color",
+  textColor: "Text color",
+  repliedMessagePreview: "Replied message preview",
+  action: "Action",
+  premium: "Premium",
 };

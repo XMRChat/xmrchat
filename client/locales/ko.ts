@@ -449,4 +449,20 @@ export default {
   editTier: "티어 수정",
   editTierDetails: "티어 상세 수정",
   manageYourTipTiers: "팁 등급을 관리하세요",
+
+  // TIP LIST
+  tipList: {
+    reply: "답글:",
+    replyToTip: "후원에 답글 달기:",
+    private: "비공개:",
+    obs: "OBS:",
+    message: "메시지:",
+  },
+  reply: "답글",
+  replyColors: "답글 색상",
+  backgroundColor: "배경색",
+  textColor: "텍스트 색상",
+  repliedMessagePreview: "답글 미리보기",
+  action: "작업",
+  premium: "프리미엄",
 };

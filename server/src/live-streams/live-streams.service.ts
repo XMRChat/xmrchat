@@ -18,6 +18,8 @@ import { Page } from 'src/pages/page.entity';
 import { RumbleProvider } from './providers/rumble.provider';
 import { Link } from 'src/links/link.entity';
 import { Tip } from 'src/tips/tip.entity';
+import { PeertubeProvider } from './providers/peertube.provider';
+import { KickProvider } from './providers/kick.provider';
 
 @Injectable()
 export class LiveStreamsService implements OnModuleInit {
@@ -27,7 +29,9 @@ export class LiveStreamsService implements OnModuleInit {
     private linksService: LinksService,
     private youtubeProvider: YoutubeProvider,
     private twitchProvider: TwitchProvider,
+    private kickProvider: KickProvider,
     private rumbleProvider: RumbleProvider,
+    private peertubeProvider: PeertubeProvider,
     private config: ConfigService,
     @InjectRepository(LiveStream) private repo: Repository<LiveStream>,
     @InjectRepository(Page) private pagesRepo: Repository<Page>,
@@ -53,9 +57,11 @@ export class LiveStreamsService implements OnModuleInit {
       .addOrderBy(
         `CASE 
           WHEN liveStream.platform = '${LiveStreamPlatformEnum.TWITCH}' THEN 1
-          WHEN liveStream.platform = '${LiveStreamPlatformEnum.YOUTUBE}' THEN 2
-          WHEN liveStream.platform = '${LiveStreamPlatformEnum.RUMBLE}' THEN 3
-          ELSE 4
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.KICK}' THEN 2
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.PEERTUBE}' THEN 3
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.YOUTUBE}' THEN 4
+          WHEN liveStream.platform = '${LiveStreamPlatformEnum.RUMBLE}' THEN 5
+          ELSE 6
         END`,
         'ASC',
       )
@@ -91,9 +97,17 @@ export class LiveStreamsService implements OnModuleInit {
   async getAndUpdateLiveStreams() {
     const youtube = await this.getYoutubeLiveStreams();
     const twitch = await this.getTwitchLiveStreams();
+    const kick = await this.getKickLiveStreams();
     const rumble = await this.getRumbleLiveStreams();
+    const peertube = await this.getPeertubeLiveStreams();
 
-    await this.updateLiveStreams([...youtube, ...twitch, ...rumble]);
+    await this.updateLiveStreams([
+      ...youtube,
+      ...twitch,
+      ...kick,
+      ...rumble,
+      ...peertube,
+    ]);
     const result = await this.findAll();
     return result;
   }
@@ -133,6 +147,19 @@ export class LiveStreamsService implements OnModuleInit {
   async getTwitchLiveStreams() {
     const params = await this.getTwitchProviderParams();
     return this.twitchProvider.getLiveStreams(params);
+  }
+
+  async getKickLiveStreams() {
+    const links = await this.linksService.findByPlatform(LinkPlatformEnum.KICK);
+
+    const params = links.map((link) => ({
+      username: link.value,
+      pageId: link.page.id,
+    }));
+
+    const streams = await this.kickProvider.getLiveStreams(params);
+
+    return streams;
   }
 
   async getYoutubeLiveStreams() {
@@ -197,5 +224,9 @@ export class LiveStreamsService implements OnModuleInit {
     }));
 
     return this.rumbleProvider.getLiveStreams(params);
+  }
+
+  async getPeertubeLiveStreams() {
+    return this.peertubeProvider.getLiveStreams();
   }
 }

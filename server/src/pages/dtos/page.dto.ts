@@ -5,6 +5,7 @@ import { MoneroUtils } from 'monero-ts';
 import { LinkDto } from 'src/links/dto/link.dto';
 import { LiveStreamDto } from 'src/live-streams/dtos/live-stream.dto';
 import { PageTipTierDto } from 'src/page-tip-tiers/dtos/page-tip-tier.dto';
+import { TipGoalDto } from 'src/tip-goals/dtos/tip-goal.dto';
 
 export class PageDto {
   @Expose()
@@ -66,6 +67,10 @@ export class PageDto {
 
   @Expose()
   bio: string;
+
+  @Expose()
+  @Type(() => TipGoalDto)
+  tipGoal: TipGoalDto;
 
   @Expose()
   ability?: any;

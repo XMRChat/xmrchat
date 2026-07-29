@@ -22,6 +22,7 @@ import { PageStatusEnum } from '../shared/constants';
 import { PageRecipient } from 'src/page-recipients/page-recipient.entity';
 import { LiveStream } from '../live-streams/live-stream.entity';
 import { PageTipTier } from 'src/page-tip-tiers/page-tip-tier.entity';
+import { TipGoal } from 'src/tip-goals/tip-goal.entity';
 
 @Entity({ name: 'pages' })
 @Unique(['path'])
@@ -133,6 +134,9 @@ export class Page {
 
   @OneToMany(() => User, (u: User) => u.cohostPage)
   cohosts: User[];
+
+  @OneToOne(() => TipGoal, (t: TipGoal) => t.page)
+  tipGoal: TipGoal;
 
   totalTips: number | null;
   tipsCount: number | null;

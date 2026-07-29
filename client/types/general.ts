@@ -115,6 +115,7 @@ export interface StreamerPage {
   ability?: any;
   bio?: string;
   searchTerms?: string;
+  tipGoal?: TipGoal;
 }
 
 interface TipPayment {
@@ -293,6 +294,7 @@ export interface LiveStream {
   platform?: LiveStreamPlatformEnum;
   page?: StreamerPage;
   videoId?: string;
+  embedUrl?: string;
 }
 
 export interface CohostInvitation {
@@ -375,4 +377,14 @@ export interface SavedViewerSuperDmKeys extends GeneratedKeys {
 export interface TipReplySettings {
   backgroundColor?: string;
   textColor?: string;
+}
+
+export interface TipGoal {
+  id: number;
+  name: string;
+  amount: string;
+  startTime: string;
+  endTime?: string;
+  description?: string;
+  isActive: boolean;
 }
