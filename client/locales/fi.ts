@@ -455,4 +455,20 @@ export default {
   editTier: "Muokkaa tasoa",
   editTierDetails: "Muokkaa tason tietoja",
   manageYourTipTiers: "Hallitse tippitasojasi",
+
+  // TIP LIST
+  tipList: {
+    reply: "Vastaus:",
+    replyToTip: "Vastaa tippiin:",
+    private: "Yksityinen:",
+    obs: "OBS:",
+    message: "Viesti:",
+  },
+  reply: "Vastaa",
+  replyColors: "Vastauksen värit",
+  backgroundColor: "Taustaväri",
+  textColor: "Tekstin väri",
+  repliedMessagePreview: "Vastatun viestin esikatselu",
+  action: "Toiminto",
+  premium: "Premium",
 };

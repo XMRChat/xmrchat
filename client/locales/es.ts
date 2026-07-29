@@ -464,4 +464,20 @@ export default {
   editTier: "Editar nivel",
   editTierDetails: "Editar detalles del nivel",
   manageYourTipTiers: "Gestiona tus niveles de propinas",
+
+  // TIP LIST
+  tipList: {
+    reply: "Respuesta:",
+    replyToTip: "Responder a la propina:",
+    private: "Privado:",
+    obs: "OBS:",
+    message: "Mensaje:",
+  },
+  reply: "Responder",
+  replyColors: "Colores de la respuesta",
+  backgroundColor: "Color de fondo",
+  textColor: "Color del texto",
+  repliedMessagePreview: "Vista previa del mensaje respondido",
+  action: "Acción",
+  premium: "Premium",
 };

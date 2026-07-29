@@ -16,7 +16,7 @@ const { state: generalState } = useGeneralStore();
 const { money } = useMoney();
 
 const isXmrDisplay = computed(
-  () => generalState.tipDisplayValue === TipDisplayMode.XMR
+  () => generalState.tipDisplayValue === TipDisplayMode.XMR,
 );
 
 const getFiatAmount = (amount?: number) => {
@@ -86,8 +86,10 @@ const handleItemClick = (item: PageTipTier) => {
               <span>( {{ getFiatAmount(item.minAmount) }} )</span>
             </div>
             <div>
-              <span class="text-pale text-sm">Message length: </span>
-              <span>{{ item.messageLength ? `${item.messageLength} characters` : '-' }}</span>
+              <span class="text-pale text-sm">{{ $t("messageLength") }} </span>
+              <span>{{
+                item.messageLength ? `${item.messageLength} characters` : "-"
+              }}</span>
             </div>
             <div v-if="item.description">{{ item.description }}</div>
           </div>
