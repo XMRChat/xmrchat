@@ -69,7 +69,7 @@ const percentage = computed(() => {
   const amount = Number(props.tipGoal?.amount) ?? 0;
   const tipsAmount = Number(data.value?.tipsAmount) ?? 0;
   if (!amount || !tipsAmount) return 0;
-  return (tipsAmount / amount) * 100;
+  return Math.round((tipsAmount / amount) * 100);
 });
 
 const startLeft = computed(() => {
