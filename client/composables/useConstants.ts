@@ -199,9 +199,9 @@ export const useConstants = () => {
     },
     [ContentLinkPlatformEnum.MATRIX]: {
       name: "Matrix",
-      colorClassName: "",
+      colorClassName: "text-[#0DBD8B]",
       iconClassName: "",
-      icon: "i-simple-icons-matrix",
+      icon: "i-simple-icons-element",
       inputLabel: "Matrix ID (for example @user:matrix.org)",
       linkCreator: (v?: string) => `https://matrix.to/#/${v}`,
     },
