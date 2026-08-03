@@ -20,4 +20,11 @@ export class NotificationTestsService {
       message: 'Test message for signal',
     });
   }
+
+  async testSimplex() {
+    await this.simplexQueue.add('send-message', {
+      contactId: 1,
+      message: 'Test message for simplex',
+    });
+  }
 }

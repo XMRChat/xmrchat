@@ -322,7 +322,7 @@ export default {
   kunoFundraiser: "Kuno fundraiser",
   rumbleLiveStreamApi: "Rumble live stream API",
   rumbleLiveStreamApiHelp:
-    "Rumble live stream API from {guide}. XMRChat uses this URL for getting current live streams of your channel.",
+    "Rumble live stream API from {guide}. XMRChat uses this URL to feature your livestream on our homepage.",
   thisGuide: "this guide",
 
   // OBS
