@@ -2,6 +2,7 @@ import { Expose, Type } from 'class-transformer';
 import { SwapDto } from 'src/swaps/dtos/swap.dto';
 import { BaseTipDto } from './base-tip.dto';
 import { PageRecipientShareDto } from 'src/page-recipients/dtos/recipient.dto';
+import { TipSourceEnum } from 'src/shared/constants';
 
 export class TipDto extends BaseTipDto {}
 
@@ -26,6 +27,9 @@ export class TipDtoRO {
   @Expose()
   @Type(() => PageRecipientShareDto)
   recipients: PageRecipientShareDto[];
+
+  @Expose()
+  source?: TipSourceEnum;
 
   @Expose()
   url?: string;
