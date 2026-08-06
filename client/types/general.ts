@@ -13,6 +13,7 @@ import type {
   LiveStreamPlatformEnum,
   CohostInvitationStatusEnum,
   SuperDmMessageSenderTypeEnum,
+  TipSourceEnum,
 } from "./enums";
 
 export type Numberic = string | number;
@@ -139,6 +140,7 @@ export interface Tip {
   createdAt?: string;
   pageTipTier?: PageTipTier;
   tipReplies?: TipReply[];
+  source?: TipSourceEnum;
 }
 
 export interface TipTier {

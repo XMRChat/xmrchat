@@ -9,7 +9,12 @@ import type {
   TipReply,
   TipReplySettings,
 } from "~/types";
-import { FiatEnum, PageSettingKey, TipDisplayMode } from "~/types/enums";
+import {
+  FiatEnum,
+  PageSettingKey,
+  TipDisplayMode,
+  TipSourceEnum,
+} from "~/types/enums";
 
 const props = withDefaults(
   defineProps<{
@@ -352,11 +357,14 @@ const handleDelete = async (tipReply: TipReply) => {
       </template>
 
       <template #name-data="{ row }">
-        <div v-if="row.private && !showPrivateNameAndMessage">
-          <p class="text-pale">{{ t("private.title") }}</p>
-        </div>
-        <div v-else class="break-words max-w-[8rem]">
-          {{ row.name }}
+        <div class="flex items-center gap-1">
+          <TipSourceIcon v-if="row.source" :source="row.source" />
+          <div v-if="row.private && !showPrivateNameAndMessage">
+            <p class="text-pale">{{ t("private.title") }}</p>
+          </div>
+          <div v-else class="break-words max-w-[8rem]">
+            {{ row.name }}
+          </div>
         </div>
       </template>
       <template #message-data="{ row }">
