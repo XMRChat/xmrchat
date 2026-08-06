@@ -83,7 +83,6 @@ watch(
     >
       <div :style="headingStyle">
         <div class="flex justify-between items-center">
-          <!-- <div v-if="item.source"> -->
           <div class="flex items-center gap-1 pb-1">
             <img
               v-if="item.source"
