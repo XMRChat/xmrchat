@@ -358,7 +358,7 @@ const handleDelete = async (tipReply: TipReply) => {
 
       <template #name-data="{ row }">
         <div class="flex items-center gap-1">
-          <TipSourceIcon :source="TipSourceEnum.XMRPOD" />
+          <TipSourceIcon v-if="row.source" :source="row.source" />
           <div v-if="row.private && !showPrivateNameAndMessage">
             <p class="text-pale">{{ t("private.title") }}</p>
           </div>
