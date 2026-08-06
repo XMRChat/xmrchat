@@ -7,17 +7,17 @@ const props = defineProps<{
 
 const { getTipSource } = useConstants();
 
-const info = computed(() =>
+const item = computed(() =>
   props.source ? getTipSource(props.source) : undefined,
 );
 const text = computed(() =>
-  info ? `Tip from ${info.value?.name}` : undefined,
+  item.value ? `Tip from ${item.value.name}` : undefined,
 );
 </script>
 
 <template>
   <UTooltip :text="text" :popper="{ placement: 'top' }">
-    <img v-if="info?.icon" :src="info.icon" class="w-4 h-4" />
+    <img v-if="item?.icon" :src="item.icon" class="w-4 h-4" />
   </UTooltip>
 </template>
 
