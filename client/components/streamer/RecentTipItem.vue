@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Tip, TipReplySettings } from "~/types";
+import { TipSourceEnum } from "~/types/enums";
 
 const props = defineProps<{
   item: Tip;
@@ -10,7 +11,7 @@ const props = defineProps<{
   name?: string;
 }>();
 
-const { getPageTierColor } = useConstants();
+const { getPageTierColor, getTipSource } = useConstants();
 
 const tier = computed(() => props.item.pageTipTier);
 const tierColor = computed(() => tier.value?.color);
@@ -82,12 +83,20 @@ watch(
     >
       <div :style="headingStyle">
         <div class="flex justify-between items-center">
-          <p
-            class="pb-1 text-base font-medium"
-            :class="{ 'opacity-80': item.private }"
-          >
-            {{ item.private ? $t("private.title") : item.name }}
-          </p>
+          <!-- <div v-if="item.source"> -->
+          <div class="flex items-center gap-1 pb-1">
+            <img
+              v-if="item.source"
+              :src="getTipSource(item.source as TipSourceEnum)?.icon"
+              class="w-4 h-4"
+            />
+            <p
+              class="text-base font-medium"
+              :class="{ 'opacity-80': item.private }"
+            >
+              {{ item.private ? $t("private.title") : item.name }}
+            </p>
+          </div>
           <UTooltip
             v-if="disappearText"
             :popper="{ placement: 'top' }"

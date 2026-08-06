@@ -139,6 +139,7 @@ export interface Tip {
   createdAt?: string;
   pageTipTier?: PageTipTier;
   tipReplies?: TipReply[];
+  source?: string;
 }
 
 export interface TipTier {

@@ -134,3 +134,8 @@ export enum MoneroNetworkTypeEnum {
   STAGENET = "stagenet",
   STRESSNET = "stressnet",
 }
+
+export enum TipSourceEnum {
+  XMRCHAT = "xmrchat",
+  XMRPOD = "xmrpod",
+}

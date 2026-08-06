@@ -7,6 +7,7 @@ import {
   MoneroNetworkTypeEnum,
   NotificationChannelEnum,
   NotificationPreferenceType,
+  TipSourceEnum,
 } from "~/types/enums";
 
 export const useConstants = () => {
@@ -405,6 +406,22 @@ export const useConstants = () => {
     return NETWORK_CONFIGS[v];
   };
 
+  const TIP_SOURCES = {
+    [TipSourceEnum.XMRCHAT]: {
+      name: "XMRChat",
+      icon: "",
+    },
+    [TipSourceEnum.XMRPOD]: {
+      name: "XMRPod",
+      icon: "/images/xmrpod.png",
+    },
+  };
+
+  const getTipSource = (v?: TipSourceEnum) => {
+    if (!v) return undefined;
+    return TIP_SOURCES[v];
+  };
+
   return {
     getContentLink,
     CONTENT_LINKS,
@@ -422,5 +439,7 @@ export const useConstants = () => {
     getPageTierColor,
     NETWORK_CONFIGS,
     getNetworkConfig,
+    TIP_SOURCES,
+    getTipSource,
   };
 };
