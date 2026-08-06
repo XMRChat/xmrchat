@@ -84,11 +84,7 @@ watch(
       <div :style="headingStyle">
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-1 pb-1">
-            <img
-              v-if="item.source"
-              :src="getTipSource(item.source as TipSourceEnum)?.icon"
-              class="w-4 h-4"
-            />
+            <TipSourceIcon v-if="item.source" :source="item.source" />
             <p
               class="text-base font-medium"
               :class="{ 'opacity-80': item.private }"
