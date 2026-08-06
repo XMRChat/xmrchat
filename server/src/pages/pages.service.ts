@@ -48,7 +48,12 @@ export class PagesService {
     private auditsService: AuditsService,
   ) {}
 
-  async searchPages(slug: string = '', offset: number = 0, limit: number = 8) {
+  async searchPages(
+    slug: string = '',
+    offset: number = 0,
+    limit: number = 8,
+    hasLinks?: string[],
+  ) {
     const tipsSubQuery = (qb: SelectQueryBuilder<any>) =>
       qb
         .select('tip.page_id', 'page_id')
@@ -117,6 +122,20 @@ export class PagesService {
           name: `%${slug.toLowerCase()}%`,
           searchTerms: `%${slug.toLowerCase()}%`,
         },
+      );
+    }
+
+    if (hasLinks?.length) {
+      idsQuery = idsQuery.innerJoin(
+        (qb) =>
+          qb
+            .select('link.page_id', 'page_id')
+            .from('links', 'link')
+            .where('link.platform IN (:...hasLinks)', { hasLinks })
+            .andWhere("link.value IS NOT NULL AND TRIM(link.value) != ''")
+            .distinctOn(['link.page_id']),
+        'has_link',
+        'has_link.page_id = page.id',
       );
     }
 

@@ -48,8 +48,11 @@ export class PagesController {
     const slug = query.search;
     const offset = query.offset;
     const limit = query.limit;
+    const hasLinks = query.hasLinks
+      ? [].concat(query.hasLinks).filter(Boolean)
+      : undefined;
 
-    return this.pagesService.searchPages(slug, offset, limit);
+    return this.pagesService.searchPages(slug, offset, limit, hasLinks);
   }
 
   @Get('/sitemap')
