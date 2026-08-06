@@ -227,6 +227,7 @@ export class TipsService {
       expiresAt:
         baseSwap?.details?.expiresAt || new Date(Date.now() + 60 * 60 * 1000),
       page: { id: page.id },
+      source: payload.source,
     });
 
     const tip = await this.repo.save(createdTip);

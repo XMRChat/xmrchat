@@ -99,7 +99,7 @@ export class CaslAbilityFactory {
 
     // TIPS ACTIONS
     can(Action.MakeTipPrivate, Page, { userId: user.id });
-    can(Action.MakeTipPublic, Page, { userId: user.id });
+    // can(Action.MakeTipPublic, Page, { userId: user.id });
     // Only make private if cohost
     can(Action.MakeTipPrivate, Page, { id: user.cohostPageId });
 

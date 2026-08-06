@@ -1,11 +1,13 @@
 import {
   IsBoolean,
+  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { TipSourceEnum } from 'src/shared/constants';
 
 export class CreateTipDto {
   @IsString()
@@ -30,4 +32,8 @@ export class CreateTipDto {
   @IsOptional()
   @IsNumber()
   coinId?: number;
+
+  @IsOptional()
+  @IsEnum(TipSourceEnum)
+  source?: TipSourceEnum;
 }

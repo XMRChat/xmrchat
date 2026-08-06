@@ -14,6 +14,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { TipReply } from 'src/tip-replies/tip-reply.entity';
+import { TipSourceEnum } from 'src/shared/constants';
 
 @Entity({ name: 'tips' })
 export class Tip {
@@ -40,6 +41,9 @@ export class Tip {
 
   @Column({ type: 'boolean', default: false })
   webhookDeleted: boolean;
+
+  @Column({ nullable: true })
+  source?: TipSourceEnum;
 
   @ManyToOne(() => Page, { onDelete: 'CASCADE' })
   @JoinColumn({ foreignKeyConstraintName: 'tips_page_id_fkey' })

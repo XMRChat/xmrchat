@@ -192,3 +192,8 @@ export enum SuperDmMessageSenderType {
 export enum PageVerificationTypeEnum {
   X = 'x',
 }
+
+export enum TipSourceEnum {
+  XMRCHAT = 'xmrchat',
+  XMRPOD = 'xmrpod',
+}
