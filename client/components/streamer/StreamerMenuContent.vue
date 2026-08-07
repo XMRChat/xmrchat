@@ -99,39 +99,44 @@ const items = computed(() => {
 
     const showPremiumPages =
       config.public.showPremiumPages && authStore.isPremiumOrAdmin;
+    const locked = !showPremiumPages;
 
-    if (showPremiumPages) {
-      res.push(
-        ...[
-          {
-            label: "Tip Tiers",
-            icon: "i-heroicons-numbered-list-20-solid",
-            to: toStreamerPageTiers(),
-            locked: true,
-          },
-          {
-            label: "SuperDMs",
-            icon: "i-heroicons-chat-bubble-left-right",
-            to: toStreamerSuperDms(),
-          },
-          {
-            label: "Tip Goal",
-            icon: "i-tabler-progress",
-            to: toStreamerTipGoal(),
-          },
-          {
-            label: "Notifications",
-            icon: "i-heroicons-bell",
-            to: toStreamerNotificationPreferences(),
-          },
-          {
-            label: "Integrations",
-            icon: "i-tabler-plug",
-            to: toStreamerIntegrations(),
-          },
-        ],
-      );
-    }
+    // if (showPremiumPages) {
+    res.push(
+      ...[
+        {
+          label: "Tip Tiers",
+          icon: "i-heroicons-numbered-list-20-solid",
+          to: toStreamerPageTiers(),
+          locked,
+        },
+        {
+          label: "SuperDMs",
+          icon: "i-heroicons-chat-bubble-left-right",
+          to: toStreamerSuperDms(),
+          locked,
+        },
+        {
+          label: "Tip Goal",
+          icon: "i-tabler-progress",
+          to: toStreamerTipGoal(),
+          locked,
+        },
+        {
+          label: "Notifications",
+          icon: "i-heroicons-bell",
+          to: toStreamerNotificationPreferences(),
+          locked,
+        },
+        {
+          label: "Integrations",
+          icon: "i-tabler-plug",
+          to: toStreamerIntegrations(),
+          locked,
+        },
+      ],
+    );
+    // }
 
     res.push(
       ...[
@@ -184,7 +189,10 @@ const items = computed(() => {
             'flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-primary transition-all',
             { 'opacity-50': item.disabled },
           ]"
-          activeClass="bg-primary !text-white "
+          :activeClass="`bg-primary !text-white`"
+          :style="
+            item.locked ? `--color-primary-DEFAULT: var(--color-gray-200)` : ``
+          "
           :disabled="item.disabled"
         >
           <UIcon v-if="item.icon" :name="item.icon" class="w-5 h-5" />
@@ -194,7 +202,7 @@ const items = computed(() => {
           <UIcon
             v-if="item.locked"
             name="i-heroicons-lock-closed"
-            class="w-5 h-5 ms-auto"
+            class="ms-auto"
           />
         </ULink>
       </template>
