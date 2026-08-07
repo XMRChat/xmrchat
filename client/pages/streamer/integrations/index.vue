@@ -24,18 +24,16 @@ const {
 } = await useLazyAsyncData(
   async () => {
     const res = await axios.get<{ integrations: IntegrationConfig[] }>(
-      "/integrations"
+      "/integrations",
     );
     return res.data;
   },
-  { server: false }
+  { server: false },
 );
 
 const { simplex: simplexConfig, signal: signalConfig } = useIntegrations({
   integrations: computed(() => integrations.value?.integrations),
 });
-
-const isPremium = computed(() => authStore.isPremiumOrAdmin);
 </script>
 
 <template>
@@ -45,16 +43,16 @@ const isPremium = computed(() => authStore.isPremiumOrAdmin);
       :description="$t('integrationsDes')"
     />
 
-    <PremiumAlert v-if="!isPremium" class="mb-6" />
-
-    <ErrorView :error="error" v-if="error" />
-    <div
-      v-else
-      class="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-4"
-    >
-      <IntegrationSimplexItem :config="simplexConfig" @connect="refresh" />
-      <IntegrationSignalItem :config="signalConfig" @connect="refresh" />
-    </div>
+    <PremiumPageContainer>
+      <ErrorView :error="error" v-if="error" />
+      <div
+        v-else
+        class="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-4"
+      >
+        <IntegrationSimplexItem :config="simplexConfig" @connect="refresh" />
+        <IntegrationSignalItem :config="signalConfig" @connect="refresh" />
+      </div>
+    </PremiumPageContainer>
   </div>
 </template>
 

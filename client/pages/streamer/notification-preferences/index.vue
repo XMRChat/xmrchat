@@ -42,14 +42,17 @@ const state = reactive<State>({
 
 const getObjectPereferences = (
   channel: NotificationChannelEnum,
-  list: NotificationPreference[]
+  list: NotificationPreference[],
 ) => {
   return list
     .filter((p) => p.channel === channel)
-    .reduce((acc, curr) => {
-      acc[curr.type] = curr.enabled;
-      return acc;
-    }, {} as Form[NotificationChannelEnum]);
+    .reduce(
+      (acc, curr) => {
+        acc[curr.type] = curr.enabled;
+        return acc;
+      },
+      {} as Form[NotificationChannelEnum],
+    );
 };
 
 const convertUTCToLocal = (utcTime?: string): string => {
@@ -84,24 +87,24 @@ const { error, data: integrations } = await useLazyAsyncData(
 
     state.form.email = getObjectPereferences(
       NotificationChannelEnum.EMAIL,
-      data.preferences
+      data.preferences,
     );
 
     state.form.simplex = getObjectPereferences(
       NotificationChannelEnum.SIMPLEX,
-      data.preferences
+      data.preferences,
     );
 
     state.form.signal = getObjectPereferences(
       NotificationChannelEnum.SIGNAL,
-      data.preferences
+      data.preferences,
     );
 
     state.minNotificationThreshold = data.minNotificationThreshold;
     state.dailySummaryTime = convertUTCToLocal(data.dailySummaryTime);
     return integrationsData.integrations;
   },
-  { server: false }
+  { server: false },
 );
 
 const { simplex: simplexConfig, signal: signalConfig } = useIntegrations({
@@ -148,7 +151,7 @@ const v = useVuelidate<any>(
   {
     minNotificationThreshold: { numberic },
   },
-  state
+  state,
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -163,67 +166,67 @@ const isPremium = computed(() => authStore.isPremiumOrAdmin);
       :description="$t('manageYourNotifs')"
     />
 
-    <PremiumAlert v-if="!isPremium" class="mb-6" />
+    <PremiumPageContainer>
+      <ErrorView :error="error" v-if="error" />
 
-    <ErrorView :error="error" v-if="error" />
-
-    <GeneralForm @submit="handleSave" v-else>
-      <div class="grid mb-10 grid-cols-1 md:grid-cols-2 gap-4">
-        <UFormGroup
-          :label="$t('minNotifsThreshold')"
-          name="minNotificationThreshold"
-          :error="getValidationAttrs('minNotificationThreshold').error"
-          :help="$t('minNotifsThresholdHelp')"
-        >
-          <UInput
-            v-model="state.minNotificationThreshold"
-            @blur="getValidationAttrs('minNotificationThreshold').onBlur"
-            :style="{ paddingStart: '54px' }"
+      <GeneralForm @submit="handleSave" v-else>
+        <div class="grid mb-10 grid-cols-1 md:grid-cols-2 gap-4">
+          <UFormGroup
+            :label="$t('minNotifsThreshold')"
+            name="minNotificationThreshold"
+            :error="getValidationAttrs('minNotificationThreshold').error"
+            :help="$t('minNotifsThresholdHelp')"
           >
-            <template #leading>
-              <span
-                class="text-pale flex items-center text-center justify-center"
-              >
-                XMR
-              </span>
-            </template>
-          </UInput>
-        </UFormGroup>
+            <UInput
+              v-model="state.minNotificationThreshold"
+              @blur="getValidationAttrs('minNotificationThreshold').onBlur"
+              :style="{ paddingStart: '54px' }"
+            >
+              <template #leading>
+                <span
+                  class="text-pale flex items-center text-center justify-center"
+                >
+                  XMR
+                </span>
+              </template>
+            </UInput>
+          </UFormGroup>
 
-        <!-- <UFormGroup
+          <!-- <UFormGroup
           label="Daily Summary Time"
           name="dailySummaryTime"
           help="Time when daily summary notifications will be sent."
         >
           <TimeInput v-model="state.dailySummaryTime" />
         </UFormGroup> -->
-      </div>
-      <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
-        <NotificationPreferenceContainer
-          :channel="NotificationChannelEnum.EMAIL"
-          v-model="state.form.email"
-          v-model:dailySummaryTime="state.dailySummaryTime"
-          configVerified
-        >
-        </NotificationPreferenceContainer>
-        <NotificationPreferenceContainer
-          :channel="NotificationChannelEnum.SIMPLEX"
-          v-model="state.form.simplex"
-          :configVerified="simplexConfig?.verified"
-        ></NotificationPreferenceContainer>
-        <NotificationPreferenceContainer
-          :channel="NotificationChannelEnum.SIGNAL"
-          v-model="state.form.signal"
-          :configVerified="signalConfig?.verified"
-        >
-        </NotificationPreferenceContainer>
-      </div>
-      <div class="flex mt-4">
-        <UButton type="submit" color="primary" :loading="state.pending">
-          {{ $t("saveChanges") }}
-        </UButton>
-      </div>
-    </GeneralForm>
+        </div>
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
+          <NotificationPreferenceContainer
+            :channel="NotificationChannelEnum.EMAIL"
+            v-model="state.form.email"
+            v-model:dailySummaryTime="state.dailySummaryTime"
+            configVerified
+          >
+          </NotificationPreferenceContainer>
+          <NotificationPreferenceContainer
+            :channel="NotificationChannelEnum.SIMPLEX"
+            v-model="state.form.simplex"
+            :configVerified="simplexConfig?.verified"
+          ></NotificationPreferenceContainer>
+          <NotificationPreferenceContainer
+            :channel="NotificationChannelEnum.SIGNAL"
+            v-model="state.form.signal"
+            :configVerified="signalConfig?.verified"
+          >
+          </NotificationPreferenceContainer>
+        </div>
+        <div class="flex mt-4">
+          <UButton type="submit" color="primary" :loading="state.pending">
+            {{ $t("saveChanges") }}
+          </UButton>
+        </div>
+      </GeneralForm>
+    </PremiumPageContainer>
   </div>
 </template>
 
