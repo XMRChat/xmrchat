@@ -99,7 +99,7 @@ const items = computed(() => {
 
     const showPremiumPages =
       config.public.showPremiumPages && authStore.isPremiumOrAdmin;
-    const locked = showPremiumPages;
+    const locked = !showPremiumPages;
 
     // if (showPremiumPages) {
     res.push(
