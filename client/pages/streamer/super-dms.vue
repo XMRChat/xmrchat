@@ -17,14 +17,14 @@ const { data, error, pending } = useLazyAsyncData(
 
     return data;
   },
-  { server: false }
+  { server: false },
 );
 
 const hideSuperDmList = computed<boolean | undefined>(
-  () => route.meta.hideSuperDmList as boolean
+  () => route.meta.hideSuperDmList as boolean,
 );
 const hideSuperDmLayout = computed<boolean | undefined>(
-  () => route.meta.hideSuperDmLayout as boolean
+  () => route.meta.hideSuperDmLayout as boolean,
 );
 </script>
 
@@ -32,48 +32,51 @@ const hideSuperDmLayout = computed<boolean | undefined>(
   <div>
     <PageTitle title="SuperDMs" description="Manage your SuperDMs"></PageTitle>
 
-    <template v-if="!hideSuperDmLayout">
-      <SuperDmNotConfigured
-        v-if="
-          (!data?.settingsConfigured || !data?.notificationsActive) && !pending
-        "
-        :settingsConfigured="data?.settingsConfigured"
-        :notificationsActive="data?.notificationsActive"
-        class="mb-6"
-      />
+    <PremiumPageContainer>
+      <template v-if="!hideSuperDmLayout">
+        <SuperDmNotConfigured
+          v-if="
+            (!data?.settingsConfigured || !data?.notificationsActive) &&
+            !pending
+          "
+          :settingsConfigured="data?.settingsConfigured"
+          :notificationsActive="data?.notificationsActive"
+          class="mb-6"
+        />
 
-      <div class="flex justify-end mb-6">
-        <UButton :to="toStreamerSuperDmSettings()" variant="soft">
-          SuperDMs Settings
-        </UButton>
-      </div>
-    </template>
+        <div class="flex justify-end mb-6">
+          <UButton :to="toStreamerSuperDmSettings()" variant="soft">
+            SuperDMs Settings
+          </UButton>
+        </div>
+      </template>
 
-    <NuxtPage v-if="hideSuperDmLayout" />
+      <NuxtPage v-if="hideSuperDmLayout" />
 
-    <div v-else :class="['grid grid-cols-1 md:grid-cols-[250px_1fr]']">
-      <div
-        :class="[
-          'md:border-e md:border-border md:pe-2',
-          { 'hidden md:block': hideSuperDmList },
-        ]"
-      >
-        <div class="flex flex-col gap-1">
-          <template v-if="pending && !data">
-            <SuperDmItemSkeleton v-for="x in 4" />
-          </template>
-          <template v-else-if="!data?.superDms.length">
-            <NoItems text="No SuperDMs yet." />
-          </template>
-          <template v-else>
-            <SuperDmItem v-for="item in data?.superDms" :superDm="item" />
-          </template>
+      <div v-else :class="['grid grid-cols-1 md:grid-cols-[250px_1fr]']">
+        <div
+          :class="[
+            'md:border-e md:border-border md:pe-2',
+            { 'hidden md:block': hideSuperDmList },
+          ]"
+        >
+          <div class="flex flex-col gap-1">
+            <template v-if="pending && !data">
+              <SuperDmItemSkeleton v-for="x in 4" />
+            </template>
+            <template v-else-if="!data?.superDms.length">
+              <NoItems text="No SuperDMs yet." />
+            </template>
+            <template v-else>
+              <SuperDmItem v-for="item in data?.superDms" :superDm="item" />
+            </template>
+          </div>
+        </div>
+
+        <div class="md:ps-2">
+          <NuxtPage :superDmsCount="data?.superDms.length" :pending="pending" />
         </div>
       </div>
-
-      <div class="md:ps-2">
-        <NuxtPage :superDmsCount="data?.superDms.length" :pending="pending" />
-      </div>
-    </div>
+    </PremiumPageContainer>
   </div>
 </template>
