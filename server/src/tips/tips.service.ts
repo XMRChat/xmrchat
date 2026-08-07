@@ -35,6 +35,7 @@ import { PageTipTier } from 'src/page-tip-tiers/page-tip-tier.entity';
 import { getDefaultMessageLength, getTipTier } from 'src/shared/utils';
 import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
 import { TipsBroadcastGateway } from 'src/tips-broadcast/tips-broadcast.gateway';
+import { getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
 export class TipsService {
@@ -84,6 +85,26 @@ export class TipsService {
     });
 
     return { tips, page };
+  }
+
+  async getTipsInDateRange(pagePath: string, start: string, end?: string) {
+    const page = await this.pagesService.findByPath(pagePath);
+    if (!page) throw new NotFoundException('Page not found');
+
+    const query = this.repo
+      .createQueryBuilder('tip')
+      .leftJoin('tip.payment', 'payment')
+      .select('SUM(COALESCE(payment.paid_amount::NUMERIC, 0))', 'totalAmount')
+      .where('tip.page_id = :pageId', { pageId: page.id })
+      .andWhere('payment.paid_at IS NOT NULL')
+      .andWhere('tip.created_at >= :start', { start });
+
+    if (end) {
+      query.andWhere('tip.created_at <= :end', { end });
+    }
+
+    const result = await query.getRawOne();
+    return result.totalAmount ?? '0';
   }
 
   async updateTip(id: number, payload: UpdateTipDto, user: User) {
@@ -397,7 +418,7 @@ export class TipsService {
       await this.lwsService.deleteWebhook(eventIds);
     } catch (error) {
       this.logger.warn(
-        `Failed to delete webhook for tips: ${error?.message || error}`,
+        `Failed to delete webhook for tips: ${getErrorMessage(error)}`,
       );
     }
 
@@ -406,5 +427,32 @@ export class TipsService {
     });
 
     await this.repo.save(expiredTips);
+  }
+
+  async getTotalTips() {
+    const testPagePaths =
+      this.configService.get('TEST_PAGE_PATHS')?.split(' ') || [];
+    const { tipsCount, totalAmount } = await this.repo
+      .createQueryBuilder('tip')
+      .innerJoin('tip.payment', 'payment')
+      .innerJoin('tip.page', 'page')
+      .where('payment.paid_at IS NOT NULL')
+      .select('COUNT(tip.id)', 'tipsCount')
+      .addSelect(
+        'COALESCE(SUM(payment.paid_amount::NUMERIC), 0)',
+        'totalAmount',
+      )
+      .andWhere('page.path NOT IN (:...testPagePaths)', {
+        testPagePaths,
+      })
+      .getRawOne();
+
+    const pagesCount = await this.pagesService.getTotalCount();
+
+    return {
+      tipsCount: parseInt(tipsCount, 10) || 0,
+      totalAmount: MoneroUtils.atomicUnitsToXmr(totalAmount?.toString() || '0'),
+      pagesCount,
+    };
   }
 }

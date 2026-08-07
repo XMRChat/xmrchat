@@ -18,8 +18,16 @@ const type = computed(() => props.liveStream?.platform);
     v-if="type === LiveStreamPlatformEnum.TWITCH"
     :liveStream="liveStream"
   />
+  <LiveStreamKick
+    v-if="type === LiveStreamPlatformEnum.KICK"
+    :liveStream="liveStream"
+  />
   <LiveStreamRumble
     v-if="type === LiveStreamPlatformEnum.RUMBLE"
+    :liveStream="liveStream"
+  />
+  <LiveStreamPeertube
+    v-if="type === LiveStreamPlatformEnum.PEERTUBE"
     :liveStream="liveStream"
   />
 </template>

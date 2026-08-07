@@ -61,24 +61,32 @@ watch(modalOpen, (open) => {
 
 <template>
   <div>
-    <UButton variant="ghost" @click="modalOpen = true"> Reply colors </UButton>
+    <UButton variant="ghost" @click="modalOpen = true">{{
+      $t("replyColors")
+    }}</UButton>
 
     <UModal v-model="modalOpen">
       <UCard>
         <template #header>
-          <h2 class="text-lg font-medium">Reply colors</h2>
+          <h2 class="text-lg font-medium">
+            {{ $t("replyColors") }}
+          </h2>
         </template>
 
         <div class="grid gap-4">
           <div class="flex gap-2">
             <UFormGroup
-              label="Background color"
+              :label="$t('backgroundColor')"
               name="backgroundColor"
               class="flex-1"
             >
               <UInput v-model="state.form.backgroundColor" type="color" />
             </UFormGroup>
-            <UFormGroup label="Text color" name="textColor" class="flex-1">
+            <UFormGroup
+              :label="$t('textColor')"
+              name="textColor"
+              class="flex-1"
+            >
               <UInput v-model="state.form.textColor" type="color" />
             </UFormGroup>
           </div>
@@ -90,7 +98,7 @@ watch(modalOpen, (open) => {
               color: state.form.textColor || tipReplyStyle().color,
             }"
           >
-            Replied message preview
+            {{ $t("repliedMessagePreview") }}
           </div>
         </div>
 

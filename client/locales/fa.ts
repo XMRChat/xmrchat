@@ -459,4 +459,20 @@ export default {
   editTier: "ویرایش سطح",
   editTierDetails: "ویرایش جزئیات سطح",
   manageYourTipTiers: "مدیریت سطوح انعام‌های شما",
+
+  // TIP LIST
+  tipList: {
+    reply: "پاسخ:",
+    replyToTip: "پاسخ به انعام:",
+    private: "خصوصی:",
+    obs: "OBS:",
+    message: "پیام:",
+  },
+  reply: "پاسخ",
+  replyColors: "رنگ‌های پاسخ",
+  backgroundColor: "رنگ پس‌زمینه",
+  textColor: "رنگ متن",
+  repliedMessagePreview: "پیش‌نمایش پیام پاسخ‌داده‌شده",
+  action: "عمل",
+  premium: "پریمیوم",
 };

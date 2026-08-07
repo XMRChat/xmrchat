@@ -109,8 +109,10 @@ export enum PageRecipientVariant {
 export enum LiveStreamPlatformEnum {
   YOUTUBE = "youtube",
   TWITCH = "twitch",
+  KICK = "kick",
   X = "x",
   RUMBLE = "rumble",
+  PEERTUBE = "peertube",
 }
 
 export enum CohostInvitationStatusEnum {

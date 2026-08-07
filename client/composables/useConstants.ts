@@ -327,6 +327,11 @@ export const useConstants = () => {
       icon: "i-tabler-brand-twitch",
       colorClassName: "text-[#6441a5]",
     },
+    [LiveStreamPlatformEnum.KICK]: {
+      name: "Kick",
+      icon: "i-tabler-brand-kick",
+      colorClassName: "text-[#53FC19]",
+    },
     [LiveStreamPlatformEnum.X]: {
       name: "X",
       icon: "i-tabler-brand-x",
@@ -336,6 +341,11 @@ export const useConstants = () => {
       name: "Rumble",
       icon: "i-tabler-brand-rumble",
       colorClassName: "text-[#85c742]",
+    },
+    [LiveStreamPlatformEnum.PEERTUBE]: {
+      name: "Peertube",
+      icon: "i-icon-peertube",
+      colorClassName: "",
     },
   };
 

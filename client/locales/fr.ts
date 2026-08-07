@@ -475,4 +475,20 @@ export default {
   editTier: "Modifier le niveau",
   editTierDetails: "Modifier les détails du niveau",
   manageYourTipTiers: "Gérer vos niveaux de pourboires",
+
+  // TIP LIST
+  tipList: {
+    reply: "Réponse :",
+    replyToTip: "Répondre au pourboire :",
+    private: "Privé :",
+    obs: "OBS :",
+    message: "Message :",
+  },
+  reply: "Répondre",
+  replyColors: "Couleurs de la réponse",
+  backgroundColor: "Couleur d'arrière-plan",
+  textColor: "Couleur du texte",
+  repliedMessagePreview: "Aperçu du message répondu",
+  action: "Action",
+  premium: "Premium",
 };

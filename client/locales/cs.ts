@@ -455,4 +455,20 @@ export default {
   editTier: "Upravit úroveň",
   editTierDetails: "Upravit detaily úrovně",
   manageYourTipTiers: "Spravovat své úrovně tipů",
+
+  // TIP LIST
+  tipList: {
+    reply: "Odpověď:",
+    replyToTip: "Odpovědět na spropitné:",
+    private: "Soukromé:",
+    obs: "OBS:",
+    message: "Zpráva:",
+  },
+  reply: "Odpovědět",
+  replyColors: "Barvy odpovědi",
+  backgroundColor: "Barva pozadí",
+  textColor: "Barva textu",
+  repliedMessagePreview: "Náhled odpovědi",
+  action: "Akce",
+  premium: "Premium",
 };

@@ -455,4 +455,20 @@ export default {
   editTier: "Редактировать уровень",
   editTierDetails: "Редактировать детали уровня",
   manageYourTipTiers: "Управляйте своими уровнями чаевых",
+
+  // TIP LIST
+  tipList: {
+    reply: "Ответ:",
+    replyToTip: "Ответить на чаевые:",
+    private: "Приватно:",
+    obs: "OBS:",
+    message: "Сообщение:",
+  },
+  reply: "Ответить",
+  replyColors: "Цвета ответа",
+  backgroundColor: "Цвет фона",
+  textColor: "Цвет текста",
+  repliedMessagePreview: "Предпросмотр ответа",
+  action: "Действие",
+  premium: "Премиум",
 };

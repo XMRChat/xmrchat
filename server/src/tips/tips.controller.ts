@@ -54,4 +54,11 @@ export class TipsController {
   test() {
     return this.tipsService.deleteExpiredTips();
   }
+
+  @Get('/total')
+  @IsPublic()
+  async getTotalTips() {
+    const total = await this.tipsService.getTotalTips();
+    return total;
+  }
 }
