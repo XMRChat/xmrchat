@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const authStore = useAuthStore();
 const isPremiumOrAdmin = computed(() => authStore.isPremiumOrAdmin);
-const notPremium = computed(() => isPremiumOrAdmin.value);
+const notPremium = computed(() => !isPremiumOrAdmin.value);
 </script>
 
 <template>
