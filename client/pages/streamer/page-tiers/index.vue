@@ -11,13 +11,13 @@ const { t } = useI18n();
 const { data, pending, error, refresh } = useLazyAsyncData(
   async () => {
     const { data } = await axios.get<{ pageTipTiers: PageTipTier[] }>(
-      `/page-tip-tiers`
+      `/page-tip-tiers`,
     );
     return data.pageTipTiers;
   },
   {
     server: false,
-  }
+  },
 );
 
 const columns = computed(() => [
@@ -74,63 +74,68 @@ const handleDelete = async (id: number) => {
       :title="$t('tipTiers')"
       :description="$t('manageYourTipTiers')"
     />
-    <div class="flex justify-end mb-4">
-      <UButton :to="toCreateStreamerPageTier()">{{ $t("createTier") }}</UButton>
-    </div>
-    <UProgress
-      v-if="pending"
-      animation="carousel"
-      class="max-w-[280px] m-auto mb-4"
-    />
-    <UTable
-      :rows="data || []"
-      :columns="columns"
-      class="border border-border rounded-md"
-      :ui="{
-        td: { base: 'whitespace-normal text-text dark:text-text' },
-      }"
-    >
-      <template #minAmount-data="{ row }">
-        <span>{{ row.minAmount ? `${row.minAmount} XMR` : "-" }}</span>
-      </template>
-      <template #color-data="{ row }">
-        <div
-          v-if="row.color"
-          class="w-6 h-6 rounded-full ring-2 ring-border"
-          :style="{ backgroundColor: row.color }"
-        ></div>
-        <div v-else>-</div>
-      </template>
-      <template #sound-data="{ row }">
-        <div class="max-w-[120px] truncate text-sm">
-          <span v-if="row.sound">
-            {{ row.sound.originalName }}
-          </span>
-          <span v-else>-</span>
-        </div>
-      </template>
-      <template #actions-data="{ row }">
-        <div class="flex gap-2 justify-end">
-          <UButton
-            variant="ghost"
-            color="primary"
-            :to="toEditStreamerPageTier(row.id)"
-          >
-            {{ $t("edit") }}
-          </UButton>
-          <UButton
-            variant="ghost"
-            color="red"
-            @click="handleDeleteClick(row.id)"
-          >
-            {{ $t("delete") }}
-          </UButton>
-        </div>
-      </template>
-      <template #empty-state>
-        <NoItems />
-      </template>
-    </UTable>
+
+    <PremiumPageContainer>
+      <div class="flex justify-end mb-4">
+        <UButton :to="toCreateStreamerPageTier()">{{
+          $t("createTier")
+        }}</UButton>
+      </div>
+      <UProgress
+        v-if="pending"
+        animation="carousel"
+        class="max-w-[280px] m-auto mb-4"
+      />
+      <UTable
+        :rows="data || []"
+        :columns="columns"
+        class="border border-border rounded-md"
+        :ui="{
+          td: { base: 'whitespace-normal text-text dark:text-text' },
+        }"
+      >
+        <template #minAmount-data="{ row }">
+          <span>{{ row.minAmount ? `${row.minAmount} XMR` : "-" }}</span>
+        </template>
+        <template #color-data="{ row }">
+          <div
+            v-if="row.color"
+            class="w-6 h-6 rounded-full ring-2 ring-border"
+            :style="{ backgroundColor: row.color }"
+          ></div>
+          <div v-else>-</div>
+        </template>
+        <template #sound-data="{ row }">
+          <div class="max-w-[120px] truncate text-sm">
+            <span v-if="row.sound">
+              {{ row.sound.originalName }}
+            </span>
+            <span v-else>-</span>
+          </div>
+        </template>
+        <template #actions-data="{ row }">
+          <div class="flex gap-2 justify-end">
+            <UButton
+              variant="ghost"
+              color="primary"
+              :to="toEditStreamerPageTier(row.id)"
+            >
+              {{ $t("edit") }}
+            </UButton>
+            <UButton
+              variant="ghost"
+              color="red"
+              @click="handleDeleteClick(row.id)"
+            >
+              {{ $t("delete") }}
+            </UButton>
+          </div>
+        </template>
+        <template #empty-state>
+          <NoItems />
+        </template>
+      </UTable>
+    </PremiumPageContainer>
   </div>
 </template>
 
