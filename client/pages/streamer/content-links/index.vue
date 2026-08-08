@@ -72,6 +72,7 @@ const state = reactive<State>({
       matrix: {},
       "monero-jobs": {},
       facebook: {},
+      pixelfed: {},
     },
     name: undefined,
     searchTerms: undefined,
@@ -121,6 +122,7 @@ const rules = computed(() => {
     GITLAB,
     MATRIX,
     MONERO_JOBS,
+    PIXELFED,
     ...rest
   } = ContentLinkPlatformEnum;
 
@@ -151,6 +153,7 @@ const rules = computed(() => {
       [GITLAB]: { value: { url } },
       [MATRIX]: { value: { matrixId } },
       [MONERO_JOBS]: { value: { url } },
+      [PIXELFED]: { value: { url } },
       ...notUrls,
     },
     rumbleLiveStreamUrl: { url, rumbleApiUrl },
