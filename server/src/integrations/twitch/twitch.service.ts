@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Client, client as tmiClient } from 'tmi.js';
 import { TwitchTokenService } from './twitch-token.service';
-import { getAxiosMessage } from 'src/shared/utils/errors';
+import { getAxiosMessage, getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
 export class TwitchService implements OnModuleInit {
@@ -94,11 +94,11 @@ export class TwitchService implements OnModuleInit {
     } catch (error) {
       console.log(
         'Twitch api error on getting channel name',
-        error.response?.data,
+        getErrorMessage(error),
       );
       if (
-        error?.response?.data?.status === 403 ||
-        error?.response?.data?.status === 401
+        (error as any)?.response?.data?.status === 403 ||
+        (error as any)?.response?.data?.status === 401
       )
         return true;
       return false;
