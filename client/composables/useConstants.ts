@@ -226,7 +226,7 @@ export const useConstants = () => {
       name: "Pixelfed",
       colorClassName: "text-[#6364FF]",
       iconClassName: "",
-      icon: "i-simple-icons-pixelfed",
+      icon: "i-icon-pixelfed",
       inputLabel: "Pixelfed link (enter full URL)",
       linkCreator: (v?: string) => `${v}`,
     },
