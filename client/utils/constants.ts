@@ -30,6 +30,7 @@ export const CONTENT_LINKS_LIST = [
   ContentLinkPlatformEnum.MATRIX,
   ContentLinkPlatformEnum.MONERO_JOBS,
   ContentLinkPlatformEnum.FACEBOOK,
+  ContentLinkPlatformEnum.PIXELFED,
   ContentLinkPlatformEnum.RUMBLE,
 ];
 

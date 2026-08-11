@@ -222,6 +222,14 @@ export const useConstants = () => {
       inputLabel: t("xUsername", { platform: "Facebook" }),
       linkCreator: (v?: string) => `https://facebook.com/${v}`,
     },
+    [ContentLinkPlatformEnum.PIXELFED]: {
+      name: "Pixelfed",
+      colorClassName: "text-[#6364FF]",
+      iconClassName: "",
+      icon: "i-icon-pixelfed",
+      inputLabel: "Pixelfed link (enter full URL)",
+      linkCreator: (v?: string) => `${v}`,
+    },
   };
   const getContentLink = (v: ContentLinkPlatformEnum) => {
     return CONTENT_LINKS[v];
