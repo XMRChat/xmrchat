@@ -224,7 +224,7 @@ export const useConstants = () => {
     },
     [ContentLinkPlatformEnum.PIXELFED]: {
       name: "Pixelfed",
-      colorClassName: "text-[#6364FF]",
+      colorClassName: "",
       iconClassName: "",
       icon: "i-icon-pixelfed",
       inputLabel: "Pixelfed link (enter full URL)",
