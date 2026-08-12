@@ -1,4 +1,5 @@
 import { HttpService } from '@nestjs/axios';
+import { InjectQueue } from '@nestjs/bullmq';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   Inject,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { Queue } from 'bullmq';
 import { Cache } from 'cache-manager';
 import { getErrorMessage } from 'src/shared/utils/errors';
 
@@ -20,6 +22,7 @@ export class TwitchTokenService implements OnModuleInit {
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @InjectQueue('notifications-email') private emailQueue: Queue,
   ) {}
 
   async onModuleInit() {
@@ -122,5 +125,39 @@ export class TwitchTokenService implements OnModuleInit {
     } catch (error) {
       this.logger.error('Failed to refresh twitch client credentials token');
     }
+  }
+
+  @Cron(CronExpression.EVERY_DAY_AT_NOON)
+  async upsertTokenRefreshReminder() {
+    const token = this.configService.get('TWITCH_OAUTH_PASS')?.split(':')[1];
+
+    if (!token) return;
+
+    const { data } = await this.httpService.axiosRef.get(
+      'https://id.twitch.tv/oauth2/validate',
+      {
+        headers: {
+          Authorization: `OAuth ${token}`,
+        },
+      },
+    );
+    const expiresIn = data.expires_in;
+
+    // Return if it is valid for more than 1 weeks
+    if (expiresIn > 14 * 24 * 60 * 60) return;
+
+    const emails =
+      this.configService.get('PAGE_REPORT_RECEPIENTS')?.split(' ') || [];
+    if (!emails.length) return;
+
+    this.emailQueue.add('send-email', {
+      to: emails,
+      options: {
+        subject: 'Twitch token update reminder',
+        text: 'Twitch token update reminder',
+        html: `Twitch token update reminder. Less that one week is remaining from expiration date, please update the token and get a new User access token token. 
+          You can use this website "https://twitchapps.com/tokengen" to generate a new User access token token.`,
+      },
+    });
   }
 }

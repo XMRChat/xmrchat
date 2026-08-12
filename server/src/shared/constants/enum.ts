@@ -85,6 +85,7 @@ export enum LinkPlatformEnum {
   MATRIX = 'matrix',
   MONERO_JOBS = 'monero-jobs',
   FACEBOOK = 'facebook',
+  PIXELFED = 'pixelfed',
 }
 
 export enum TrocadorStatusEnum {

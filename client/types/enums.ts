@@ -48,6 +48,7 @@ export enum ContentLinkPlatformEnum {
   MATRIX = "matrix",
   MONERO_JOBS = "monero-jobs",
   FACEBOOK = "facebook",
+  PIXELFED = "pixelfed",
 }
 
 export enum TipDisplayMode {
