@@ -126,6 +126,9 @@ const dropdownItems = computed<DropdownItem[][]>(() => {
               trailing-icon="i-heroicons-chevron-down-20-solid"
             />
           </UDropdown> -->
+          <UButton>
+            Donate
+          </UButton>
           <UButton
             v-if="authStore.isLoggedIn"
             icon="i-heroicons-user"
