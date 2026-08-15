@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { WsException } from '@nestjs/websockets';
 import { WS_GUARD_METADATA } from 'src/shared/constants';
+import { isJwtSessionValid, JwtPayload } from 'src/shared/utils';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class WsAuthGuard implements CanActivate {
 
     const user = await this.usersService.findById(payload.userId);
 
-    if (!user) {
+    if (!user || !isJwtSessionValid(payload, user)) {
       throw new WsException('Unauthorized');
     }
 

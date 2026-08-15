@@ -32,7 +32,7 @@ export const useServices = () => {
   };
 
   const updatePassword = async (params: any) => {
-    const res = await axios.post<{ message: string }>(
+    const res = await axios.post<{ message: string; access_token: string }>(
       "/auth/update-password",
       params
     );

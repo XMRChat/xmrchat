@@ -49,4 +49,7 @@ export class User {
 
   @Column('boolean', { default: false })
   isEmailVerified: boolean;
+
+  @Column({ default: 0 })
+  tokenVersion: number;
 }
