@@ -43,7 +43,7 @@ services:
     restart: always
     ports:
       # - :80
-      - :8443
+      # - :8443
     command:
       - --db-path=/home/monero-lws/.bitmonero/light_wallet_server
       - --daemon=tcp://monero:1882
