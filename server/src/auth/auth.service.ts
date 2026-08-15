@@ -97,7 +97,7 @@ export class AuthService {
       );
     }
 
-    const token = await this.generateJwt(user.id, user.email);
+    const token = await this.generateJwt(user);
 
     return {
       access_token: token,
@@ -167,6 +167,7 @@ export class AuthService {
     await this.usersService.update(userToken.userId, {
       password: passwordResult,
       isEmailVerified: true,
+      tokenVersion: (user.tokenVersion ?? 0) + 1,
     });
 
     await this.userTokensService.remove(userToken.id);
@@ -187,14 +188,21 @@ export class AuthService {
       throw new BadRequestException(this.i18n.t('error.invalidCredentials'));
     }
 
+    const tokenVersion = (user.tokenVersion ?? 0) + 1;
+
     await this.usersService.update(user.id, {
       password: createFinalPassword(data.password),
+      tokenVersion,
     });
 
     this.notificationsService.sendPasswordChangeEmail(user.email);
 
     return {
       message: this.i18n.t('general.accountPasswordUpdated'),
+      access_token: await this.generateJwt({
+        ...user,
+        tokenVersion,
+      }),
     };
   }
 
@@ -222,7 +230,11 @@ export class AuthService {
     return this.usersService.update(user.id, user);
   }
 
-  generateJwt(userId: number, email: string) {
-    return this.jwtService.signAsync({ userId, email });
+  generateJwt(user: Pick<User, 'id' | 'email' | 'tokenVersion'>) {
+    return this.jwtService.signAsync({
+      userId: user.id,
+      email: user.email,
+      tokenVersion: user.tokenVersion ?? 0,
+    });
   }
 }
