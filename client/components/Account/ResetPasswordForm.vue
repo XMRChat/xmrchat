@@ -3,6 +3,7 @@ import useVuelidate from "@vuelidate/core";
 
 const { required, minLength, maxLength, sameAs } = useValidations();
 const { updatePassword } = useServices();
+const authStore = useAuthStore();
 const toast = useToast();
 const { t } = useI18n();
 
@@ -22,10 +23,14 @@ const handleSubmit = async () => {
 
   try {
     loadingSubmit.value = true;
-    await updatePassword({
+    const res = await updatePassword({
       currentPassword: state.oldPassword,
       password: state.password,
     });
+
+    if (res.access_token) {
+      authStore.state.token = res.access_token;
+    }
 
     toast.add({ description: "Password is updated." });
 
