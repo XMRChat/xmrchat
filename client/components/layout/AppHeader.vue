@@ -126,10 +126,10 @@ const dropdownItems = computed<DropdownItem[][]>(() => {
               trailing-icon="i-heroicons-chevron-down-20-solid"
             />
           </UDropdown> -->
-          <UButton :to="toStreamer('xmrchat')" variant="soft">
+          <!-- <UButton :to="toStreamer('xmrchat')" variant="soft">
             <UIcon name="i-tabler-heart" size="20" />
             <span class="hidden md:inline-flex"> Donate </span>
-          </UButton>
+          </UButton> -->
           <UButton
             v-if="authStore.isLoggedIn"
             icon="i-heroicons-user"
