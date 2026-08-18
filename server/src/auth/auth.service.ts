@@ -48,7 +48,6 @@ export class AuthService {
       type: UserTokenType.EMAIL_VERIFICATION,
     });
 
-    this.logger.log(`Token: ${token}`);
 
     this.notificationsService.sendVerificationEmail(user.email, token);
 
@@ -143,7 +142,6 @@ export class AuthService {
       );
     }
 
-    this.logger.log(`Token: ${token}`);
 
     this.notificationsService.sendResetPasswordEmail(user.email, token);
 
