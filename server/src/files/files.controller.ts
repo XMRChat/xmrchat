@@ -33,6 +33,7 @@ export class FilesController {
     @UploadedFile() file: Express.Multer.File,
     @Param('slug', new ParseEnumPipe(FileType)) slug: FileType,
   ) {
+    throw new BadRequestException('Use the /upload/:type endpoint instead');
     if (!file) throw new BadRequestException('No file is uploaded.');
 
     const fileBuffer = await fs.readFile(file.path);
