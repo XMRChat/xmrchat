@@ -89,14 +89,14 @@ export class TipGoalsService {
     const page = await this.pagesService.findMyPage(user);
     if (!page) throw new NotFoundException('Page not found');
 
+    const tipGoal = await this.findOneByPageId(page.id);
+    if (!tipGoal) throw new NotFoundException('Tip goal not found');
+
     const ability = await this.casl.createForUser(user);
-    if (!ability.can(Action.Update, TipGoal))
+    if (!ability.can(Action.Update, tipGoal))
       throw new ForbiddenException(
         'You are not authorized to update a tip goal',
       );
-
-    const tipGoal = await this.findOneByPageId(page.id);
-    if (!tipGoal) throw new NotFoundException('Tip goal not found');
 
     const { isValid, message } = await this.validateDates({
       startTime: new Date(dto.startTime),
