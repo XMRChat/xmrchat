@@ -127,10 +127,4 @@ export class WebhooksController {
 
     return swap;
   }
-
-  @Get('/test')
-  @IsPublic()
-  test() {
-    return this.tipsGateway.notifyTipPayment(1234, 'some value' as any);
-  }
 }

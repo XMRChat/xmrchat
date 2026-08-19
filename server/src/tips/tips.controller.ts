@@ -49,12 +49,6 @@ export class TipsController {
     return this.tipsService.updateTip(id, body, user);
   }
 
-  @Get('/test/test')
-  @IsPublic()
-  test() {
-    return this.tipsService.deleteExpiredTips();
-  }
-
   @Get('/total')
   @IsPublic()
   async getTotalTips() {
