@@ -35,14 +35,13 @@ watch(model, () => {
   <UModal v-model="model">
     <UCard>
       <template #header>
-        <h2 class="text-lg font-medium">SuperDM recovery codes</h2>
+        <h2 class="text-lg font-medium">
+          {{ $t("superDMRecoveryCodesTitle") }}
+        </h2>
       </template>
       <div class="grid gap-2">
         <p>
-          The recovery codes are not saved on the server. Please save the
-          recovery code. You will need the recovery code and SuperDM id to
-          access your encrypted messages. If you clear cache or use different
-          device you will need to enter the recovery code.
+          {{ $t("superDMRecoveryCodesDes") }}
         </p>
 
         <UFormGroup label="SuperDM id">
@@ -59,7 +58,9 @@ watch(model, () => {
       </div>
       <template #footer>
         <div class="flex gap-2 justify-end">
-          <UButton variant="ghost" @click="handleHide">Close</UButton>
+          <UButton variant="ghost" @click="handleHide">{{
+            $t("close")
+          }}</UButton>
         </div>
       </template>
     </UCard>

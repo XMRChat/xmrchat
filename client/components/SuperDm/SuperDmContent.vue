@@ -32,7 +32,7 @@ const { axios } = useApp();
 const minSuperDmAmount = computed(
   () =>
     props.settings?.find((s) => s.key === PageSettingKey.SUPER_DM_MIN_AMOUNT)
-      ?.value
+      ?.value,
 );
 
 const { minFiatAmount, price, minSwapFiatAmount, minXmr, minSwapXMR } =
@@ -74,12 +74,12 @@ const v = useVuelidate<State["form"]>(
         minValue: minValue(
           generalState.tipDisplayValue === TipDisplayMode.XMR
             ? minXmrValue
-            : minFiatValue
+            : minFiatValue,
         ),
       },
     };
   }),
-  computed(() => state.form)
+  computed(() => state.form),
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -118,7 +118,7 @@ const renderInputPrefix = computed(() => {
   return fiat.value.symbol;
 });
 const renderInputPadding = computed(
-  () => `${renderInputPrefix.value.length * 0.6 + 2}rem`
+  () => `${renderInputPrefix.value.length * 0.6 + 2}rem`,
 );
 
 const handleSubmit = async () => {
@@ -134,7 +134,7 @@ const handleSubmit = async () => {
       xmrAmount = state.form.amount;
     } else {
       xmrAmount = (Number(state.form.amount) / (price.value as number)).toFixed(
-        8
+        8,
       );
     }
 
@@ -178,7 +178,7 @@ const handleSubmit = async () => {
         <div class="both">
           <UFormGroup
             size="lg"
-            label="Name"
+            :label="$t('name')"
             :error="getValidationAttrs('name').error"
             name="name"
           >
@@ -189,7 +189,7 @@ const handleSubmit = async () => {
           </UFormGroup>
           <UFormGroup
             size="lg"
-            label="Amount"
+            :label="$t('amount')"
             :error="getValidationAttrs('amount').error"
             name="amount"
           >
@@ -251,7 +251,7 @@ const handleSubmit = async () => {
           <UAlert
             color="red"
             :description="state.errorMessage"
-            title="SuperDM could not be started"
+            :title="$t('superDMAlertTitle')"
           >
           </UAlert>
         </div>
@@ -265,7 +265,7 @@ const handleSubmit = async () => {
             :loading="state.loading"
             class="flex items-center gap-2 w-fit"
           >
-            Start SuperDM
+            {{ $t("startSuperDM") }}
           </UButton>
           <UButton
             v-if="superDmConfigured"
@@ -273,7 +273,7 @@ const handleSubmit = async () => {
             size="lg"
             @click="emit('recover')"
           >
-            Open SuperDM
+            {{ $t("openSuperDM") }}
           </UButton>
         </div>
       </div>

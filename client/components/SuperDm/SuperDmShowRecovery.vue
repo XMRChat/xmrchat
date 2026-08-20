@@ -10,9 +10,9 @@ const modelRef = ref(false);
 </script>
 
 <template>
-  <UButton variant="ghost" size="xs" @click="modelRef = true"
-    >Show Recovery Code</UButton
-  >
+  <UButton variant="ghost" size="xs" @click="modelRef = true">{{
+    $t("showRecoveryCode")
+  }}</UButton>
   <SuperDmShowRecoveryModal
     :pagePath="pagePath"
     :superDmId="superDmId"

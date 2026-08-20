@@ -471,4 +471,74 @@ export default {
   repliedMessagePreview: "Náhled odpovědi",
   action: "Akce",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Cíl spropitného byl aktualizován",
+  tipGoalCreated: "Cíl spropitného byl vytvořen",
+  amountXMR: "Částka ( XMR )",
+  start: "Začátek",
+  end: "Konec",
+  isActive: "Je aktivní",
+  isActiveHelp:
+    "Deaktivovaný cíl spropitného se na vaší stránce spropitného nebude zobrazovat.",
+  timeIsEnded: "Čas vypršel",
+
+  // SUPER DM
+  amount: "Částka",
+  superDMAlertTitle: "SuperDM se nepodařilo spustit",
+  startSuperDM: "Spustit SuperDM",
+  openSuperDM: "Otevřít SuperDM",
+  endSuperDM: "Ukončit SuperDM",
+  endedAt: "Ukončeno v",
+  endSuperDMText: "Po ukončení tohoto SuperDM již nelze odesílat zprávy.",
+  saveSuperDMIdAndKeyTitle: "Uložit ID SuperDM a obnovovací kód",
+  saveSuperDMIdAndKeyDes:
+    "Uložte si ID SuperDM a obnovovací klíč. Klíče nelze znovu použít. Bez nich nebudete moci zprávy obnovit ani dešifrovat. XMRChat nebude vaše obnovovací klíče ukládat.",
+  savedIdAndRecoveryCode: "ID a obnovovací klíč jsem uložil",
+  superDMKeysRecoveryTitle:
+    "Obnovovací klíče nejsou v tomto prohlížeči uloženy. Pro obnovení zpráv zadejte mnemotechnickou frázi tohoto SuperDM.",
+  superDMId: "ID SuperDM: ",
+  mnemonicPhrase: "Mnemotechnická fráze",
+  enterYourMnemonicPhrase: "Zadejte svou mnemotechnickou frázi",
+  recover: "Obnovit",
+  encryptionKeys: "Šifrovací klíče",
+  backupRecoveryCode: "Zálohujte svůj obnovovací kód",
+  backupRecoveryCodeDes:
+    "XMRChat ukládá pouze váš veřejný klíč. Váš obnovovací kód zůstává ve vašem zařízení.",
+  recoveryCode: "Obnovovací kód",
+  recoveryCodeDes:
+    "Zadejte svůj obnovovací kód nebo vygenerujte nové klíče. Po vygenerování nových klíčů již nebudete moci dešifrovat předchozí zprávy.",
+  generateNew: "Vygenerovat nové",
+  pleaseSaveYourRecoveryCode:
+    "Uložte si prosím svůj obnovovací kód. Budete ho potřebovat pro přístup k šifrovaným zprávám. Pokud vymažete mezipaměť nebo použijete jiné zařízení, budete muset obnovovací kód znovu zadat.",
+  ISavedRecoveryCode: "Obnovovací kód jsem uložil",
+  generateNewKeys: "Vygenerovat nové klíče",
+  generateNewKeysDes:
+    "Pokud vygenerujete nové klíče, nebudete moci dešifrovat předchozí zprávy. Nové zprávy budou šifrovány pomocí nových klíčů.",
+  clickGenerateKeys:
+    "Kliknutím na „Vygenerovat klíče“ nastavíte šifrování SuperDM.",
+  beReadyToSaveRecoveryCode:
+    "Připravte se prosím na uložení svého obnovovacího kódu.",
+  generateKeys: "Vygenerovat klíče",
+  superDMIsEnded: "SuperDM byl ukončen.",
+  superDMIsEndedAt: "SuperDM byl ukončen v {date}.",
+  sendAMessage: "Odeslat zprávu...",
+  superDMNotConfiguredTitle: "SuperDM nejsou nakonfigurovány.",
+  superDMNotConfiguredDes:
+    "Povolení SuperDM umožní fanouškům zaplatit vámi zvolenou částku za možnost zahájit s vámi soukromou konverzaci. Jedná se o end-to-end šifrovaný chat mezi vámi a fanouškem; tyto zprávy nikdo další neuvidí (ani my!). Pro tuto funkci musí být povolena oznámení, abyste byli upozorněni, když přijde SuperDM. Odpovídejte prosím svým fanouškům rychle.",
+  configureSuperDMs: "Nakonfigurovat SuperDM",
+  configureNotifications: "Nakonfigurovat oznámení",
+  showKeys: "Zobrazit klíče",
+  continueSuperDM: "Pokračovat v SuperDM",
+  savedKeys: "Uložené klíče",
+  useSavedKeys: "K pokračování zpráv SuperDM můžete použít uložené klíče.",
+  use: "Použít",
+  enterSuperDMIdAndRecoveryCode: "Zadejte ID SuperDM a obnovovací kód.",
+  minSuperDMAmount: "Min. částka SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "Minimální částka, kterou vám fanoušek musí poslat, aby mohl zahájit SuperDM.",
+  showRecoveryCode: "Zobrazit obnovovací kód",
+  superDMRecoveryCodesTitle: "Obnovovací kódy SuperDM",
+  superDMRecoveryCodesDes:
+    "Obnovovací kódy nejsou uloženy na serveru. Uložte si prosím svůj obnovovací kód. Pro přístup k šifrovaným zprávám budete potřebovat obnovovací kód a ID SuperDM. Pokud vymažete mezipaměť nebo použijete jiné zařízení, budete muset obnovovací kód zadat znovu.",
 };

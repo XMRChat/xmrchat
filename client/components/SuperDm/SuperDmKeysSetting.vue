@@ -45,12 +45,12 @@ const {
     const keys = await getSavedKey();
     return keys;
   },
-  { server: false }
+  { server: false },
 );
 
 const getPublicKeySettings = async () => {
   const { data } = await axios.get<{ settings: PageSetting[] }>(
-    `/super-dms/settings`
+    `/super-dms/settings`,
   );
   return data.settings.find((s) => s.key === PageSettingKey.SUPER_DM_PUBLIC_KEY)
     ?.value;
@@ -102,7 +102,7 @@ const handleRecoverClick = async () => {
 
     const samePrivateKeys = await validateSamePrivateKeys(
       keys.publicKeyArmored,
-      publicKeySetting
+      publicKeySetting,
     );
     if (!samePrivateKeys) throw createError("Invalid recovery code");
 
@@ -120,7 +120,7 @@ const v = useVuelidate<State>(
   computed(() => ({
     recoveryCode: { required },
   })),
-  computed(() => state)
+  computed(() => state),
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -128,28 +128,26 @@ const { getValidationAttrs } = useValidations(v);
 
 <template>
   <div>
-    <h3 class="text-lg font-medium mb-2">Encryption Keys</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t("encryptionKeys") }}</h3>
     <div v-if="pending">Loading...</div>
     <div v-else-if="error">{{ getErrorMessage(error) }}</div>
 
     <template v-else>
       <div v-if="savedKeys" class="flex flex-col gap-2">
-        <h3 class="font-medium">Backup your recovery code</h3>
+        <h3 class="font-medium">{{ $t("backupRecoveryCode") }}</h3>
         <p>
-          XMRChat only stores your public key. Your recovery code remains on
-          your device.
+          {{ $t("backupRecoveryCodeDes") }}
         </p>
         <UInput :modelValue="savedKeys?.mnemonic" readonly />
       </div>
       <div v-else-if="!state.generatedResult">
         <UFormGroup
-          label="Recovery Code"
+          :label="$t('recoveryCode')"
           :error="getValidationAttrs('recoveryCode').error"
         >
           <template #description>
             <p>
-              Enter your recovery code or generate new keys. You won't be able
-              to decrypt your previous messages after generating new keys.
+              {{ $t("recoveryCodeDes") }}
             </p>
           </template>
           <UInput
@@ -163,22 +161,20 @@ const { getValidationAttrs } = useValidations(v);
             :loading="state.loadingRecover"
             @click="handleRecoverClick"
           >
-            Recover
+            {{ $t("recover") }}
           </UButton>
           <UButton
             variant="ghost"
             @click="handleGenerateClick"
             :loading="state.loadingGenerate"
           >
-            Generate new
+            {{ $t("generateNew") }}
           </UButton>
         </div>
       </div>
       <div v-else class="grid gap-2">
         <p>
-          Please save your recovery code. You will need the recovery code to
-          access your encrypted messages. If you clear cache or use different
-          device you will need to enter the recovery code.
+          {{ $t("pleaseSaveYourRecoveryCode") }}
         </p>
         <UInput
           :modelValue="state.generatedResult?.mnemonic"
@@ -187,7 +183,7 @@ const { getValidationAttrs } = useValidations(v);
         />
         <div>
           <UButton @click="handleSaveRecoveryCode">
-            I saved the recovery code
+            {{ $t("ISavedRecoveryCode") }}
           </UButton>
         </div>
       </div>
@@ -196,23 +192,19 @@ const { getValidationAttrs } = useValidations(v);
     <UModal v-model="state.generateModal">
       <UCard>
         <template #header>
-          <h2 class="text-lg font-medium">Generate new keys</h2>
+          <h2 class="text-lg font-medium">{{ $t("generateNewKeys") }}</h2>
         </template>
 
         <UAlert color="primary" variant="subtle">
-          <template #description>
-            If you generate new keys you will not be able to decrypt your
-            previous messages. New messages will be encrypted with the new keys.
-          </template>
+          <template #description> </template>
         </UAlert>
         <div class="grid gap-2 mt-6">
           <p>
-            If you forgot your recovery code or it is your first time using
-            SuperDM, you can generate new encryption keys.
+            {{ $t("generateNewKeysDes") }}
           </p>
-          <p>Click generate keys to setup the SuperDM encryption.</p>
+          <p>{{ $t("clickGenerateKeys") }}</p>
           <p class="pt-4 text-sm text-pale">
-            Please be ready to save your recovery code.
+            {{ $t("beReadyToSaveRecoveryCode") }}
           </p>
         </div>
         <template #footer>
@@ -222,9 +214,9 @@ const { getValidationAttrs } = useValidations(v);
               color="red"
               @click="state.generateModal = false"
             >
-              Cancel
+              {{ $t("cancel") }}
             </UButton>
-            <UButton @click="handleGenerate">Generate keys</UButton>
+            <UButton @click="handleGenerate">{{ $t("generateKeys") }}</UButton>
           </div>
         </template>
       </UCard>

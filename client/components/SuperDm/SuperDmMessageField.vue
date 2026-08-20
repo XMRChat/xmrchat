@@ -24,7 +24,7 @@ const v = useVuelidate(
   {
     message: { required },
   },
-  computed(() => ({ message: model.value }))
+  computed(() => ({ message: model.value })),
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -33,15 +33,15 @@ const { getValidationAttrs } = useValidations(v);
 <template>
   <div class="flex gap-2 p-4 border-t border-border items-start">
     <div v-if="endedAt" class="flex flex-col items-center text-center flex-1">
-      <p class="font-medium">SuperDM is ended.</p>
+      <p class="font-medium">{{ $t("superDMIsEnded") }}</p>
       <p class="text-pale text-xs">
-        SuperDM is ended at {{ dayjs(endedAt).format("L LT") }}.
+        {{ $t("superDMIsEndedAt", { date: dayjs(endedAt).format("L LT") }) }}
       </p>
     </div>
     <template v-else>
       <UInput
         v-model="model"
-        placeholder="Send a message..."
+        :placeholder="$t('sendAMessage')"
         class="flex-grow"
         size="lg"
         @blur="getValidationAttrs('message').onBlur"

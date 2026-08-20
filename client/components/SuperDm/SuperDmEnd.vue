@@ -12,7 +12,7 @@ const props = withDefaults(
   }>(),
   {
     endedByType: SuperDmMessageSenderTypeEnum.CREATOR,
-  }
+  },
 );
 
 const emit = defineEmits<{
@@ -23,13 +23,14 @@ const modal = useModal();
 const { axios } = useApp();
 const toast = useToast();
 const { dayjs } = useDate();
+const { t } = useI18n();
 
 const loading = ref(false);
 
 const handleEndSuperDmClick = async () => {
   const confirmModal = modal.open(ConfirmModal, {
-    title: "End SuperDM",
-    text: "Messages can no longer be sent in this SuperDM after it is ended.",
+    title: t("endSuperDM"),
+    text: t("endSuperDMText"),
     color: "red",
     onConfirm: () => {
       handleEndSuperDm();
@@ -82,7 +83,7 @@ const handleEndSuperDm = async () => {
     v-if="superDm?.endedAt"
     class="text-xs text-pale flex flex-col items-end"
   >
-    <span> Ended at </span>
+    <span> {{ $t("endedAt") }} </span>
     <span>
       {{ dayjs(superDm.endedAt).format("L LT") }}
     </span>
@@ -95,7 +96,7 @@ const handleEndSuperDm = async () => {
     :loading="loading"
     @click="handleEndSuperDmClick"
   >
-    End SuperDM
+    {{ $t("endSuperDM") }}
   </UButton>
 </template>
 

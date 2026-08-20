@@ -111,7 +111,7 @@ const handleSubmit = async () => {
     }
 
     toast.add({
-      description: props.editable ? "Tip goal updated" : "Tip goal created",
+      description: props.editable ? t("tipGoalUpdated") : t("tipGoalCreated"),
       color: "green",
     });
     // await navigateTo(toStreamerTipGoal());
@@ -158,7 +158,7 @@ const { getValidationAttrs } = useValidations(v);
         </UFormGroup>
 
         <UFormGroup
-          label="Amount ( XMR )"
+          :label="$t('amountXMR')"
           :error="getValidationAttrs('amount').error"
         >
           <UInput
@@ -168,7 +168,7 @@ const { getValidationAttrs } = useValidations(v);
         </UFormGroup>
 
         <UFormGroup
-          label="Start"
+          :label="$t('start')"
           :error="getValidationAttrs('startTime').error"
         >
           <UInput
@@ -178,7 +178,10 @@ const { getValidationAttrs } = useValidations(v);
           />
         </UFormGroup>
 
-        <UFormGroup label="End" :error="getValidationAttrs('endTime').error">
+        <UFormGroup
+          :label="$t('end')"
+          :error="getValidationAttrs('endTime').error"
+        >
           <template #hint>
             <span class="text-xs">{{ $t("optional") }}</span>
           </template>
@@ -190,7 +193,7 @@ const { getValidationAttrs } = useValidations(v);
         </UFormGroup>
 
         <UFormGroup
-          label="Description"
+          :label="$t('description')"
           :error="getValidationAttrs('description').error"
         >
           <template #hint>
@@ -203,9 +206,9 @@ const { getValidationAttrs } = useValidations(v);
         </UFormGroup>
 
         <UFormGroup>
-          <UCheckbox v-model="state.form.isActive" label="Is Active">
+          <UCheckbox v-model="state.form.isActive" :label="$t('isActive')">
             <template #help>
-              Deactivated tip goal will not be displayed on your tip page.
+              {{ $t("isActiveHelp") }}
             </template>
           </UCheckbox>
         </UFormGroup>

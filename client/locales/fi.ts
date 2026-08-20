@@ -471,4 +471,74 @@ export default {
   repliedMessagePreview: "Vastatun viestin esikatselu",
   action: "Toiminto",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Juomarahatavoite päivitetty",
+  tipGoalCreated: "Juomarahatavoite luotu",
+  amountXMR: "Summa ( XMR )",
+  start: "Alku",
+  end: "Loppu",
+  isActive: "On aktiivinen",
+  isActiveHelp:
+    "Käytöstä poistettua juomarahatavoitetta ei näytetä juomarahasivullasi.",
+  timeIsEnded: "Aika on päättynyt",
+
+  // SUPER DM
+  amount: "Summa",
+  superDMAlertTitle: "SuperDM:ää ei voitu käynnistää",
+  startSuperDM: "Käynnistä SuperDM",
+  openSuperDM: "Avaa SuperDM",
+  endSuperDM: "Lopeta SuperDM",
+  endedAt: "Päättyi",
+  endSuperDMText:
+    "Tähän SuperDM:ään ei voi enää lähettää viestejä sen päätyttyä.",
+  saveSuperDMIdAndKeyTitle: "Tallenna SuperDM-tunnus ja palautuskoodi",
+  saveSuperDMIdAndKeyDes:
+    "Tallenna SuperDM-tunnus ja palautusavain. Avaimia ei voi käyttää uudelleen. Et voi palauttaa tai purkaa viestien salausta ilman niitä. XMRChat ei tallenna palautusavaimiasi.",
+  savedIdAndRecoveryCode: "Olen tallentanut tunnuksen ja palautusavaimen",
+  superDMKeysRecoveryTitle:
+    "Palautusavaimia ei ole tallennettu tähän selaimeen. Syötä tämän SuperDM:n muistilause palauttaaksesi viestit.",
+  superDMId: "SuperDM-tunnus: ",
+  mnemonicPhrase: "Muistilause",
+  enterYourMnemonicPhrase: "Syötä muistilauseesi",
+  recover: "Palauta",
+  encryptionKeys: "Salausavaimet",
+  backupRecoveryCode: "Varmuuskopioi palautuskoodisi",
+  backupRecoveryCodeDes:
+    "XMRChat tallentaa vain julkisen avaimesi. Palautuskoodisi säilyy laitteellasi.",
+  recoveryCode: "Palautuskoodi",
+  recoveryCodeDes:
+    "Syötä palautuskoodisi tai luo uudet avaimet. Et voi purkaa aiempien viestiesi salausta uusien avainten luomisen jälkeen.",
+  generateNew: "Luo uudet",
+  pleaseSaveYourRecoveryCode:
+    "Tallenna palautuskoodisi. Tarvitset sitä päästäksesi käsiksi salattuihin viesteihisi. Jos tyhjennät välimuistin tai käytät toista laitetta, sinun on syötettävä palautuskoodi.",
+  ISavedRecoveryCode: "Olen tallentanut palautuskoodin",
+  generateNewKeys: "Luo uudet avaimet",
+  generateNewKeysDes:
+    "Jos luot uudet avaimet, et voi purkaa aiempien viestiesi salausta. Uudet viestit salataan uusilla avaimilla.",
+  clickGenerateKeys: "Napsauta «Luo avaimet» määrittääksesi SuperDM-salauksen.",
+  beReadyToSaveRecoveryCode: "Valmistaudu tallentamaan palautuskoodisi.",
+  generateKeys: "Luo avaimet",
+  superDMIsEnded: "SuperDM on päättynyt.",
+  superDMIsEndedAt: "SuperDM päättyi {date}.",
+  sendAMessage: "Lähetä viesti...",
+  superDMNotConfiguredTitle: "SuperDM:iä ei ole määritetty.",
+  superDMNotConfiguredDes:
+    "SuperDM:ien käyttöönotto antaa faneillesi mahdollisuuden maksaa valitsemasi summan aloittaakseen yksityisen keskustelun kanssasi. Kyseessä on päästä päähän salattu keskustelu sinun ja fanin välillä, eikä kukaan muu näe näitä viestejä (emme edes me!). Ilmoitukset on otettava käyttöön, jotta saat ilmoituksen SuperDM:n saapuessa. Vastaa faneillesi nopeasti.",
+  configureSuperDMs: "Määritä SuperDM:t",
+  configureNotifications: "Määritä ilmoitukset",
+  showKeys: "Näytä avaimet",
+  continueSuperDM: "Jatka SuperDM:ää",
+  savedKeys: "Tallennetut avaimet",
+  useSavedKeys:
+    "Voit käyttää tallennettuja avaimia jatkaaksesi SuperDM-viestejä.",
+  use: "Käytä",
+  enterSuperDMIdAndRecoveryCode: "Syötä SuperDM-tunnus ja palautuskoodi.",
+  minSuperDMAmount: "SuperDM:n vähimmäissumma ( XMR )",
+  minSuperDMAmountHelp:
+    "Vähimmäissumma, jonka fanin on lähetettävä sinulle SuperDM:n aloittamiseksi.",
+  showRecoveryCode: "Näytä palautuskoodi",
+  superDMRecoveryCodesTitle: "SuperDM:n palautuskoodit",
+  superDMRecoveryCodesDes:
+    "Palautuskoodeja ei tallenneta palvelimelle. Tallenna palautuskoodisi. Tarvitset palautuskoodin ja SuperDM-tunnuksen päästäksesi käsiksi salattuihin viesteihisi. Jos tyhjennät välimuistin tai käytät toista laitetta, sinun on syötettävä palautuskoodi.",
 };

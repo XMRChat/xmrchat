@@ -31,7 +31,7 @@ const handleRecover = async () => {
     }
     const samePrivateKeys = await validateSamePrivateKeys(
       keys.publicKeyArmored,
-      props.superDmPublicKeyArmored
+      props.superDmPublicKeyArmored,
     );
 
     if (!samePrivateKeys) throw createError("Invalid recovery code");
@@ -52,7 +52,7 @@ const v = useVuelidate<any>(
   {
     recoveryKey: { required },
   },
-  state
+  state,
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -61,26 +61,25 @@ const { getValidationAttrs } = useValidations(v);
 <template>
   <div class="max-w-[600px] mx-auto grid gap-4">
     <p class="">
-      The recovery keys are not saved on this browser. Please enter the mnemonic
-      phrase for this SuperDM to recover the messages.
+      {{ $t("superDMKeysRecoveryTitle") }}
     </p>
     <p class="">
-      <span class="font-medium">SuperDM id: </span>
+      <span class="font-medium">{{ $t("superDMId") }}</span>
       <span class="">{{ superDmId }}</span>
     </p>
     <GeneralForm>
       <UFormGroup
-        label="Mnemonic phrase"
+        :label="$t('mnemonicPhrase')"
         :error="getValidationAttrs('recoveryKey').error"
       >
         <UInput
           v-model="state.recoveryKey"
-          placeholder="Enter your mnemonic phrase"
+          :placeholder="$t('enterYourMnemonicPhrase')"
           @blur="getValidationAttrs('recoveryKey').onBlur"
         />
       </UFormGroup>
       <div class="flex justify-center mt-4">
-        <UButton @click="handleRecover">Recover</UButton>
+        <UButton @click="handleRecover">{{ $t("recover") }}</UButton>
       </div>
     </GeneralForm>
   </div>

@@ -491,4 +491,79 @@ export default {
   repliedMessagePreview: "Aperçu du message répondu",
   action: "Action",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Objectif de pourboire mis à jour",
+  tipGoalCreated: "Objectif de pourboire créé",
+  amountXMR: "Montant ( XMR )",
+  start: "Début",
+  end: "Fin",
+  isActive: "Est actif",
+  isActiveHelp:
+    "Un objectif de pourboire désactivé ne sera pas affiché sur votre page de pourboires.",
+  timeIsEnded: "Le temps est écoulé",
+
+  // SUPER DM
+  amount: "Montant",
+  superDMAlertTitle: "SuperDM n’a pas pu être démarré",
+  startSuperDM: "Démarrer le SuperDM",
+  openSuperDM: "Ouvrir le SuperDM",
+  endSuperDM: "Terminer le SuperDM",
+  endedAt: "Terminé à",
+  endSuperDMText:
+    "Les messages ne peuvent plus être envoyés dans ce SuperDM après sa fin.",
+  saveSuperDMIdAndKeyTitle:
+    "Enregistrer l’identifiant et le code de récupération du SuperDM",
+  saveSuperDMIdAndKeyDes:
+    "Veuillez enregistrer l’identifiant du SuperDM et la clé de récupération. Les clés ne peuvent pas être réutilisées. Vous ne pourrez pas récupérer/déchiffrer les messages sans elles. XMRChat ne stockera pas vos clés de récupération.",
+  savedIdAndRecoveryCode:
+    "J’ai enregistré l’identifiant et la clé de récupération",
+  superDMKeysRecoveryTitle:
+    "Les clés de récupération ne sont pas enregistrées sur ce navigateur. Veuillez saisir la phrase mnémonique de ce SuperDM pour récupérer les messages.",
+  superDMId: "Identifiant du SuperDM : ",
+  mnemonicPhrase: "Phrase mnémonique",
+  enterYourMnemonicPhrase: "Saisissez votre phrase mnémonique",
+  recover: "Récupérer",
+  encryptionKeys: "Clés de chiffrement",
+  backupRecoveryCode: "Sauvegarder votre code de récupération",
+  backupRecoveryCodeDes:
+    "XMRChat ne stocke que votre clé publique. Votre code de récupération reste sur votre appareil.",
+  recoveryCode: "Code de récupération",
+  recoveryCodeDes:
+    "Saisissez votre code de récupération ou générez de nouvelles clés. Vous ne pourrez pas déchiffrer vos anciens messages après avoir généré de nouvelles clés.",
+  generateNew: "Générer de nouvelles",
+  pleaseSaveYourRecoveryCode:
+    "Veuillez enregistrer votre code de récupération. Vous en aurez besoin pour accéder à vos messages chiffrés. Si vous videz le cache ou utilisez un autre appareil, vous devrez saisir le code de récupération.",
+  ISavedRecoveryCode: "J’ai enregistré le code de récupération",
+  generateNewKeys: "Générer de nouvelles clés",
+  generateNewKeysDes:
+    "Si vous générez de nouvelles clés, vous ne pourrez pas déchiffrer vos anciens messages. Les nouveaux messages seront chiffrés avec les nouvelles clés.",
+  clickGenerateKeys:
+    "Cliquez sur « Générer les clés » pour configurer le chiffrement du SuperDM.",
+  beReadyToSaveRecoveryCode:
+    "Veuillez être prêt à enregistrer votre code de récupération.",
+  generateKeys: "Générer les clés",
+  superDMIsEnded: "Le SuperDM est terminé.",
+  superDMIsEndedAt: "Le SuperDM s’est terminé à {date}.",
+  sendAMessage: "Envoyer un message...",
+  superDMNotConfiguredTitle: "Les SuperDM ne sont pas configurés.",
+  superDMNotConfiguredDes:
+    "L’activation des SuperDM permettra à vos fans de vous envoyer le montant de leur choix pour démarrer une conversation privée avec vous. Il s’agit d’un chat chiffré de bout en bout entre vous et votre fan ; personne d’autre ne peut voir ces messages (pas même nous !). Les notifications doivent être activées pour cette fonctionnalité afin que vous soyez averti lorsqu’un SuperDM arrive. Veuillez répondre rapidement à vos fans.",
+  configureSuperDMs: "Configurer les SuperDM",
+  configureNotifications: "Configurer les notifications",
+  showKeys: "Afficher les clés",
+  continueSuperDM: "Continuer le SuperDM",
+  savedKeys: "Clés enregistrées",
+  useSavedKeys:
+    "Vous pouvez utiliser les clés enregistrées pour continuer les messages du SuperDM.",
+  use: "Utiliser",
+  enterSuperDMIdAndRecoveryCode:
+    "Saisissez l’identifiant du SuperDM et le code de récupération.",
+  minSuperDMAmount: "Montant minimum du SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "Montant minimum qu’un fan doit vous envoyer pour démarrer un SuperDM.",
+  showRecoveryCode: "Afficher le code de récupération",
+  superDMRecoveryCodesTitle: "Codes de récupération du SuperDM",
+  superDMRecoveryCodesDes:
+    "Les codes de récupération ne sont pas enregistrés sur le serveur. Veuillez enregistrer votre code de récupération. Vous aurez besoin du code de récupération et de l’identifiant du SuperDM pour accéder à vos messages chiffrés. Si vous videz le cache ou utilisez un autre appareil, vous devrez saisir le code de récupération.",
 };

@@ -467,4 +467,73 @@ export default {
   repliedMessagePreview: "Replied message preview",
   action: "Action",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Tip goal don update",
+  tipGoalCreated: "Tip goal don create",
+  amountXMR: "Amount ( XMR )",
+  start: "Start",
+  end: "End",
+  isActive: "E dey active",
+  isActiveHelp: "If you deactivate tip goal, e no go show for your tip page.",
+  timeIsEnded: "Time don finish",
+
+  // SUPER DM
+  amount: "Amount",
+  superDMAlertTitle: "SuperDM no fit start",
+  startSuperDM: "Start SuperDM",
+  openSuperDM: "Open SuperDM",
+  endSuperDM: "End SuperDM",
+  endedAt: "E end for",
+  endSuperDMText:
+    "People no fit send message for this SuperDM again after e don end.",
+  saveSuperDMIdAndKeyTitle: "Save SuperDM ID and Recovery Code",
+  saveSuperDMIdAndKeyDes:
+    "Abeg save SuperDM ID and Recovery Key. You no fit use the keys again. You no go fit recover or decrypt the messages without them. XMRChat no go store your recovery keys.",
+  savedIdAndRecoveryCode: "I don save the ID and recovery key",
+  superDMKeysRecoveryTitle:
+    "The recovery keys no dey saved for this browser. Abeg enter the mnemonic phrase for this SuperDM to recover the messages.",
+  superDMId: "SuperDM ID: ",
+  mnemonicPhrase: "Mnemonic phrase",
+  enterYourMnemonicPhrase: "Enter your mnemonic phrase",
+  recover: "Recover",
+  encryptionKeys: "Encryption Keys",
+  backupRecoveryCode: "Back up your recovery code",
+  backupRecoveryCodeDes:
+    "XMRChat only dey store your public key. Your recovery code dey remain for your device.",
+  recoveryCode: "Recovery Code",
+  recoveryCodeDes:
+    "Enter your recovery code or generate new keys. You no go fit decrypt your old messages after you generate new keys.",
+  generateNew: "Generate new",
+  pleaseSaveYourRecoveryCode:
+    "Abeg save your recovery code. You go need am to access your encrypted messages. If you clear cache or use another device, you go need enter the recovery code.",
+  ISavedRecoveryCode: "I don save the recovery code",
+  generateNewKeys: "Generate new keys",
+  generateNewKeysDes:
+    "If you generate new keys, you no go fit decrypt your old messages. New messages go dey encrypted with the new keys.",
+  clickGenerateKeys: "Click generate keys to set up SuperDM encryption.",
+  beReadyToSaveRecoveryCode:
+    "Abeg make sure say you ready to save your recovery code.",
+  generateKeys: "Generate keys",
+  superDMIsEnded: "SuperDM don end.",
+  superDMIsEndedAt: "SuperDM don end for {date}.",
+  sendAMessage: "Send message...",
+  superDMNotConfiguredTitle: "SuperDMs never dey configured.",
+  superDMNotConfiguredDes:
+    "If you enable SuperDMs, your fans go fit pay you any amount wey you choose to start private conversation with you. Na end-to-end encrypted chat between you and the fan, and nobody else fit see the messages (not even us!). You need enable notifications for this feature so you go know when SuperDM enter. Abeg reply your fans quickly.",
+  configureSuperDMs: "Configure SuperDMs",
+  configureNotifications: "Configure Notifications",
+  showKeys: "Show keys",
+  continueSuperDM: "Continue SuperDM",
+  savedKeys: "Saved keys",
+  useSavedKeys: "You fit use the saved keys to continue the SuperDM messages.",
+  use: "Use",
+  enterSuperDMIdAndRecoveryCode: "Enter the SuperDM ID and recovery code.",
+  minSuperDMAmount: "Min. SuperDM amount ( XMR )",
+  minSuperDMAmountHelp:
+    "The minimum amount wey fan need send you to start SuperDM.",
+  showRecoveryCode: "Show Recovery Code",
+  superDMRecoveryCodesTitle: "SuperDM recovery codes",
+  superDMRecoveryCodesDes:
+    "The recovery codes no dey saved for the server. Abeg save your recovery code. You go need the recovery code and SuperDM ID to access your encrypted messages. If you clear cache or use another device, you go need enter the recovery code.",
 };

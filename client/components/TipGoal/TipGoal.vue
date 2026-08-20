@@ -142,7 +142,9 @@ const isCompleted = computed(() => {
           }}</span>
         </div>
         <div>
-          <span v-if="isEnded" class="text-sm text-pale">Time is ended</span>
+          <span v-if="isEnded" class="text-sm text-pale">{{
+            $t("timeIsEnded")
+          }}</span>
           <span v-else class="text-sm text-pale">{{ timeLeft }}</span>
         </div>
       </div>
