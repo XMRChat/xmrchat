@@ -196,11 +196,16 @@ const { getValidationAttrs } = useValidations(v);
         </template>
 
         <UAlert color="primary" variant="subtle">
-          <template #description> </template>
+          <template #description>
+            If you generate new keys you will not be able to decrypt your
+            previous messages. New messages will be encrypted with the new keys.
+          </template>
         </UAlert>
         <div class="grid gap-2 mt-6">
           <p>
-            {{ $t("generateNewKeysDes") }}
+            <!-- {{ $t("generateNewKeysDes") }} -->
+            If you forgot your recovery code or it is your first time using
+            SuperDM, you can generate new encryption keys.
           </p>
           <p>{{ $t("clickGenerateKeys") }}</p>
           <p class="pt-4 text-sm text-pale">
