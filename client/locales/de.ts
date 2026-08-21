@@ -63,6 +63,8 @@ export default {
   heroDescription: "Unterstütze deinen Lieblings-Streamer mit Kryptowährung",
   findCreators: "Creator finden",
   creatorsStartHere: "Creator starten hier",
+  fansTippingStats:
+    "Fans haben {tipsCount} Superchats im Gesamtwert von {totalAmount} Monero ({fiatAmount}) an {pagesCount} Content-Creator mit XMRChat gesendet!",
 
   FAQ: {
     title: "FAQ",

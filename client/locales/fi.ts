@@ -61,6 +61,8 @@ export default {
   heroDescription: "Tue suosikkistriimaajaasi Monerolla.",
   findCreators: "Etsi sisällöntuottajia",
   creatorsStartHere: "Sisällöntuottajille: Aloita tästä",
+  fansTippingStats:
+    "Fanien lähettämien superchatien määrä on {tipsCount}, на общую сумму {totalAmount} Monero ({fiatAmount}), {pagesCount} sisällöntuottajalle XMRChatin kautta!",
 
   FAQ: {
     title: "Usein kysytyt kysymykset",

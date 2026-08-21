@@ -63,6 +63,8 @@ export default {
   heroDescription: "De propinas en criptomonedas a sus streamers favoritos.",
   findCreators: "Encontrar creadores",
   creatorsStartHere: "Los creadores comienzan aquí",
+  fansTippingStats:
+    "¡Los fans han enviado {tipsCount} superchats por un total de {totalAmount} Monero ({fiatAmount}) a {pagesCount} creadores de contenido con XMRChat!",
 
   FAQ: {
     title: "Preguntas frecuentes",

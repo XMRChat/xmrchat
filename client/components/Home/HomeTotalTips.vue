@@ -19,23 +19,34 @@ const totalAmountFiat = computed(() => {
 <template>
   <div class="bg-primary text-white py-1 px-1.5">
     <div class="inner flex items-center justify-center">
-      <div class="text-sm">
-        Fans have sent
-        <USkeleton v-if="pending" class="skeleton-inline w-8" />
-        <span v-else class="font-bold">{{ totalTips?.tipsCount }}</span>
-        superchats totaling
-        <USkeleton v-if="pending" class="skeleton-inline w-12" />
-        <span v-else class="font-bold">{{
-          totalTips?.totalAmount?.toFixed(2)
-        }}</span>
-        Monero
-        <USkeleton v-if="pending" class="skeleton-inline w-12" />
-        <span v-else class="font-bold"> (${{ totalAmountFiat }}) </span>
-        to
-        <USkeleton v-if="pending" class="skeleton-inline w-8" />
-        <span v-else class="font-bold">{{ totalTips?.pagesCount }}</span>
-        content creators with XMRChat!
-      </div>
+      <I18nT
+        keypath="fansTippingStats"
+        tag="div"
+        class="text-sm"
+        scope="global"
+      >
+        <template #tipsCount>
+          <USkeleton v-if="pending" class="skeleton-inline w-8" />
+          <span v-else class="font-bold">{{ totalTips?.tipsCount }}</span>
+        </template>
+
+        <template #totalAmount>
+          <USkeleton v-if="pending" class="skeleton-inline w-12" />
+          <span v-else class="font-bold">{{
+            totalTips?.totalAmount?.toFixed(2)
+          }}</span>
+        </template>
+
+        <template #fiatAmount>
+          <USkeleton v-if="pending" class="skeleton-inline w-12" />
+          <span v-else class="font-bold">${{ totalAmountFiat }}</span>
+        </template>
+
+        <template #pagesCount>
+          <USkeleton v-if="pending" class="skeleton-inline w-8" />
+          <span v-else class="font-bold">{{ totalTips?.pagesCount }}</span>
+        </template>
+      </I18nT>
     </div>
   </div>
 </template>

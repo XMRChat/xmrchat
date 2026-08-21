@@ -65,6 +65,8 @@ export default {
     "Offrez des pourboires en cryptomonnaie à vos streamers préférés.",
   findCreators: "Trouver des Créateurs",
   creatorsStartHere: "Les Créateurs commencent ici",
+  fansTippingStats:
+    "Les fans ont envoyé {tipsCount} superchats pour un total de {totalAmount} Monero ({fiatAmount}) à {pagesCount} créateurs de contenu avec XMRChat !",
 
   FAQ: {
     title: "FAQ",

@@ -61,6 +61,8 @@ export default {
   heroDescription: "Podpořte svého oblíbeného streamera kryptoměnou.",
   findCreators: "Najít tvůrce",
   creatorsStartHere: "Tvůrci začínají zde",
+  fansTippingStats:
+    "Fanoušci poslali {tipsCount} superchatů v celkové hodnotě {totalAmount} Monero ({fiatAmount}) {pagesCount} tvůrcům obsahu prostřednictvím XMRChat!",
 
   FAQ: {
     title: "Často kladené dotazy",

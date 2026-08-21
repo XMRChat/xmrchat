@@ -63,6 +63,8 @@ export default {
   heroDescription: "Поддержите любимого стримера криптовалютой.",
   findCreators: "Найти авторов",
   creatorsStartHere: "Начало для авторов",
+  fansTippingStats:
+    "Поклонники отправили {tipsCount} суперчатов на общую сумму {totalAmount} Monero ({fiatAmount}) {pagesCount} создателям контента с помощью XMRChat!",
 
   FAQ: {
     title: "Часто задаваемые вопросы",
