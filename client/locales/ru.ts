@@ -63,6 +63,8 @@ export default {
   heroDescription: "Поддержите любимого стримера криптовалютой.",
   findCreators: "Найти авторов",
   creatorsStartHere: "Начало для авторов",
+  fansTippingStats:
+    "Поклонники отправили {tipsCount} суперчатов на общую сумму {totalAmount} Monero ({fiatAmount}) {pagesCount} создателям контента с помощью XMRChat!",
 
   FAQ: {
     title: "Часто задаваемые вопросы",
@@ -471,4 +473,76 @@ export default {
   repliedMessagePreview: "Предпросмотр ответа",
   action: "Действие",
   premium: "Премиум",
+
+  // TIP GOAL
+  tipGoalUpdated: "Цель чаевых обновлена",
+  tipGoalCreated: "Цель чаевых создана",
+  amountXMR: "Сумма ( XMR )",
+  start: "Начало",
+  end: "Конец",
+  isActive: "Активна",
+  isActiveHelp:
+    "Деактивированная цель чаевых не будет отображаться на вашей странице чаевых.",
+  timeIsEnded: "Время истекло",
+
+  // SUPER DM
+  amount: "Сумма",
+  superDMAlertTitle: "Не удалось запустить SuperDM",
+  startSuperDM: "Запустить SuperDM",
+  openSuperDM: "Открыть SuperDM",
+  endSuperDM: "Завершить SuperDM",
+  endedAt: "Завершено в",
+  endSuperDMText:
+    "После завершения этого SuperDM отправка сообщений будет недоступна.",
+  saveSuperDMIdAndKeyTitle: "Сохранить ID SuperDM и код восстановления",
+  saveSuperDMIdAndKeyDes:
+    "Пожалуйста, сохраните ID SuperDM и ключ восстановления. Ключи нельзя использовать повторно. Без них вы не сможете восстановить или расшифровать сообщения. XMRChat не будет хранить ваши ключи восстановления.",
+  savedIdAndRecoveryCode: "Я сохранил ID и ключ восстановления",
+  superDMKeysRecoveryTitle:
+    "Ключи восстановления не сохранены в этом браузере. Введите мнемоническую фразу для этого SuperDM, чтобы восстановить сообщения.",
+  superDMId: "ID SuperDM: ",
+  mnemonicPhrase: "Мнемоническая фраза",
+  enterYourMnemonicPhrase: "Введите вашу мнемоническую фразу",
+  recover: "Восстановить",
+  encryptionKeys: "Ключи шифрования",
+  backupRecoveryCode: "Сохраните резервную копию кода восстановления",
+  backupRecoveryCodeDes:
+    "XMRChat хранит только ваш открытый ключ. Код восстановления остается на вашем устройстве.",
+  recoveryCode: "Код восстановления",
+  recoveryCodeDes:
+    "Введите код восстановления или создайте новые ключи. После создания новых ключей вы не сможете расшифровать предыдущие сообщения.",
+  generateNew: "Создать новые",
+  pleaseSaveYourRecoveryCode:
+    "Пожалуйста, сохраните код восстановления. Он понадобится для доступа к вашим зашифрованным сообщениям. Если вы очистите кеш или используете другое устройство, вам потребуется ввести код восстановления.",
+  ISavedRecoveryCode: "Я сохранил код восстановления",
+  generateNewKeys: "Создать новые ключи",
+  generateNewKeysDes:
+    "Если вы создадите новые ключи, вы не сможете расшифровать предыдущие сообщения. Новые сообщения будут зашифрованы с помощью новых ключей.",
+  clickGenerateKeys:
+    "Нажмите «Создать ключи», чтобы настроить шифрование SuperDM.",
+  beReadyToSaveRecoveryCode:
+    "Пожалуйста, будьте готовы сохранить код восстановления.",
+  generateKeys: "Создать ключи",
+  superDMIsEnded: "SuperDM завершён.",
+  superDMIsEndedAt: "SuperDM завершён в {date}.",
+  sendAMessage: "Отправить сообщение...",
+  superDMNotConfiguredTitle: "SuperDM не настроен.",
+  superDMNotConfiguredDes:
+    "Включение SuperDM позволит вашим поклонникам отправлять вам выбранную вами сумму за возможность начать приватный разговор с вами. Это чат с сквозным шифрованием между вами и поклонником; никто другой не видит эти сообщения (даже мы!). Для этой функции необходимо включить уведомления, чтобы вы получали уведомление при поступлении SuperDM. Пожалуйста, отвечайте своим поклонникам быстро.",
+  configureSuperDMs: "Настроить SuperDM",
+  configureNotifications: "Настроить уведомления",
+  showKeys: "Показать ключи",
+  continueSuperDM: "Продолжить SuperDM",
+  savedKeys: "Сохранённые ключи",
+  useSavedKeys:
+    "Вы можете использовать сохранённые ключи, чтобы продолжить сообщения SuperDM.",
+  use: "Использовать",
+  enterSuperDMIdAndRecoveryCode: "Введите ID SuperDM и код восстановления.",
+  minSuperDMAmount: "Минимальная сумма SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "Минимальная сумма, которую поклонник должен отправить вам, чтобы начать SuperDM.",
+  showRecoveryCode: "Показать код восстановления",
+  superDMRecoveryCodesTitle: "Коды восстановления SuperDM",
+  superDMRecoveryCodesDes:
+    "Коды восстановления не сохраняются на сервере. Пожалуйста, сохраните код восстановления. Для доступа к зашифрованным сообщениям вам понадобятся код восстановления и ID SuperDM. Если вы очистите кеш или используете другое устройство, вам потребуется ввести код восстановления.",
 };

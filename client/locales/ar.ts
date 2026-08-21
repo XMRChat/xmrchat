@@ -60,6 +60,8 @@ export default {
   heroDescription: "تبرّع لصانع المحتوى المفضل لديك بالعملات المشفرة",
   findCreators: "البحث عن صانعي المحتوى",
   creatorsStartHere: "اشترك الآن",
+  fansTippingStats:
+    "أرسل المعجبون {tipsCount} من رسائل Superchat بقيمة إجمالية قدرها {totalAmount} Monero ({fiatAmount}) إلى {pagesCount} من منشئي المحتوى عبر XMRChat!",
 
   FAQ: {
     title: "الأسئلة الشائعة",
@@ -463,4 +465,71 @@ export default {
   repliedMessagePreview: "معاينة الرسالة المُرد عليها",
   action: "إجراء",
   premium: "بريميوم",
+
+  // TIP GOAL
+  tipGoalUpdated: "تم تحديث هدف الإكرامية",
+  tipGoalCreated: "تم إنشاء هدف الإكرامية",
+  amountXMR: "المبلغ ( XMR )",
+  start: "البداية",
+  end: "النهاية",
+  isActive: "نشط",
+  isActiveHelp: "لن يظهر هدف الإكرامية المُعطّل في صفحة الإكراميات الخاصة بك.",
+  timeIsEnded: "انتهى الوقت",
+
+  // SUPER DM
+  amount: "المبلغ",
+  superDMAlertTitle: "تعذّر بدء SuperDM",
+  startSuperDM: "بدء SuperDM",
+  openSuperDM: "فتح SuperDM",
+  endSuperDM: "إنهاء SuperDM",
+  endedAt: "انتهى في",
+  endSuperDMText: "لا يمكن إرسال رسائل جديدة في هذا الـ SuperDM بعد إنهائه.",
+  saveSuperDMIdAndKeyTitle: "حفظ معرّف SuperDM ورمز الاسترداد",
+  saveSuperDMIdAndKeyDes:
+    "يرجى حفظ معرّف SuperDM ومفتاح الاسترداد. لا يمكن إعادة استخدام المفاتيح. لن تتمكن من استرداد الرسائل أو فك تشفيرها بدونهما. لن يقوم XMRChat بتخزين مفاتيح الاسترداد الخاصة بك.",
+  savedIdAndRecoveryCode: "لقد حفظت المعرّف ومفتاح الاسترداد",
+  superDMKeysRecoveryTitle:
+    "مفاتيح الاسترداد غير محفوظة في هذا المتصفح. يرجى إدخال العبارة التذكيرية الخاصة بهذا الـ SuperDM لاسترداد الرسائل.",
+  superDMId: "معرّف SuperDM: ",
+  mnemonicPhrase: "العبارة التذكيرية",
+  enterYourMnemonicPhrase: "أدخل العبارة التذكيرية الخاصة بك",
+  recover: "استرداد",
+  encryptionKeys: "مفاتيح التشفير",
+  backupRecoveryCode: "انسخ رمز الاسترداد احتياطيًا",
+  backupRecoveryCodeDes:
+    "يخزّن XMRChat مفتاحك العام فقط. يبقى رمز الاسترداد على جهازك.",
+  recoveryCode: "رمز الاسترداد",
+  recoveryCodeDes:
+    "أدخل رمز الاسترداد الخاص بك أو أنشئ مفاتيح جديدة. لن تتمكن من فك تشفير رسائلك السابقة بعد إنشاء مفاتيح جديدة.",
+  generateNew: "إنشاء جديد",
+  pleaseSaveYourRecoveryCode:
+    "يرجى حفظ رمز الاسترداد الخاص بك. ستحتاج إليه للوصول إلى رسائلك المشفّرة. إذا مسحت ذاكرة التخزين المؤقت أو استخدمت جهازًا مختلفًا، فستحتاج إلى إدخال رمز الاسترداد.",
+  ISavedRecoveryCode: "لقد حفظت رمز الاسترداد",
+  generateNewKeys: "إنشاء مفاتيح جديدة",
+  generateNewKeysDes:
+    "إذا أنشأت مفاتيح جديدة، فلن تتمكن من فك تشفير رسائلك السابقة. سيتم تشفير الرسائل الجديدة باستخدام المفاتيح الجديدة.",
+  clickGenerateKeys: "انقر على «إنشاء المفاتيح» لإعداد تشفير SuperDM.",
+  beReadyToSaveRecoveryCode: "يرجى الاستعداد لحفظ رمز الاسترداد الخاص بك.",
+  generateKeys: "إنشاء المفاتيح",
+  superDMIsEnded: "انتهى SuperDM.",
+  superDMIsEndedAt: "انتهى SuperDM في {date}.",
+  sendAMessage: "إرسال رسالة...",
+  superDMNotConfiguredTitle: "لم يتم إعداد SuperDM.",
+  superDMNotConfiguredDes:
+    "سيتيح تفعيل SuperDM للمعجبين دفع مبلغ تختاره لبدء محادثة خاصة معك. هذه محادثة مشفّرة من طرف إلى طرف بينك وبين المعجب، ولا يمكن لأي شخص آخر رؤية هذه الرسائل (ولا حتى نحن!). يجب تفعيل الإشعارات لهذه الميزة حتى يتم إعلامك عند وصول SuperDM. يرجى الرد على معجبيك بسرعة.",
+  configureSuperDMs: "إعداد SuperDM",
+  configureNotifications: "إعداد الإشعارات",
+  showKeys: "إظهار المفاتيح",
+  continueSuperDM: "متابعة SuperDM",
+  savedKeys: "المفاتيح المحفوظة",
+  useSavedKeys: "يمكنك استخدام المفاتيح المحفوظة لمتابعة رسائل SuperDM.",
+  use: "استخدام",
+  enterSuperDMIdAndRecoveryCode: "أدخل معرّف SuperDM ورمز الاسترداد.",
+  minSuperDMAmount: "الحد الأدنى لمبلغ SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "الحد الأدنى للمبلغ الذي يجب أن يرسله المعجب إليك لبدء SuperDM.",
+  showRecoveryCode: "إظهار رمز الاسترداد",
+  superDMRecoveryCodesTitle: "رموز استرداد SuperDM",
+  superDMRecoveryCodesDes:
+    "لا يتم حفظ رموز الاسترداد على الخادم. يرجى حفظ رمز الاسترداد الخاص بك. ستحتاج إلى رمز الاسترداد ومعرّف SuperDM للوصول إلى رسائلك المشفّرة. إذا مسحت ذاكرة التخزين المؤقت أو استخدمت جهازًا مختلفًا، فستحتاج إلى إدخال رمز الاسترداد.",
 };

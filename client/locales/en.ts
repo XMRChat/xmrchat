@@ -63,6 +63,8 @@ export default {
   heroDescription: "Tip your favorite streamer in cryptocurrency.",
   findCreators: "Find Creators",
   creatorsStartHere: "Creators Start Here",
+  fansTippingStats:
+    "Fans have sent {tipsCount} superchats totaling {totalAmount} Monero ({fiatAmount}) to {pagesCount} content creators with XMRChat!",
 
   FAQ: {
     title: "FAQ",
@@ -482,4 +484,72 @@ export default {
   repliedMessagePreview: "Replied message preview",
   action: "Action",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Tip goal updated",
+  tipGoalCreated: "Tip goal created",
+  amountXMR: "Amount ( XMR )",
+  start: "Start",
+  end: "End",
+  isActive: "Is Active",
+  isActiveHelp: "Deactivated tip goal will not be displayed on your tip page.",
+  timeIsEnded: "Time is ended",
+
+  // SUPER DM
+  amount: "Amount",
+  superDMAlertTitle: "SuperDM could not be started",
+  startSuperDM: "Start SuperDM",
+  openSuperDM: "Open SuperDM",
+  endSuperDM: "End SuperDM",
+  endedAt: "Ended at",
+  endSuperDMText:
+    "Messages can no longer be sent in this SuperDM after it is ended.",
+  saveSuperDMIdAndKeyTitle: "Save SuperDM id and Recovery code",
+  saveSuperDMIdAndKeyDes:
+    "Please save SuperDM id and Recovery key. The keys can not be reused. You will not be able to recover/decrypt the messages without them. XMRChat will not store your recovery keys.",
+  savedIdAndRecoveryCode: "I saved id and recovery key",
+  superDMKeysRecoveryTitle:
+    "The recovery keys are not saved on this browser. Please enter the mnemonic phrase for this SuperDM to recover the messages.",
+  superDMId: "SuperDM id: ",
+  mnemonicPhrase: "Mnemonic phrase",
+  enterYourMnemonicPhrase: "Enter your mnemonic phrase",
+  recover: "Recover",
+  encryptionKeys: "Encryption Keys",
+  backupRecoveryCode: "Backup your recovery code",
+  backupRecoveryCodeDes:
+    "XMRChat only stores your public key. Your recovery code remains on your device.",
+  recoveryCode: "Recovery Code",
+  recoveryCodeDes:
+    "Enter your recovery code or generate new keys. You won't be able to decrypt your previous messages after generating new keys.",
+  generateNew: "Generate new",
+  pleaseSaveYourRecoveryCode:
+    "Please save your recovery code. You will need the recovery code to access your encrypted messages. If you clear cache or use different device you will need to enter the recovery code.",
+  ISavedRecoveryCode: "I saved the recovery code",
+  generateNewKeys: "Generate new keys",
+  generateNewKeysDes:
+    "If you generate new keys you will not be able to decrypt your previous messages. New messages will be encrypted with the new keys.",
+  clickGenerateKeys: "Click generate keys to setup the SuperDM encryption.",
+  beReadyToSaveRecoveryCode: "Please be ready to save your recovery code.",
+  generateKeys: "Generate keys",
+  superDMIsEnded: "SuperDM is ended.",
+  superDMIsEndedAt: "SuperDM is ended at {date}.",
+  sendAMessage: "Send a message...",
+  superDMNotConfiguredTitle: "SuperDMs are not configured.",
+  superDMNotConfiguredDes:
+    "Enabling SuperDMs will allow fans to pay you an amount you choose for the ability to start a private conversation with you. This is an end to end encrypted chat between you and the fan, no one else sees these messages (not even us!). Notifications need to be enabled for this feature so you are notified when a SuperDM arrives. Please respond quickly to your fans.",
+  configureSuperDMs: "Configure SuperDMs",
+  configureNotifications: "Configure Notifications",
+  showKeys: "Show keys",
+  continueSuperDM: "Continue SuperDM",
+  savedKeys: "Saved keys",
+  useSavedKeys: "You can use the saved keys to continue the SuperDM messages.",
+  use: "Use",
+  enterSuperDMIdAndRecoveryCode: "Enter the SuperDM id and recovery code.",
+  minSuperDMAmount: "Min. SuperDM amount ( XMR )",
+  minSuperDMAmountHelp:
+    "The minimum amount a fan needs to send to you to start a SuperDM.",
+  showRecoveryCode: "Show Recovery Code",
+  superDMRecoveryCodesTitle: "SuperDM recovery codes",
+  superDMRecoveryCodesDes:
+    "The recovery codes are not saved on the server. Please save the recovery code. You will need the recovery code and SuperDM id to access your encrypted messages. If you clear cache or use different device you will need to enter the recovery code.",
 };

@@ -63,6 +63,8 @@ export default {
   heroDescription: "De propinas en criptomonedas a sus streamers favoritos.",
   findCreators: "Encontrar creadores",
   creatorsStartHere: "Los creadores comienzan aquí",
+  fansTippingStats:
+    "¡Los fans han enviado {tipsCount} superchats por un total de {totalAmount} Monero ({fiatAmount}) a {pagesCount} creadores de contenido con XMRChat!",
 
   FAQ: {
     title: "Preguntas frecuentes",
@@ -480,4 +482,78 @@ export default {
   repliedMessagePreview: "Vista previa del mensaje respondido",
   action: "Acción",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Objetivo de propina actualizado",
+  tipGoalCreated: "Objetivo de propina creado",
+  amountXMR: "Cantidad ( XMR )",
+  start: "Inicio",
+  end: "Fin",
+  isActive: "Está activo",
+  isActiveHelp:
+    "Un objetivo de propina desactivado no se mostrará en tu página de propinas.",
+  timeIsEnded: "El tiempo ha terminado",
+
+  // SUPER DM
+  amount: "Cantidad",
+  superDMAlertTitle: "No se pudo iniciar SuperDM",
+  startSuperDM: "Iniciar SuperDM",
+  openSuperDM: "Abrir SuperDM",
+  endSuperDM: "Finalizar SuperDM",
+  endedAt: "Finalizado a las",
+  endSuperDMText:
+    "Ya no se pueden enviar mensajes en este SuperDM una vez finalizado.",
+  saveSuperDMIdAndKeyTitle:
+    "Guardar el ID y el código de recuperación de SuperDM",
+  saveSuperDMIdAndKeyDes:
+    "Guarda el ID de SuperDM y la clave de recuperación. Las claves no se pueden reutilizar. No podrás recuperar/descifrar los mensajes sin ellas. XMRChat no almacenará tus claves de recuperación.",
+  savedIdAndRecoveryCode: "He guardado el ID y la clave de recuperación",
+  superDMKeysRecoveryTitle:
+    "Las claves de recuperación no están guardadas en este navegador. Introduce la frase mnemónica de este SuperDM para recuperar los mensajes.",
+  superDMId: "ID de SuperDM: ",
+  mnemonicPhrase: "Frase mnemónica",
+  enterYourMnemonicPhrase: "Introduce tu frase mnemónica",
+  recover: "Recuperar",
+  encryptionKeys: "Claves de cifrado",
+  backupRecoveryCode: "Haz una copia de seguridad de tu código de recuperación",
+  backupRecoveryCodeDes:
+    "XMRChat solo almacena tu clave pública. Tu código de recuperación permanece en tu dispositivo.",
+  recoveryCode: "Código de recuperación",
+  recoveryCodeDes:
+    "Introduce tu código de recuperación o genera nuevas claves. No podrás descifrar tus mensajes anteriores después de generar nuevas claves.",
+  generateNew: "Generar nuevas",
+  pleaseSaveYourRecoveryCode:
+    "Guarda tu código de recuperación. Lo necesitarás para acceder a tus mensajes cifrados. Si borras la caché o utilizas otro dispositivo, tendrás que introducir el código de recuperación.",
+  ISavedRecoveryCode: "He guardado el código de recuperación",
+  generateNewKeys: "Generar nuevas claves",
+  generateNewKeysDes:
+    "Si generas nuevas claves, no podrás descifrar tus mensajes anteriores. Los mensajes nuevos se cifrarán con las nuevas claves.",
+  clickGenerateKeys:
+    "Haz clic en «Generar claves» para configurar el cifrado de SuperDM.",
+  beReadyToSaveRecoveryCode:
+    "Prepárate para guardar tu código de recuperación.",
+  generateKeys: "Generar claves",
+  superDMIsEnded: "SuperDM ha finalizado.",
+  superDMIsEndedAt: "SuperDM finalizó a las {date}.",
+  sendAMessage: "Enviar un mensaje...",
+  superDMNotConfiguredTitle: "Los SuperDM no están configurados.",
+  superDMNotConfiguredDes:
+    "Activar los SuperDM permitirá que tus fans te paguen la cantidad que elijan para iniciar una conversación privada contigo. Es un chat cifrado de extremo a extremo entre tú y el fan; nadie más puede ver estos mensajes (¡ni siquiera nosotros!). Las notificaciones deben estar activadas para esta función para que recibas una notificación cuando llegue un SuperDM. Responde rápidamente a tus fans.",
+  configureSuperDMs: "Configurar SuperDM",
+  configureNotifications: "Configurar notificaciones",
+  showKeys: "Mostrar claves",
+  continueSuperDM: "Continuar SuperDM",
+  savedKeys: "Claves guardadas",
+  useSavedKeys:
+    "Puedes utilizar las claves guardadas para continuar los mensajes de SuperDM.",
+  use: "Usar",
+  enterSuperDMIdAndRecoveryCode:
+    "Introduce el ID de SuperDM y el código de recuperación.",
+  minSuperDMAmount: "Cantidad mínima de SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "Cantidad mínima que un fan debe enviarte para iniciar un SuperDM.",
+  showRecoveryCode: "Mostrar código de recuperación",
+  superDMRecoveryCodesTitle: "Códigos de recuperación de SuperDM",
+  superDMRecoveryCodesDes:
+    "Los códigos de recuperación no se guardan en el servidor. Guarda tu código de recuperación. Necesitarás el código de recuperación y el ID de SuperDM para acceder a tus mensajes cifrados. Si borras la caché o utilizas otro dispositivo, tendrás que introducir el código de recuperación.",
 };

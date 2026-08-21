@@ -63,6 +63,8 @@ export default {
   heroDescription: "Unterstütze deinen Lieblings-Streamer mit Kryptowährung",
   findCreators: "Creator finden",
   creatorsStartHere: "Creator starten hier",
+  fansTippingStats:
+    "Fans haben {tipsCount} Superchats im Gesamtwert von {totalAmount} Monero ({fiatAmount}) an {pagesCount} Content-Creator mit XMRChat gesendet!",
 
   FAQ: {
     title: "FAQ",
@@ -483,4 +485,78 @@ export default {
   repliedMessagePreview: "Vorschau der beantworteten Nachricht",
   action: "Aktion",
   premium: "Premium",
+
+  // TIP GOAL
+  tipGoalUpdated: "Trinkgeldziel aktualisiert",
+  tipGoalCreated: "Trinkgeldziel erstellt",
+  amountXMR: "Betrag ( XMR )",
+  start: "Start",
+  end: "Ende",
+  isActive: "Ist aktiv",
+  isActiveHelp:
+    "Ein deaktiviertes Trinkgeldziel wird nicht auf deiner Trinkgeldseite angezeigt.",
+  timeIsEnded: "Die Zeit ist abgelaufen",
+
+  // SUPER DM
+  amount: "Betrag",
+  superDMAlertTitle: "SuperDM konnte nicht gestartet werden",
+  startSuperDM: "SuperDM starten",
+  openSuperDM: "SuperDM öffnen",
+  endSuperDM: "SuperDM beenden",
+  endedAt: "Beendet um",
+  endSuperDMText:
+    "Nach dem Beenden können in diesem SuperDM keine Nachrichten mehr gesendet werden.",
+  saveSuperDMIdAndKeyTitle: "SuperDM-ID und Wiederherstellungscode speichern",
+  saveSuperDMIdAndKeyDes:
+    "Bitte speichere die SuperDM-ID und den Wiederherstellungsschlüssel. Die Schlüssel können nicht wiederverwendet werden. Ohne sie kannst du die Nachrichten nicht wiederherstellen/entschlüsseln. XMRChat speichert deine Wiederherstellungsschlüssel nicht.",
+  savedIdAndRecoveryCode:
+    "Ich habe die ID und den Wiederherstellungsschlüssel gespeichert",
+  superDMKeysRecoveryTitle:
+    "Die Wiederherstellungsschlüssel sind in diesem Browser nicht gespeichert. Bitte gib die mnemonische Phrase für dieses SuperDM ein, um die Nachrichten wiederherzustellen.",
+  superDMId: "SuperDM-ID: ",
+  mnemonicPhrase: "Mnemonische Phrase",
+  enterYourMnemonicPhrase: "Gib deine mnemonische Phrase ein",
+  recover: "Wiederherstellen",
+  encryptionKeys: "Verschlüsselungsschlüssel",
+  backupRecoveryCode: "Wiederherstellungscode sichern",
+  backupRecoveryCodeDes:
+    "XMRChat speichert nur deinen öffentlichen Schlüssel. Dein Wiederherstellungscode bleibt auf deinem Gerät.",
+  recoveryCode: "Wiederherstellungscode",
+  recoveryCodeDes:
+    "Gib deinen Wiederherstellungscode ein oder erstelle neue Schlüssel. Nach dem Erstellen neuer Schlüssel kannst du deine bisherigen Nachrichten nicht mehr entschlüsseln.",
+  generateNew: "Neue erstellen",
+  pleaseSaveYourRecoveryCode:
+    "Bitte speichere deinen Wiederherstellungscode. Du benötigst ihn, um auf deine verschlüsselten Nachrichten zuzugreifen. Wenn du den Cache löschst oder ein anderes Gerät verwendest, musst du den Wiederherstellungscode eingeben.",
+  ISavedRecoveryCode: "Ich habe den Wiederherstellungscode gespeichert",
+  generateNewKeys: "Neue Schlüssel erstellen",
+  generateNewKeysDes:
+    "Wenn du neue Schlüssel erstellst, kannst du deine bisherigen Nachrichten nicht mehr entschlüsseln. Neue Nachrichten werden mit den neuen Schlüsseln verschlüsselt.",
+  clickGenerateKeys:
+    "Klicke auf „Schlüssel erstellen“, um die SuperDM-Verschlüsselung einzurichten.",
+  beReadyToSaveRecoveryCode:
+    "Bitte sei bereit, deinen Wiederherstellungscode zu speichern.",
+  generateKeys: "Schlüssel erstellen",
+  superDMIsEnded: "SuperDM ist beendet.",
+  superDMIsEndedAt: "SuperDM wurde um {date} beendet.",
+  sendAMessage: "Nachricht senden...",
+  superDMNotConfiguredTitle: "SuperDMs sind nicht konfiguriert.",
+  superDMNotConfiguredDes:
+    "Durch die Aktivierung von SuperDMs können Fans dir einen von dir festgelegten Betrag zahlen, um ein privates Gespräch mit dir zu beginnen. Es handelt sich um einen Ende-zu-Ende-verschlüsselten Chat zwischen dir und dem Fan. Niemand sonst kann diese Nachrichten sehen (nicht einmal wir!). Für diese Funktion müssen Benachrichtigungen aktiviert sein, damit du informiert wirst, wenn ein SuperDM eingeht. Bitte antworte deinen Fans schnell.",
+  configureSuperDMs: "SuperDMs konfigurieren",
+  configureNotifications: "Benachrichtigungen konfigurieren",
+  showKeys: "Schlüssel anzeigen",
+  continueSuperDM: "SuperDM fortsetzen",
+  savedKeys: "Gespeicherte Schlüssel",
+  useSavedKeys:
+    "Du kannst die gespeicherten Schlüssel verwenden, um die SuperDM-Nachrichten fortzusetzen.",
+  use: "Verwenden",
+  enterSuperDMIdAndRecoveryCode:
+    "Gib die SuperDM-ID und den Wiederherstellungscode ein.",
+  minSuperDMAmount: "Mindestbetrag für SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "Der Mindestbetrag, den ein Fan dir senden muss, um ein SuperDM zu starten.",
+  showRecoveryCode: "Wiederherstellungscode anzeigen",
+  superDMRecoveryCodesTitle: "SuperDM-Wiederherstellungscodes",
+  superDMRecoveryCodesDes:
+    "Die Wiederherstellungscodes werden nicht auf dem Server gespeichert. Bitte speichere deinen Wiederherstellungscode. Du benötigst den Wiederherstellungscode und die SuperDM-ID, um auf deine verschlüsselten Nachrichten zuzugreifen. Wenn du den Cache löschst oder ein anderes Gerät verwendest, musst du den Wiederherstellungscode eingeben.",
 };

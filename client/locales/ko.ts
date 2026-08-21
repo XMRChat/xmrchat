@@ -60,6 +60,8 @@ export default {
   heroDescription: "좋아하는 스트리머에게 암호화폐로 팁을 주세요.",
   findCreators: "크리에이터 찾기",
   creatorsStartHere: "크리에이터는 여기서 시작하세요",
+  fansTippingStats:
+    "팬들이 XMRChat을 통해 {pagesCount}명의 콘텐츠 크리에이터에게 총 {totalAmount} Monero ({fiatAmount})에 해당하는 {tipsCount}개의 슈퍼챗을 보냈습니다!",
 
   FAQ: {
     title: "자주 묻는 질문",
@@ -465,4 +467,71 @@ export default {
   repliedMessagePreview: "답글 미리보기",
   action: "작업",
   premium: "프리미엄",
+
+  // TIP GOAL
+  tipGoalUpdated: "팁 목표가 업데이트되었습니다",
+  tipGoalCreated: "팁 목표가 생성되었습니다",
+  amountXMR: "금액 ( XMR )",
+  start: "시작",
+  end: "종료",
+  isActive: "활성 상태",
+  isActiveHelp: "비활성화된 팁 목표는 팁 페이지에 표시되지 않습니다.",
+  timeIsEnded: "시간이 종료되었습니다",
+
+  // SUPER DM
+  amount: "금액",
+  superDMAlertTitle: "SuperDM을 시작할 수 없습니다",
+  startSuperDM: "SuperDM 시작",
+  openSuperDM: "SuperDM 열기",
+  endSuperDM: "SuperDM 종료",
+  endedAt: "종료 시간",
+  endSuperDMText: "SuperDM이 종료된 후에는 더 이상 메시지를 보낼 수 없습니다.",
+  saveSuperDMIdAndKeyTitle: "SuperDM ID 및 복구 코드 저장",
+  saveSuperDMIdAndKeyDes:
+    "SuperDM ID와 복구 키를 저장해 주세요. 키는 다시 사용할 수 없습니다. 키가 없으면 메시지를 복구하거나 복호화할 수 없습니다. XMRChat은 복구 키를 저장하지 않습니다.",
+  savedIdAndRecoveryCode: "ID와 복구 키를 저장했습니다",
+  superDMKeysRecoveryTitle:
+    "이 브라우저에 복구 키가 저장되어 있지 않습니다. 메시지를 복구하려면 이 SuperDM의 니모닉 문구를 입력해 주세요.",
+  superDMId: "SuperDM ID: ",
+  mnemonicPhrase: "니모닉 문구",
+  enterYourMnemonicPhrase: "니모닉 문구를 입력하세요",
+  recover: "복구",
+  encryptionKeys: "암호화 키",
+  backupRecoveryCode: "복구 코드 백업",
+  backupRecoveryCodeDes:
+    "XMRChat은 공개 키만 저장합니다. 복구 코드는 기기에 저장됩니다.",
+  recoveryCode: "복구 코드",
+  recoveryCodeDes:
+    "복구 코드를 입력하거나 새 키를 생성하세요. 새 키를 생성한 후에는 이전 메시지를 복호화할 수 없습니다.",
+  generateNew: "새로 생성",
+  pleaseSaveYourRecoveryCode:
+    "복구 코드를 저장해 주세요. 암호화된 메시지에 액세스하려면 복구 코드가 필요합니다. 캐시를 삭제하거나 다른 기기를 사용하면 복구 코드를 다시 입력해야 합니다.",
+  ISavedRecoveryCode: "복구 코드를 저장했습니다",
+  generateNewKeys: "새 키 생성",
+  generateNewKeysDes:
+    "새 키를 생성하면 이전 메시지를 복호화할 수 없습니다. 새 메시지는 새 키로 암호화됩니다.",
+  clickGenerateKeys: "SuperDM 암호화를 설정하려면 ‘키 생성’을 클릭하세요.",
+  beReadyToSaveRecoveryCode: "복구 코드를 저장할 준비를 해주세요.",
+  generateKeys: "키 생성",
+  superDMIsEnded: "SuperDM이 종료되었습니다.",
+  superDMIsEndedAt: "SuperDM이 {date}에 종료되었습니다.",
+  sendAMessage: "메시지 보내기...",
+  superDMNotConfiguredTitle: "SuperDM이 구성되지 않았습니다.",
+  superDMNotConfiguredDes:
+    "SuperDM을 활성화하면 팬이 원하는 금액을 지불하고 비공개 대화를 시작할 수 있습니다. 이는 사용자와 팬 간의 종단 간 암호화 채팅이며, 다른 누구도 이 메시지를 볼 수 없습니다(저희도 볼 수 없습니다!). SuperDM이 도착했을 때 알림을 받으려면 이 기능에 대한 알림을 활성화해야 합니다. 팬에게 신속하게 답변해 주세요.",
+  configureSuperDMs: "SuperDM 구성",
+  configureNotifications: "알림 구성",
+  showKeys: "키 표시",
+  continueSuperDM: "SuperDM 계속하기",
+  savedKeys: "저장된 키",
+  useSavedKeys: "저장된 키를 사용하여 SuperDM 메시지를 계속할 수 있습니다.",
+  use: "사용",
+  enterSuperDMIdAndRecoveryCode: "SuperDM ID와 복구 코드를 입력하세요.",
+  minSuperDMAmount: "최소 SuperDM 금액 ( XMR )",
+  minSuperDMAmountHelp:
+    "팬이 SuperDM을 시작하기 위해 보내야 하는 최소 금액입니다.",
+  showRecoveryCode: "복구 코드 표시",
+  superDMRecoveryCodesTitle: "SuperDM 복구 코드",
+  superDMRecoveryCodesDes:
+    "복구 코드는 서버에 저장되지 않습니다. 복구 코드를 저장해 주세요. 암호화된 메시지에 액세스하려면 복구 코드와 SuperDM ID가 필요합니다. 캐시를 삭제하거나 다른 기기를 사용하면 복구 코드를 다시 입력해야 합니다.",
 };

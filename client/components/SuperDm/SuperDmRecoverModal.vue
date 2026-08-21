@@ -44,7 +44,7 @@ const handleRecover = async () => {
   try {
     state.loading = true;
     const { data } = await axios.get<{ superDm: SuperDm }>(
-      `/super-dms/${state.superDmId}`
+      `/super-dms/${state.superDmId}`,
     );
     if (!data.superDm) {
       throw createError("SuperDM not found");
@@ -54,7 +54,7 @@ const handleRecover = async () => {
 
     const samePrivateKeys = await validateSamePrivateKeys(
       data.superDm.publicKey,
-      keys.publicKeyArmored
+      keys.publicKeyArmored,
     );
 
     if (!samePrivateKeys) {
@@ -86,7 +86,7 @@ const v = useVuelidate<any>(
     superDmId: { required },
     recoveryCode: { required },
   },
-  state
+  state,
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -102,14 +102,14 @@ watch(model, () => {
   <UModal v-model="model">
     <UCard>
       <template #header>
-        <h2 class="text-lg font-medium">Continue SuperDM</h2>
+        <h2 class="text-lg font-medium">{{ $t("continueSuperDM") }}</h2>
       </template>
       <div class="grid gap-2">
         <div v-if="savedKeys?.length">
           <div class="flex flex-col items-center">
-            <h3 class="font-medium">Saved keys</h3>
+            <h3 class="font-medium">{{ $t("savedKeys") }}</h3>
             <p class="text-sm text-pale text-center">
-              You can use the saved keys to continue the SuperDM messages.
+              {{ $t("useSavedKeys") }}
             </p>
           </div>
           <div class="pt-6 grid gap-2">
@@ -123,7 +123,9 @@ watch(model, () => {
               }"
             >
               <div class="flex flex-col">
-                <span class="font-medium whitespace-nowrap">SuperDM id:</span>
+                <span class="font-medium whitespace-nowrap">{{
+                  $t("superDMId")
+                }}</span>
                 <span class="truncate">{{ item.superDmId }}</span>
               </div>
               <div class="flex justify-end pt-2">
@@ -131,7 +133,7 @@ watch(model, () => {
                   :to="toSuperDm(props.pagePath!, item.superDmId)"
                   variant="ghost"
                 >
-                  Use <DirectionalArrow
+                  {{ $t("use") }} <DirectionalArrow
                 /></UButton>
               </div>
             </UCard>
@@ -140,7 +142,7 @@ watch(model, () => {
           <UDivider class="my-4" label="OR" />
         </div>
 
-        <p class="text-center">Enter the SuperDM id and recovery code.</p>
+        <p class="text-center">{{ $t("enterSuperDMIdAndRecoveryCode") }}</p>
 
         <UFormGroup
           label="SuperDM id"
@@ -163,9 +165,11 @@ watch(model, () => {
       </div>
       <template #footer>
         <div class="flex gap-2 justify-end">
-          <UButton variant="ghost" @click="handleHide">Cancel</UButton>
+          <UButton variant="ghost" @click="handleHide">{{
+            $t("cancel")
+          }}</UButton>
           <UButton @click="handleRecover" :loading="state.loading">
-            Continue
+            {{ $t("continue") }}
           </UButton>
         </div>
       </template>

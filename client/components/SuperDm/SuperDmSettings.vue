@@ -26,19 +26,19 @@ const state = reactive<State>({
 useLazyAsyncData(
   async () => {
     const { data } = await axios.get<{ settings: PageSetting[] }>(
-      `/super-dms/settings`
+      `/super-dms/settings`,
     );
     const active = data.settings.find(
-      (s) => s.key === PageSettingKey.SUPER_DM_ACTIVE
+      (s) => s.key === PageSettingKey.SUPER_DM_ACTIVE,
     )?.value;
     const minAmount = data.settings.find(
-      (s) => s.key === PageSettingKey.SUPER_DM_MIN_AMOUNT
+      (s) => s.key === PageSettingKey.SUPER_DM_MIN_AMOUNT,
     )?.value;
 
     state.form.superDmActive = active;
     state.form.minSuperDmAmount = minAmount;
   },
-  { server: false }
+  { server: false },
 );
 
 const handleSubmit = async () => {
@@ -61,7 +61,7 @@ const v = useVuelidate<State["form"]>(
   computed(() => ({
     minSuperDmAmount: { required, numberic },
   })),
-  computed(() => state.form)
+  computed(() => state.form),
 );
 
 const { getValidationAttrs } = useValidations(v);
@@ -79,10 +79,10 @@ const { getValidationAttrs } = useValidations(v);
           <UToggle v-model="state.form.superDmActive" size="lg" />
         </UFormGroup>
         <UFormGroup
-          label="Min. SuperDM amount ( XMR )"
+          :label="$t('minSuperDMAmount')"
           name="minSuperDmAmount"
           :error="getValidationAttrs('minSuperDmAmount').error"
-          help="The minimum amount a fan needs to send to you to start a SuperDM."
+          :help="$t('minSuperDMAmountHelp')"
         >
           <UInput
             v-model="state.form.minSuperDmAmount"
@@ -93,7 +93,7 @@ const { getValidationAttrs } = useValidations(v);
       </div>
       <div class="flex pt-6">
         <UButton :loading="state.loadingSave" @click="handleSubmit">
-          Save
+          {{ $t("save") }}
         </UButton>
       </div>
     </GeneralForm>

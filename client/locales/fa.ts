@@ -62,6 +62,8 @@ export default {
   heroDescription: "به استریمر مورد علاقه خود با ارز دیجیتال انعام دهید.",
   findCreators: "پیدا کردن سازندگان محتوا",
   creatorsStartHere: " تولیدکنندگان محتوا جهت شروع از این قسمت استفاده کنند.",
+  fansTippingStats:
+    "طرفداران با استفاده از XMRChat تعداد {tipsCount} سوپرچت به ارزش مجموعاً {totalAmount} مونرو ({fiatAmount}) به {pagesCount} تولیدکننده محتوا ارسال کرده‌اند!",
 
   FAQ: {
     title: "سوالات متداول",
@@ -475,4 +477,73 @@ export default {
   repliedMessagePreview: "پیش‌نمایش پیام پاسخ‌داده‌شده",
   action: "عمل",
   premium: "پریمیوم",
+
+  // TIP GOAL
+  tipGoalUpdated: "هدف انعام به‌روزرسانی شد",
+  tipGoalCreated: "هدف انعام ایجاد شد",
+  amountXMR: "مبلغ ( XMR )",
+  start: "شروع",
+  end: "پایان",
+  isActive: "فعال است",
+  isActiveHelp: "هدف انعام غیرفعال‌شده در صفحه انعام شما نمایش داده نخواهد شد.",
+  timeIsEnded: "زمان به پایان رسیده است",
+
+  // SUPER DM
+  amount: "مبلغ",
+  superDMAlertTitle: "SuperDM قابل شروع نیست",
+  startSuperDM: "شروع SuperDM",
+  openSuperDM: "باز کردن SuperDM",
+  endSuperDM: "پایان دادن به SuperDM",
+  endedAt: "پایان در",
+  endSuperDMText: "پس از پایان این SuperDM دیگر امکان ارسال پیام وجود ندارد.",
+  saveSuperDMIdAndKeyTitle: "ذخیره شناسه و کد بازیابی SuperDM",
+  saveSuperDMIdAndKeyDes:
+    "لطفاً شناسه SuperDM و کلید بازیابی را ذخیره کنید. کلیدها قابل استفاده مجدد نیستند. بدون آن‌ها امکان بازیابی یا رمزگشایی پیام‌ها را نخواهید داشت. XMRChat کلیدهای بازیابی شما را ذخیره نمی‌کند.",
+  savedIdAndRecoveryCode: "شناسه و کلید بازیابی را ذخیره کردم",
+  superDMKeysRecoveryTitle:
+    "کلیدهای بازیابی در این مرورگر ذخیره نشده‌اند. برای بازیابی پیام‌ها، عبارت یادآور مربوط به این SuperDM را وارد کنید.",
+  superDMId: "شناسه SuperDM: ",
+  mnemonicPhrase: "عبارت یادآور",
+  enterYourMnemonicPhrase: "عبارت یادآور خود را وارد کنید",
+  recover: "بازیابی",
+  encryptionKeys: "کلیدهای رمزنگاری",
+  backupRecoveryCode: "از کد بازیابی خود نسخه پشتیبان تهیه کنید",
+  backupRecoveryCodeDes:
+    "XMRChat فقط کلید عمومی شما را ذخیره می‌کند. کد بازیابی شما روی دستگاهتان باقی می‌ماند.",
+  recoveryCode: "کد بازیابی",
+  recoveryCodeDes:
+    "کد بازیابی خود را وارد کنید یا کلیدهای جدید ایجاد کنید. پس از ایجاد کلیدهای جدید، دیگر نمی‌توانید پیام‌های قبلی خود را رمزگشایی کنید.",
+  generateNew: "ایجاد جدید",
+  pleaseSaveYourRecoveryCode:
+    "لطفاً کد بازیابی خود را ذخیره کنید. برای دسترسی به پیام‌های رمزنگاری‌شده به این کد نیاز خواهید داشت. اگر کش را پاک کنید یا از دستگاه دیگری استفاده کنید، باید کد بازیابی را وارد کنید.",
+  ISavedRecoveryCode: "کد بازیابی را ذخیره کردم",
+  generateNewKeys: "ایجاد کلیدهای جدید",
+  generateNewKeysDes:
+    "اگر کلیدهای جدید ایجاد کنید، دیگر نمی‌توانید پیام‌های قبلی خود را رمزگشایی کنید. پیام‌های جدید با کلیدهای جدید رمزنگاری خواهند شد.",
+  clickGenerateKeys:
+    "برای تنظیم رمزنگاری SuperDM روی «ایجاد کلیدها» کلیک کنید.",
+  beReadyToSaveRecoveryCode: "لطفاً آماده ذخیره کردن کد بازیابی خود باشید.",
+  generateKeys: "ایجاد کلیدها",
+  superDMIsEnded: "SuperDM به پایان رسیده است.",
+  superDMIsEndedAt: "SuperDM در {date} به پایان رسید.",
+  sendAMessage: "ارسال پیام...",
+  superDMNotConfiguredTitle: "SuperDMها پیکربندی نشده‌اند.",
+  superDMNotConfiguredDes:
+    "با فعال کردن SuperDM، طرفداران شما می‌توانند مبلغی را که شما تعیین می‌کنید پرداخت کنند تا امکان شروع یک گفت‌وگوی خصوصی با شما را داشته باشند. این یک چت با رمزنگاری سرتاسری بین شما و طرفدار است و هیچ شخص دیگری نمی‌تواند این پیام‌ها را ببیند (حتی ما!). برای استفاده از این قابلیت باید اعلان‌ها فعال باشند تا هنگام دریافت SuperDM به شما اطلاع داده شود. لطفاً سریع به طرفداران خود پاسخ دهید.",
+  configureSuperDMs: "پیکربندی SuperDMها",
+  configureNotifications: "پیکربندی اعلان‌ها",
+  showKeys: "نمایش کلیدها",
+  continueSuperDM: "ادامه SuperDM",
+  savedKeys: "کلیدهای ذخیره‌شده",
+  useSavedKeys:
+    "می‌توانید برای ادامه پیام‌های SuperDM از کلیدهای ذخیره‌شده استفاده کنید.",
+  use: "استفاده",
+  enterSuperDMIdAndRecoveryCode: "شناسه SuperDM و کد بازیابی را وارد کنید.",
+  minSuperDMAmount: "حداقل مبلغ SuperDM ( XMR )",
+  minSuperDMAmountHelp:
+    "حداقل مبلغی که یک طرفدار باید برای شروع SuperDM برای شما ارسال کند.",
+  showRecoveryCode: "نمایش کد بازیابی",
+  superDMRecoveryCodesTitle: "کدهای بازیابی SuperDM",
+  superDMRecoveryCodesDes:
+    "کدهای بازیابی روی سرور ذخیره نمی‌شوند. لطفاً کد بازیابی خود را ذخیره کنید. برای دسترسی به پیام‌های رمزنگاری‌شده به کد بازیابی و شناسه SuperDM نیاز خواهید داشت. اگر کش را پاک کنید یا از دستگاه دیگری استفاده کنید، باید کد بازیابی را وارد کنید.",
 };
