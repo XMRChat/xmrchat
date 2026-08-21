@@ -62,6 +62,8 @@ export default {
   heroDescription: "به استریمر مورد علاقه خود با ارز دیجیتال انعام دهید.",
   findCreators: "پیدا کردن سازندگان محتوا",
   creatorsStartHere: " تولیدکنندگان محتوا جهت شروع از این قسمت استفاده کنند.",
+  fansTippingStats:
+    "طرفداران با استفاده از XMRChat تعداد {tipsCount} سوپرچت به ارزش مجموعاً {totalAmount} مونرو ({fiatAmount}) به {pagesCount} تولیدکننده محتوا ارسال کرده‌اند!",
 
   FAQ: {
     title: "سوالات متداول",

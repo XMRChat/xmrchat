@@ -61,6 +61,8 @@ export default {
   heroDescription: "Send crypto tip give your best streamer.",
   findCreators: "Find Creators",
   creatorsStartHere: "Creators go start here",
+  fansTippingStats:
+    "Fans don send {tipsCount} superchats wey total {totalAmount} Monero ({fiatAmount}) to {pagesCount} content creators with XMRChat!",
 
   FAQ: {
     title: "FAQ",

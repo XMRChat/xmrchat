@@ -60,6 +60,8 @@ export default {
   heroDescription: "تبرّع لصانع المحتوى المفضل لديك بالعملات المشفرة",
   findCreators: "البحث عن صانعي المحتوى",
   creatorsStartHere: "اشترك الآن",
+  fansTippingStats:
+    "أرسل المعجبون {tipsCount} من رسائل Superchat بقيمة إجمالية قدرها {totalAmount} Monero ({fiatAmount}) إلى {pagesCount} من منشئي المحتوى عبر XMRChat!",
 
   FAQ: {
     title: "الأسئلة الشائعة",

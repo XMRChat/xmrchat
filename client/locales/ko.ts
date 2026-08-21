@@ -60,6 +60,8 @@ export default {
   heroDescription: "좋아하는 스트리머에게 암호화폐로 팁을 주세요.",
   findCreators: "크리에이터 찾기",
   creatorsStartHere: "크리에이터는 여기서 시작하세요",
+  fansTippingStats:
+    "팬들이 XMRChat을 통해 {pagesCount}명의 콘텐츠 크리에이터에게 총 {totalAmount} Monero ({fiatAmount})에 해당하는 {tipsCount}개의 슈퍼챗을 보냈습니다!",
 
   FAQ: {
     title: "자주 묻는 질문",
