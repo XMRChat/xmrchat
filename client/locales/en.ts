@@ -528,6 +528,8 @@ export default {
   generateNewKeys: "Generate new keys",
   generateNewKeysDes:
     "If you generate new keys you will not be able to decrypt your previous messages. New messages will be encrypted with the new keys.",
+  ifForgotRecoveryCode:
+    "If you forgot your recovery code or it is your first time using SuperDM, you can generate new encryption keys.",
   clickGenerateKeys: "Click generate keys to setup the SuperDM encryption.",
   beReadyToSaveRecoveryCode: "Please be ready to save your recovery code.",
   generateKeys: "Generate keys",

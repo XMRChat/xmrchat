@@ -517,6 +517,8 @@ export default {
   generateNewKeys: "Vygenerovat nové klíče",
   generateNewKeysDes:
     "Pokud vygenerujete nové klíče, nebudete moci dešifrovat předchozí zprávy. Nové zprávy budou šifrovány pomocí nových klíčů.",
+  ifForgotRecoveryCode:
+    "Pokud jste zapomněli svůj obnovovací kód nebo používáte SuperDM poprvé, můžete vygenerovat nové šifrovací klíče.",
   clickGenerateKeys:
     "Kliknutím na „Vygenerovat klíče“ nastavíte šifrování SuperDM.",
   beReadyToSaveRecoveryCode:

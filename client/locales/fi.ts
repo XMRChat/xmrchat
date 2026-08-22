@@ -518,6 +518,8 @@ export default {
   generateNewKeys: "Luo uudet avaimet",
   generateNewKeysDes:
     "Jos luot uudet avaimet, et voi purkaa aiempien viestiesi salausta. Uudet viestit salataan uusilla avaimilla.",
+  ifForgotRecoveryCode:
+    "Jos unohdit palautuskoodisi tai käytät SuperDM:ää ensimmäistä kertaa, voit luoda uudet salausavaimet.",
   clickGenerateKeys: "Napsauta «Luo avaimet» määrittääksesi SuperDM-salauksen.",
   beReadyToSaveRecoveryCode: "Valmistaudu tallentamaan palautuskoodisi.",
   generateKeys: "Luo avaimet",

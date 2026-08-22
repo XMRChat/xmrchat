@@ -531,6 +531,8 @@ export default {
   generateNewKeys: "Neue Schlüssel erstellen",
   generateNewKeysDes:
     "Wenn du neue Schlüssel erstellst, kannst du deine bisherigen Nachrichten nicht mehr entschlüsseln. Neue Nachrichten werden mit den neuen Schlüsseln verschlüsselt.",
+  ifForgotRecoveryCode:
+    "Wenn du deinen Wiederherstellungscode vergessen hast oder SuperDM zum ersten Mal verwendest, kannst du neue Verschlüsselungsschlüssel erstellen.",
   clickGenerateKeys:
     "Klicke auf „Schlüssel erstellen“, um die SuperDM-Verschlüsselung einzurichten.",
   beReadyToSaveRecoveryCode:

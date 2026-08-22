@@ -510,6 +510,8 @@ export default {
   generateNewKeys: "새 키 생성",
   generateNewKeysDes:
     "새 키를 생성하면 이전 메시지를 복호화할 수 없습니다. 새 메시지는 새 키로 암호화됩니다.",
+  ifForgotRecoveryCode:
+    "복구 코드를 잊어버렸거나 SuperDM을 처음 사용하는 경우 새 암호화 키를 생성할 수 있습니다.",
   clickGenerateKeys: "SuperDM 암호화를 설정하려면 ‘키 생성’을 클릭하세요.",
   beReadyToSaveRecoveryCode: "복구 코드를 저장할 준비를 해주세요.",
   generateKeys: "키 생성",
