@@ -18,7 +18,7 @@ export class TipMessageService {
     private pricesService: PricesService,
   ) {}
 
-  private privateTemplate = `{{name}} tipped {{value}}`;
+  private privateTemplate = `Private tipped {{value}}`;
   private template = `{{name}} tipped {{value}} {{#if message}}: {{message}} {{/if}}`;
 
   async generateMessage(tipId: number, pageId: number) {
