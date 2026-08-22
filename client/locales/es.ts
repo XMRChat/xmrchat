@@ -528,6 +528,8 @@ export default {
   generateNewKeys: "Generar nuevas claves",
   generateNewKeysDes:
     "Si generas nuevas claves, no podrás descifrar tus mensajes anteriores. Los mensajes nuevos se cifrarán con las nuevas claves.",
+  ifForgotRecoveryCode:
+    "Si olvidaste tu código de recuperación o es la primera vez que usas SuperDM, puedes generar nuevas claves de cifrado.",
   clickGenerateKeys:
     "Haz clic en «Generar claves» para configurar el cifrado de SuperDM.",
   beReadyToSaveRecoveryCode:
