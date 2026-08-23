@@ -56,6 +56,7 @@ export default {
   here: "zde",
   backToHome: "Zpět na domovskou stránku",
   somethingWentWrong: "Něco se pokazilo!",
+  donate: "Přispět",
 
   xmrchat: "XMRChat",
   heroDescription: "Podpořte svého oblíbeného streamera kryptoměnou.",

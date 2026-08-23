@@ -55,6 +55,7 @@ export default {
   here: "هنا",
   backToHome: "العودة إلى الصفحة الرئيسية",
   somethingWentWrong: "حدث خطأ ما!",
+  donate: "تبرع",
 
   xmrchat: "XMRChat",
   heroDescription: "تبرّع لصانع المحتوى المفضل لديك بالعملات المشفرة",

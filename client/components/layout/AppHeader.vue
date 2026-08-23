@@ -128,7 +128,7 @@ const dropdownItems = computed<DropdownItem[][]>(() => {
           </UDropdown> -->
           <UButton :to="toStreamer('xmrchat')" variant="soft">
             <UIcon name="i-tabler-heart" size="20" />
-            <span class="hidden md:inline-flex"> Donate </span>
+            <span class="hidden md:inline-flex"> {{ $t("donate") }} </span>
           </UButton>
           <UButton
             v-if="authStore.isLoggedIn"

@@ -56,6 +56,7 @@ export default {
   here: "here",
   backToHome: "Go back to home",
   somethingWentWrong: "Wetin wey no correct happen!",
+  donate: "Donate",
 
   xmrchat: "XMRChat",
   heroDescription: "Send crypto tip give your best streamer.",

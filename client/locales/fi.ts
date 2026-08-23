@@ -56,6 +56,7 @@ export default {
   here: "tässä",
   backToHome: "Takaisin kotiin",
   somethingWentWrong: "Jotain meni pieleen!",
+  donate: "Lahjoita",
 
   xmrchat: "XMRChat",
   heroDescription: "Tue suosikkistriimaajaasi Monerolla.",

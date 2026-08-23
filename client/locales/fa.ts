@@ -57,6 +57,7 @@ export default {
   here: "اینجا",
   backToHome: "بازگشت به خانه",
   somethingWentWrong: "خطایی ناخواسته پیش آمده ",
+  donate: "اهدا",
 
   xmrchat: "XMRChat",
   heroDescription: "به استریمر مورد علاقه خود با ارز دیجیتال انعام دهید.",

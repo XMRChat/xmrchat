@@ -55,6 +55,7 @@ export default {
   here: "여기",
   backToHome: "홈으로 돌아가기",
   somethingWentWrong: "문제가 발생했습니다!",
+  donate: "후원하기",
 
   xmrchat: "XMRChat",
   heroDescription: "좋아하는 스트리머에게 암호화폐로 팁을 주세요.",

@@ -59,6 +59,7 @@ export default {
   here: "ici",
   backToHome: "Retour à l'accueil",
   somethingWentWrong: "Une erreur s'est produite !",
+  donate: "Faire un don",
 
   xmrchat: "XMRChat",
   heroDescription:

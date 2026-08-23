@@ -58,6 +58,7 @@ export default {
   here: "здесь",
   backToHome: "Назад на главную",
   somethingWentWrong: "Что-то пошло не так!",
+  donate: "Пожертвовать",
 
   xmrchat: "XMRChat",
   heroDescription: "Поддержите любимого стримера криптовалютой.",

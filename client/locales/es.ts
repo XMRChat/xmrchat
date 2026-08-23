@@ -58,6 +58,7 @@ export default {
   here: "aquí",
   backToHome: "Volver al inicio",
   somethingWentWrong: "¡Algo salió mal!",
+  donate: "Donar",
 
   xmrchat: "XMRChat",
   heroDescription: "De propinas en criptomonedas a sus streamers favoritos.",

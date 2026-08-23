@@ -58,6 +58,7 @@ export default {
   here: "hier",
   backToHome: "Zurück zur Startseite",
   somethingWentWrong: "Etwas ist schiefgelaufen!",
+  donate: "Spenden",
 
   xmrchat: "XMRChat",
   heroDescription: "Unterstütze deinen Lieblings-Streamer mit Kryptowährung",
