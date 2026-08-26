@@ -190,6 +190,24 @@ export default {
   cancel: "Zrušit",
   copyAddress: "Kopírovat adresu",
   waitingForPayment: "Čekání na platbu",
+  tipSwapFailed:
+    "Směna selhala. Navštivte prosím níže uvedený odkaz na Trocador, zkontrolujte stav a v případě potřeby směnu zrušte.",
+  paymentExpired:
+    "Platba vypršela. Pokud jste již platbu odeslali, kontaktujte prosím podporu.",
+  sendTestTip: "Odeslat testovací tip",
+  swapStatus: "Stav směny: ",
+  swapStatusMessage: {
+    waiting: "Čekání na platbu.",
+    confirming: "Čekání na potvrzení na blockchainu.",
+    sending: "Směna se odesílá do XMRChat.",
+    failed: "Směna selhala, kontaktujte prosím podporu Trocador.",
+  },
+  paymentReceived: "Platba přijata.",
+  exactly: "přesně",
+  swapPaymentSend:
+    "Pro zobrazení vašeho xmrchat prosím odešlete {exactly} {amount} na tuto adresu.",
+  swapETA: "Předpokládaná doba směny je přibližně {eta} minut.",
+  trackSwap: "Svou směnu můžete sledovat přímo přes {trocador}.",
 
   contactUsDescription:
     "Kontaktujte nás s jakýmikoli dotazy nebo zpětnou vazbou.",

@@ -342,7 +342,7 @@ const renderInputPadding = computed(
             class="flex items-center gap-2 w-fit"
             @click="handleSendTestTip"
           >
-            Send Test Tip
+            {{ $t("sendTestTip") }}
           </UButton>
           <!-- <UButton
             v-if="superDmActive"

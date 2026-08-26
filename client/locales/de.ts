@@ -197,6 +197,25 @@ export default {
   cancel: "Abbrechen",
   copyAddress: "Adresse kopieren",
   waitingForPayment: "Warte auf Zahlung",
+  tipSwapFailed:
+    "Der Swap ist fehlgeschlagen. Bitte besuche den folgenden Trocador-Link, um den Status zu überprüfen und den Swap gegebenenfalls zu stornieren.",
+  paymentExpired:
+    "Die Zahlung ist abgelaufen. Wenn du deine Zahlung bereits gesendet hast, kontaktiere bitte den Support.",
+  sendTestTip: "Test-Tipp senden",
+  swapStatus: "Swap-Status: ",
+  swapStatusMessage: {
+    waiting: "Warten auf Zahlung.",
+    confirming: "Warten auf die Bestätigung auf der Blockchain.",
+    sending: "Der Swap wird an XMRChat gesendet.",
+    failed:
+      "Der Swap ist fehlgeschlagen. Bitte kontaktiere den Trocador-Support.",
+  },
+  paymentReceived: "Zahlung erhalten.",
+  exactly: "genau",
+  swapPaymentSend:
+    "Bitte sende {exactly} {amount} an diese Adresse, damit dein xmrchat angezeigt werden kann.",
+  swapETA: "Die voraussichtliche Swap-Dauer beträgt etwa {eta} Minuten.",
+  trackSwap: "Du kannst deinen Swap direkt über {trocador} verfolgen.",
 
   // CONTACT US PAGE
   contactUsDescription: "Kontaktiere uns bei Fragen oder Feedback.",

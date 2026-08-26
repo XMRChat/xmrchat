@@ -192,7 +192,24 @@ export default {
   cancel: "취소",
   copyAddress: "주소 복사",
   waitingForPayment: "결제 대기 중",
-
+  tipSwapFailed:
+    "스왑에 실패했습니다. 아래 Trocador 링크에서 상태를 확인하고 필요한 경우 스왑을 취소해 주세요.",
+  paymentExpired:
+    "결제 시간이 만료되었습니다. 이미 결제를 보냈다면 고객 지원팀에 문의해 주세요.",
+  sendTestTip: "테스트 팁 보내기",
+  swapStatus: "스왑 상태: ",
+  swapStatusMessage: {
+    waiting: "결제를 기다리는 중입니다.",
+    confirming: "블록체인 확인을 기다리는 중입니다.",
+    sending: "스왑을 XMRChat으로 보내는 중입니다.",
+    failed: "스왑에 실패했습니다. Trocador 지원팀에 문의해 주세요.",
+  },
+  paymentReceived: "결제가 완료되었습니다.",
+  exactly: "정확히",
+  swapPaymentSend:
+    "xmrchat이 표시되도록 {amount}을(를) {exactly} 이 주소로 보내주세요.",
+  swapETA: "스왑 완료까지 약 {eta}분이 소요됩니다.",
+  trackSwap: "{trocador}에서 스왑 상태를 직접 확인할 수 있습니다.",
   contactUsDescription: "질문이나 피드백이 있다면 문의해주세요.",
   contactUsForm: "문의 양식",
   contactUsFormDescription: "질문이나 피드백이 있다면 문의해주세요.",

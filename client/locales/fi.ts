@@ -191,6 +191,24 @@ export default {
   cancel: "Peruuta",
   copyAddress: "Kopioi osoite",
   waitingForPayment: "Odotetaan maksua",
+  tipSwapFailed:
+    "Vaihto epäonnistui. Tarkista tila alla olevasta Trocador-linkistä ja peruuta vaihto tarvittaessa.",
+  paymentExpired:
+    "Maksu on vanhentunut. Jos olet jo lähettänyt maksun, ota yhteyttä tukeen.",
+  sendTestTip: "Lähetä testivinkki",
+  swapStatus: "Vaihdon tila: ",
+  swapStatusMessage: {
+    waiting: "Odotetaan maksua.",
+    confirming: "Odotetaan lohkoketjun vahvistusta.",
+    sending: "Vaihtoa lähetetään XMRChatiin.",
+    failed: "Vaihto epäonnistui. Ota yhteyttä Trocadorin tukeen.",
+  },
+  paymentReceived: "Maksu vastaanotettu.",
+  exactly: "täsmälleen",
+  swapPaymentSend:
+    "Lähetä {exactly} {amount} tähän osoitteeseen, jotta xmrchatisi voidaan näyttää.",
+  swapETA: "Vaihdon arvioitu kesto on noin {eta} minuuttia.",
+  trackSwap: "Voit seurata vaihtoa suoraan {trocador}-palvelusta.",
 
   contactUsDescription: "Ota meihin yhteyttä kysymyksillä tai palautteella.",
   contactUsForm: "Yhteydenottolomake",

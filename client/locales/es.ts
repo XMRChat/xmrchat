@@ -197,6 +197,25 @@ export default {
   cancel: "Cancelar",
   copyAddress: "Copiar dirección",
   waitingForPayment: "Esperando el pago",
+  tipSwapFailed:
+    "El intercambio ha fallado. Visita el enlace de Trocador a continuación para comprobar el estado y cancelar el intercambio si es necesario.",
+  paymentExpired:
+    "El pago ha caducado. Si ya has enviado el pago, ponte en contacto con el soporte.",
+  sendTestTip: "Enviar propina de prueba",
+  swapStatus: "Estado del intercambio: ",
+  swapStatusMessage: {
+    waiting: "Esperando el pago.",
+    confirming: "Esperando la confirmación en la blockchain.",
+    sending: "El intercambio se está enviando a XMRChat.",
+    failed:
+      "El intercambio ha fallado. Ponte en contacto con el soporte de Trocador.",
+  },
+  paymentReceived: "Pago recibido.",
+  exactly: "exactamente",
+  swapPaymentSend:
+    "Envía {exactly} {amount} a esta dirección para que se muestre tu xmrchat.",
+  swapETA: "El tiempo estimado del intercambio es de unos {eta} minutos.",
+  trackSwap: "Puedes seguir tu intercambio directamente desde {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "Contáctanos si tienes preguntas o comentarios.",

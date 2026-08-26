@@ -192,6 +192,24 @@ export default {
   cancel: "Cancel",
   copyAddress: "Copy Address",
   waitingForPayment: "We dey wait for payment",
+  tipSwapFailed:
+    "The swap no work. Abeg, visit the Trocador link below to check the status and cancel the swap if e necessary.",
+  paymentExpired:
+    "The payment don expire. If you don already send your payment, abeg contact support.",
+  sendTestTip: "Send Test Tip",
+  swapStatus: "Swap Status: ",
+  swapStatusMessage: {
+    waiting: "We dey wait for payment.",
+    confirming: "We dey wait for blockchain confirmation.",
+    sending: "We dey send the swap to XMRChat.",
+    failed: "The swap no work, abeg contact Trocador support.",
+  },
+  paymentReceived: "Payment don enter.",
+  exactly: "exactly",
+  swapPaymentSend:
+    "Abeg send {exactly} {amount} to this address make your xmrchat show.",
+  swapETA: "The swap fit take about {eta} minutes.",
+  trackSwap: "You fit track your swap directly from {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "Reach us if you get question or feedback.",

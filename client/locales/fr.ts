@@ -187,6 +187,24 @@ export default {
   cancel: "Annuler",
   copyAddress: "Copier l'Adresse",
   waitingForPayment: "En attente du paiement",
+  tipSwapFailed:
+    "L'échange a échoué. Veuillez consulter le lien Trocador ci-dessous pour vérifier le statut et annuler l'échange si nécessaire.",
+  paymentExpired:
+    "Le paiement a expiré. Si vous avez déjà envoyé votre paiement, veuillez contacter le support.",
+  sendTestTip: "Envoyer un pourboire de test",
+  swapStatus: "Statut de l'échange : ",
+  swapStatusMessage: {
+    waiting: "En attente du paiement.",
+    confirming: "En attente de la confirmation sur la blockchain.",
+    sending: "L'échange est en cours d'envoi vers XMRChat.",
+    failed: "L'échange a échoué, veuillez contacter le support de Trocador.",
+  },
+  paymentReceived: "Paiement reçu.",
+  exactly: "exactement",
+  swapPaymentSend:
+    "Veuillez envoyer {exactly} {amount} à cette adresse pour que votre xmrchat soit affiché.",
+  swapETA: "L'échange devrait prendre environ {eta} minutes.",
+  trackSwap: "Vous pouvez suivre votre échange directement depuis {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "Contactez-nous pour toute question ou commentaire.",

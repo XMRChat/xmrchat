@@ -194,6 +194,24 @@ export default {
   cancel: "لغو کردن",
   copyAddress: "کپی آدرس",
   waitingForPayment: "در انتظار پرداخت",
+  tipSwapFailed:
+    "تراکنش سواپ ناموفق بود. لطفاً برای بررسی وضعیت و لغو سواپ در صورت نیاز، به لینک Trocador در زیر مراجعه کنید.",
+  paymentExpired:
+    "مهلت پرداخت به پایان رسیده است. اگر پرداخت خود را قبلاً ارسال کرده‌اید، لطفاً با پشتیبانی تماس بگیرید.",
+  sendTestTip: "ارسال انعام آزمایشی",
+  swapStatus: "وضعیت سواپ: ",
+  swapStatusMessage: {
+    waiting: "در انتظار پرداخت.",
+    confirming: "در انتظار تأیید در بلاکچین.",
+    sending: "سواپ در حال ارسال به XMRChat است.",
+    failed: "سواپ ناموفق بود، لطفاً با پشتیبانی Trocador تماس بگیرید.",
+  },
+  paymentReceived: "پرداخت دریافت شد.",
+  exactly: "دقیقاً",
+  swapPaymentSend:
+    "لطفاً {exactly} {amount} را به این آدرس ارسال کنید تا xmrchat شما نمایش داده شود.",
+  swapETA: "زمان تقریبی انجام سواپ حدود {eta} دقیقه است.",
+  trackSwap: "می‌توانید سواپ خود را مستقیماً از طریق {trocador} پیگیری کنید.",
 
   // CONTACT US PAGE
   contactUsDescription: "جهت هرگونه سوال یا بازخورد با ما تماس بگیرید.",

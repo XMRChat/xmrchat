@@ -195,6 +195,24 @@ export default {
   cancel: "Cancel",
   copyAddress: "Copy Address",
   waitingForPayment: "Waiting for payment",
+  tipSwapFailed:
+    "Swap failed. Please visit the Trocador link below to check the status and cancel the swap if necessary.",
+  paymentExpired:
+    "Payment is expired. If you have already sent your payment please contact support.",
+  sendTestTip: "Send Test Tip",
+  swapStatus: "Swap Status: ",
+  swapStatusMessage: {
+    waiting: "Waiting for payment.",
+    confirming: "Waiting for blockchain confirmation.",
+    sending: "Swap is being sent to XMRChat.",
+    failed: "Swap failed, please contact Trocador support.",
+  },
+  paymentReceived: "Payment received.",
+  exactly: "exactly",
+  swapPaymentSend:
+    "Please send {exactly} {amount} to this address for your xmrchat to be displayed.",
+  swapETA: "Swap ETA is about {eta} minutes.",
+  trackSwap: "You can track your swap directly from {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "Contact us for any questions or feedback.",

@@ -189,6 +189,24 @@ export default {
   cancel: "إلغاء",
   copyAddress: "نسخ العنوان",
   waitingForPayment: "في انتظار الدفع",
+  tipSwapFailed:
+    "فشلت عملية المبادلة. يرجى زيارة رابط Trocador أدناه للتحقق من الحالة وإلغاء المبادلة إذا لزم الأمر.",
+  paymentExpired:
+    "انتهت صلاحية الدفع. إذا كنت قد أرسلت دفعتك بالفعل، يرجى التواصل مع الدعم.",
+  sendTestTip: "إرسال إكرامية تجريبية",
+  swapStatus: "حالة المبادلة: ",
+  swapStatusMessage: {
+    waiting: "في انتظار الدفع.",
+    confirming: "في انتظار تأكيد المعاملة على البلوكشين.",
+    sending: "جارٍ إرسال المبادلة إلى XMRChat.",
+    failed: "فشلت عملية المبادلة، يرجى التواصل مع دعم Trocador.",
+  },
+  paymentReceived: "تم استلام الدفع.",
+  exactly: "بالضبط",
+  swapPaymentSend:
+    "يرجى إرسال {exactly} {amount} إلى هذا العنوان لعرض xmrchat الخاص بك.",
+  swapETA: "من المتوقع أن تستغرق المبادلة حوالي {eta} دقيقة.",
+  trackSwap: "يمكنك تتبع مبادلتك مباشرة من {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "اتصل بنا لأي أسئلة أو ملاحظات",
