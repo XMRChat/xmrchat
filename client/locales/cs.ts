@@ -564,4 +564,41 @@ export default {
   superDMRecoveryCodesTitle: "Obnovovací kódy SuperDM",
   superDMRecoveryCodesDes:
     "Obnovovací kódy nejsou uloženy na serveru. Uložte si prosím svůj obnovovací kód. Pro přístup k šifrovaným zprávám budete potřebovat obnovovací kód a ID SuperDM. Pokud vymažete mezipaměť nebo použijete jiné zařízení, budete muset obnovovací kód zadat znovu.",
+
+  // GUIDES
+  walletGuides: "PRŮVODCI PENĚŽENKOU",
+  howToFindPrimaryAddress:
+    "Jak najít primární adresu a soukromý view klíč (známý také jako tajný view klíč):",
+  toGetYourPrimaryAddress: "Chcete-li získat svou primární adresu:",
+  toGetYourViewKey: "Chcete-li získat svůj view klíč",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Klikněte na "Přijmout"',
+    primaryAddress2: "2. Zkopírujte adresu, která začíná číslem 4",
+    viewKey1: "1. Klikněte na Nastavení",
+    viewKey2: '2. Zkopírujte "View key (soukromý)"',
+    securityAndBackup: "Zabezpečení a záloha",
+    showSeed: "Zobrazit seed/klíče",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Klikněte na Nastavení",
+    guide2: '2. Zkopírujte "Primární adresu" a "Tajný view klíč"',
+    seedsAndKeys: "Seedy a klíče",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Klikněte na Wallet",
+    guide2: '2. Zkopírujte "Primární adresu" a "Tajný view klíč"',
+    keys: "Klíče",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Klikněte na Wallet",
+    clickOnTheMenu: "Klikněte na menu",
+    selectShowSecrets: 'Vyberte "Show Secrets!"',
+    guide2: '2. Zkopírujte "Veřejnou adresu"',
+    guide3: '3. Rozbalte "Podrobné informace"',
+    copyViewKey: 'Zkopírujte "View Key"',
+  },
 };

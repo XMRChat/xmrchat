@@ -554,4 +554,41 @@ export default {
   superDMRecoveryCodesTitle: "SuperDM 복구 코드",
   superDMRecoveryCodesDes:
     "복구 코드는 서버에 저장되지 않습니다. 복구 코드를 저장해 주세요. 암호화된 메시지에 액세스하려면 복구 코드와 SuperDM ID가 필요합니다. 캐시를 삭제하거나 다른 기기를 사용하면 복구 코드를 다시 입력해야 합니다.",
+
+  // GUIDES
+  walletGuides: "지갑 가이드",
+  howToFindPrimaryAddress:
+    "기본 주소와 프라이빗 뷰 키(시크릿 뷰 키라고도 함)를 찾는 방법:",
+  toGetYourPrimaryAddress: "기본 주소를 확인하려면:",
+  toGetYourViewKey: "뷰 키를 확인하려면",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. "받기"를 클릭하세요',
+    primaryAddress2: "2. 4로 시작하는 주소를 복사하세요",
+    viewKey1: "1. 설정을 클릭하세요",
+    viewKey2: '2. "뷰 키(비공개)"를 복사하세요',
+    securityAndBackup: "보안 및 백업",
+    showSeed: "시드/키 표시",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. 설정을 클릭하세요",
+    guide2: '2. "기본 주소"와 "시크릿 뷰 키"를 복사하세요',
+    seedsAndKeys: "시드 및 키",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Wallet을 클릭하세요",
+    guide2: '2. "기본 주소"와 "시크릿 뷰 키"를 복사하세요',
+    keys: "키",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Wallet을 클릭하세요",
+    clickOnTheMenu: "메뉴를 클릭하세요",
+    selectShowSecrets: '"Show Secrets!"를 선택하세요',
+    guide2: '2. "공개 주소"를 복사하세요',
+    guide3: '3. "상세 정보"를 펼치세요',
+    copyViewKey: '"뷰 키"를 복사하세요',
+  },
 };

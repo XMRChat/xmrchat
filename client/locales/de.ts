@@ -581,4 +581,41 @@ export default {
   superDMRecoveryCodesTitle: "SuperDM-Wiederherstellungscodes",
   superDMRecoveryCodesDes:
     "Die Wiederherstellungscodes werden nicht auf dem Server gespeichert. Bitte speichere deinen Wiederherstellungscode. Du benötigst den Wiederherstellungscode und die SuperDM-ID, um auf deine verschlüsselten Nachrichten zuzugreifen. Wenn du den Cache löschst oder ein anderes Gerät verwendest, musst du den Wiederherstellungscode eingeben.",
+
+  // GUIDES
+  walletGuides: "WALLET-ANLEITUNGEN",
+  howToFindPrimaryAddress:
+    "So findest du die primäre Adresse und den privaten View-Key (auch bekannt als geheimer View-Key):",
+  toGetYourPrimaryAddress: "So erhältst du deine primäre Adresse:",
+  toGetYourViewKey: "So erhältst du deinen View-Key",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Klicke auf "Empfangen"',
+    primaryAddress2: "2. Kopiere die Adresse, die mit 4 beginnt",
+    viewKey1: "1. Klicke auf Einstellungen",
+    viewKey2: '2. Kopiere den "View Key (privat)"',
+    securityAndBackup: "Sicherheit und Backup",
+    showSeed: "Seed/Schlüssel anzeigen",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Klicke auf Einstellungen",
+    guide2: '2. Kopiere die "Primäre Adresse" und den "Geheimen View Key"',
+    seedsAndKeys: "Seeds & Schlüssel",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Klicke auf Wallet",
+    guide2: '2. Kopiere die "Primäre Adresse" und den "Geheimen View Key"',
+    keys: "Schlüssel",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Klicke auf Wallet",
+    clickOnTheMenu: "Klicke auf das Menü",
+    selectShowSecrets: 'Wähle "Show Secrets!"',
+    guide2: '2. Kopiere die "Öffentliche Adresse"',
+    guide3: '3. Erweitere "Detaillierte Informationen"',
+    copyViewKey: 'Kopiere den "View Key"',
+  },
 };

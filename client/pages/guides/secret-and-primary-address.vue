@@ -3,34 +3,35 @@
 <template>
   <div class="m-4">
     <div class="guide inner">
-      <h4 class="title">WALLET GUIDES</h4>
+      <h4 class="title">{{ $t("walletGuides") }}</h4>
       <div class="page">
         <div class="how-to">
           <p>
-            How to find the primary address and private view key (also known as
-            secret view key):
+            {{ $t("howToFindPrimaryAddress") }}
           </p>
-          <h5>Cake Wallet:</h5>
+          <h5>{{ $t("cakeWallet.title") }}</h5>
           <h6>
-            <UIcon name="i-mdi-arrow-right-thin" class="text-3xl" /> To get your
-            primary address:
+            <UIcon name="i-mdi-arrow-right-thin" class="text-3xl" />
+            {{ $t("toGetYourPrimaryAddress") }}
           </h6>
           <ul>
-            <li>1. Click on "Receive"</li>
-            <li>2. Copy the address that begins with 4</li>
+            <li>{{ $t("cakeWallet.primaryAddress1") }}</li>
+            <li>{{ $t("cakeWallet.primaryAddress2") }}</li>
           </ul>
 
           <h6>
-            <UIcon name="i-mdi-arrow-right-thin" class="text-3xl" /> To get your
-            view key
+            <UIcon name="i-mdi-arrow-right-thin" class="text-3xl" />
+            {{ $t("toGetYourViewKey") }}
           </h6>
           <ul>
             <li>
-              1. Click on Settings
-              <span class="text-orange-500">-></span> Security and backup
-              <span class="text-orange-500">-></span> Show seed/keys
+              {{ $t("cakeWallet.viewKey1") }}
+              <span class="text-orange-500">-></span>
+              {{ $t("cakeWallet.securityAndBackup") }}
+              <span class="text-orange-500">-></span>
+              {{ $t("cakeWallet.showSeed") }}
             </li>
-            <li>2. Copy "View key (private)"</li>
+            <li>{{ $t("cakeWallet.viewKey2") }}</li>
           </ul>
         </div>
         <div class="images">
@@ -48,13 +49,14 @@
     <div class="guide inner">
       <div class="page">
         <div class="how-to">
-          <h5>GUI Wallet:</h5>
+          <h5>{{ $t("GUIWallet.title") }}</h5>
           <ul>
             <li>
-              1. Click on Settings <span class="text-orange-500">-></span> Seeds
-              & Keys
+              {{ $t("GUIWallet.guide1") }}
+              <span class="text-orange-500">-></span>
+              {{ $t("GUIWallet.seedsAndKeys") }}
             </li>
-            <li>2. Copy "Primary address" and "Secret view key"</li>
+            <li>{{ $t("GUIWallet.guide2") }}</li>
           </ul>
         </div>
         <div class="images">
@@ -72,12 +74,14 @@
     <div class="guide inner">
       <div class="page">
         <div class="how-to">
-          <h5>Feather Wallet:</h5>
+          <h5>{{ $t("featherWallet.title") }}</h5>
           <ul>
             <li>
-              1. Click on Wallet <span class="text-orange-500">-></span> Keys
+              {{ $t("featherWallet.guide1") }}
+              <span class="text-orange-500">-></span>
+              {{ $t("featherWallet.keys") }}
             </li>
-            <li>2. Copy "Primary address" and "Secret view key"</li>
+            <li>{{ $t("featherWallet.guide2") }}</li>
           </ul>
         </div>
         <div class="images">
@@ -95,14 +99,21 @@
     <div class="guide inner">
       <div class="page">
         <div class="how-to">
-          <h5>Monerujo Wallet:</h5>
+          <h5>{{ $t("monerujoWallet.title") }}</h5>
           <ul>
             <li>
-              1. Click on Wallet <span class="text-orange-500">-></span> Click on the menu <UIcon name="mdi:dots-vertical" /> <span class="text-orange-500">-></span> Select "Show Secrets!"
+              {{ $t("monerujoWallet.guide1") }}
+              <span class="text-orange-500">-></span>
+              {{ $t("monerujoWallet.clickOnTheMenu") }}
+              <UIcon name="mdi:dots-vertical" />
+              <span class="text-orange-500">-></span>
+              {{ $t("monerujoWallet.selectShowSecrets") }}
             </li>
-            <li>2. Copy "Public Address"</li>
+            <li>{{ $t("monerujoWallet.guide2") }}</li>
             <li>
-              3. Expand "Detailed information" <span class="text-orange-500">-></span> Copy "View Key"
+              {{ $t("monerujoWallet.guide3") }}
+              <span class="text-orange-500">-></span>
+              {{ $t("monerujoWallet.copyViewKey") }}
             </li>
           </ul>
         </div>

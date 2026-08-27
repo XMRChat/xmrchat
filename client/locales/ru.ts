@@ -566,4 +566,41 @@ export default {
   superDMRecoveryCodesTitle: "Коды восстановления SuperDM",
   superDMRecoveryCodesDes:
     "Коды восстановления не сохраняются на сервере. Пожалуйста, сохраните код восстановления. Для доступа к зашифрованным сообщениям вам понадобятся код восстановления и ID SuperDM. Если вы очистите кеш или используете другое устройство, вам потребуется ввести код восстановления.",
+
+  // GUIDES
+  walletGuides: "РУКОВОДСТВА ПО КОШЕЛЬКАМ",
+  howToFindPrimaryAddress:
+    "Как найти основной адрес и приватный view-ключ (также известный как секретный view-ключ):",
+  toGetYourPrimaryAddress: "Чтобы получить свой основной адрес:",
+  toGetYourViewKey: "Чтобы получить свой view-ключ",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Нажмите "Получить"',
+    primaryAddress2: "2. Скопируйте адрес, начинающийся с 4",
+    viewKey1: "1. Нажмите на Настройки",
+    viewKey2: '2. Скопируйте "View key (приватный)"',
+    securityAndBackup: "Безопасность и резервное копирование",
+    showSeed: "Показать сид-фразу/ключи",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Нажмите на Настройки",
+    guide2: '2. Скопируйте "Основной адрес" и "Секретный view-ключ"',
+    seedsAndKeys: "Сид-фразы и ключи",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Нажмите на Wallet",
+    guide2: '2. Скопируйте "Основной адрес" и "Секретный view-ключ"',
+    keys: "Ключи",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Нажмите на Wallet",
+    clickOnTheMenu: "Нажмите на меню",
+    selectShowSecrets: 'Выберите "Show Secrets!"',
+    guide2: '2. Скопируйте "Публичный адрес"',
+    guide3: '3. Разверните "Подробная информация"',
+    copyViewKey: 'Скопируйте "View Key"',
+  },
 };

@@ -567,4 +567,41 @@ export default {
   superDMRecoveryCodesTitle: "کدهای بازیابی SuperDM",
   superDMRecoveryCodesDes:
     "کدهای بازیابی روی سرور ذخیره نمی‌شوند. لطفاً کد بازیابی خود را ذخیره کنید. برای دسترسی به پیام‌های رمزنگاری‌شده به کد بازیابی و شناسه SuperDM نیاز خواهید داشت. اگر کش را پاک کنید یا از دستگاه دیگری استفاده کنید، باید کد بازیابی را وارد کنید.",
+
+  // GUIDES
+  walletGuides: "راهنماهای کیف پول",
+  howToFindPrimaryAddress:
+    "چگونه آدرس اصلی و کلید مشاهده خصوصی (که به کلید مشاهده مخفی نیز معروف است) را پیدا کنیم:",
+  toGetYourPrimaryAddress: "برای دریافت آدرس اصلی خود:",
+  toGetYourViewKey: "برای دریافت کلید مشاهده خود",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '۱. روی "Receive" کلیک کنید',
+    primaryAddress2: "۲. آدرسی را که با ۴ شروع می‌شود کپی کنید",
+    viewKey1: "۱. روی Settings کلیک کنید",
+    viewKey2: '۲. "View key (private)" را کپی کنید',
+    securityAndBackup: "امنیت و پشتیبان‌گیری",
+    showSeed: "نمایش سید/کلیدها",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "۱. روی Settings کلیک کنید",
+    guide2: '۲. "Primary address" و "Secret view key" را کپی کنید',
+    seedsAndKeys: "سیدها و کلیدها",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "۱. روی Wallet کلیک کنید",
+    guide2: '۲. "Primary address" و "Secret view key" را کپی کنید',
+    keys: "کلیدها",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "۱. روی Wallet کلیک کنید",
+    clickOnTheMenu: "روی منو کلیک کنید",
+    selectShowSecrets: '"Show Secrets!" را انتخاب کنید',
+    guide2: '۲. "Public Address" را کپی کنید',
+    guide3: '۳. "Detailed information" را باز کنید',
+    copyViewKey: '"View Key" را کپی کنید',
+  },
 };

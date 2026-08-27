@@ -559,4 +559,41 @@ export default {
   superDMRecoveryCodesTitle: "SuperDM recovery codes",
   superDMRecoveryCodesDes:
     "The recovery codes no dey saved for the server. Abeg save your recovery code. You go need the recovery code and SuperDM ID to access your encrypted messages. If you clear cache or use another device, you go need enter the recovery code.",
+
+  // GUIDES
+  walletGuides: "WALLET GUIDES",
+  howToFindPrimaryAddress:
+    "How you go find your main address and private view key (dem still dey call am secret view key):",
+  toGetYourPrimaryAddress: "To get your main address:",
+  toGetYourViewKey: "To get your view key",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Click on "Receive"',
+    primaryAddress2: "2. Copy the address wey start with 4",
+    viewKey1: "1. Click on Settings",
+    viewKey2: '2. Copy "View key (private)"',
+    securityAndBackup: "Security and backup",
+    showSeed: "Show seed/keys",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Click on Settings",
+    guide2: '2. Copy "Primary address" and "Secret view key"',
+    seedsAndKeys: "Seeds & Keys",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Click on Wallet",
+    guide2: '2. Copy "Primary address" and "Secret view key"',
+    keys: "Keys",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Click on Wallet",
+    clickOnTheMenu: "Click on the menu",
+    selectShowSecrets: 'Select "Show Secrets!"',
+    guide2: '2. Copy "Public Address"',
+    guide3: '3. Expand "Detailed information"',
+    copyViewKey: 'Copy "View Key"',
+  },
 };

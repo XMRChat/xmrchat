@@ -564,4 +564,41 @@ export default {
   superDMRecoveryCodesTitle: "SuperDM:n palautuskoodit",
   superDMRecoveryCodesDes:
     "Palautuskoodeja ei tallenneta palvelimelle. Tallenna palautuskoodisi. Tarvitset palautuskoodin ja SuperDM-tunnuksen päästäksesi käsiksi salattuihin viesteihisi. Jos tyhjennät välimuistin tai käytät toista laitetta, sinun on syötettävä palautuskoodi.",
+
+  // GUIDES
+  walletGuides: "LOMPAKKO-OPPAAT",
+  howToFindPrimaryAddress:
+    "Miten löydät ensisijaisen osoitteen ja yksityisen katseluavaimen (tunnetaan myös salaisena katseluavaimena):",
+  toGetYourPrimaryAddress: "Saadaksesi ensisijaisen osoitteesi:",
+  toGetYourViewKey: "Saadaksesi katseluavaimesi",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Napsauta "Vastaanota"',
+    primaryAddress2: "2. Kopioi osoite, joka alkaa numerolla 4",
+    viewKey1: "1. Napsauta Asetukset",
+    viewKey2: '2. Kopioi "View key (yksityinen)"',
+    securityAndBackup: "Turvallisuus ja varmuuskopiointi",
+    showSeed: "Näytä siemen/avaimet",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Napsauta Asetukset",
+    guide2: '2. Kopioi "Ensisijainen osoite" ja "Salainen katseluavain"',
+    seedsAndKeys: "Siemenet ja avaimet",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Napsauta Wallet",
+    guide2: '2. Kopioi "Ensisijainen osoite" ja "Salainen katseluavain"',
+    keys: "Avaimet",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Napsauta Wallet",
+    clickOnTheMenu: "Napsauta valikkoa",
+    selectShowSecrets: 'Valitse "Show Secrets!"',
+    guide2: '2. Kopioi "Julkinen osoite"',
+    guide3: '3. Laajenna "Yksityiskohtaiset tiedot"',
+    copyViewKey: 'Kopioi "View Key"',
+  },
 };

@@ -589,4 +589,41 @@ export default {
   superDMRecoveryCodesTitle: "Codes de récupération du SuperDM",
   superDMRecoveryCodesDes:
     "Les codes de récupération ne sont pas enregistrés sur le serveur. Veuillez enregistrer votre code de récupération. Vous aurez besoin du code de récupération et de l’identifiant du SuperDM pour accéder à vos messages chiffrés. Si vous videz le cache ou utilisez un autre appareil, vous devrez saisir le code de récupération.",
+
+  // GUIDES
+  walletGuides: "GUIDES DE PORTEFEUILLE",
+  howToFindPrimaryAddress:
+    "Comment trouver l'adresse principale et la clé de vue privée (aussi appelée clé de vue secrète) :",
+  toGetYourPrimaryAddress: "Pour obtenir votre adresse principale :",
+  toGetYourViewKey: "Pour obtenir votre clé de vue",
+  cakeWallet: {
+    title: "Cake Wallet :",
+    primaryAddress1: '1. Cliquez sur "Recevoir"',
+    primaryAddress2: "2. Copiez l'adresse qui commence par 4",
+    viewKey1: "1. Cliquez sur Paramètres",
+    viewKey2: '2. Copiez la "Clé de vue (privée)"',
+    securityAndBackup: "Sécurité et sauvegarde",
+    showSeed: "Afficher la phrase de récupération/les clés",
+  },
+  GUIWallet: {
+    title: "GUI Wallet :",
+    guide1: "1. Cliquez sur Paramètres",
+    guide2: '2. Copiez l\'"Adresse principale" et la "Clé de vue secrète"',
+    seedsAndKeys: "Phrases de récupération et clés",
+  },
+  featherWallet: {
+    title: "Feather Wallet :",
+    guide1: "1. Cliquez sur Portefeuille",
+    guide2: '2. Copiez l\'"Adresse principale" et la "Clé de vue secrète"',
+    keys: "Clés",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet :",
+    guide1: "1. Cliquez sur Portefeuille",
+    clickOnTheMenu: "Cliquez sur le menu",
+    selectShowSecrets: 'Sélectionnez "Afficher les secrets !"',
+    guide2: '2. Copiez l\'"Adresse publique"',
+    guide3: '3. Développez "Informations détaillées"',
+    copyViewKey: 'Copiez la "Clé de vue"',
+  },
 };
