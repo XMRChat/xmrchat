@@ -58,6 +58,7 @@ export default {
   here: "aquí",
   backToHome: "Volver al inicio",
   somethingWentWrong: "¡Algo salió mal!",
+  donate: "Donar",
 
   xmrchat: "XMRChat",
   heroDescription: "De propinas en criptomonedas a sus streamers favoritos.",
@@ -196,6 +197,25 @@ export default {
   cancel: "Cancelar",
   copyAddress: "Copiar dirección",
   waitingForPayment: "Esperando el pago",
+  tipSwapFailed:
+    "El intercambio ha fallado. Visita el enlace de Trocador a continuación para comprobar el estado y cancelar el intercambio si es necesario.",
+  paymentExpired:
+    "El pago ha caducado. Si ya has enviado el pago, ponte en contacto con el soporte.",
+  sendTestTip: "Enviar propina de prueba",
+  swapStatus: "Estado del intercambio: ",
+  swapStatusMessage: {
+    waiting: "Esperando el pago.",
+    confirming: "Esperando la confirmación en la blockchain.",
+    sending: "El intercambio se está enviando a XMRChat.",
+    failed:
+      "El intercambio ha fallado. Ponte en contacto con el soporte de Trocador.",
+  },
+  paymentReceived: "Pago recibido.",
+  exactly: "exactamente",
+  swapPaymentSend:
+    "Envía {exactly} {amount} a esta dirección para que se muestre tu xmrchat.",
+  swapETA: "El tiempo estimado del intercambio es de unos {eta} minutos.",
+  trackSwap: "Puedes seguir tu intercambio directamente desde {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "Contáctanos si tienes preguntas o comentarios.",
@@ -558,4 +578,41 @@ export default {
   superDMRecoveryCodesTitle: "Códigos de recuperación de SuperDM",
   superDMRecoveryCodesDes:
     "Los códigos de recuperación no se guardan en el servidor. Guarda tu código de recuperación. Necesitarás el código de recuperación y el ID de SuperDM para acceder a tus mensajes cifrados. Si borras la caché o utilizas otro dispositivo, tendrás que introducir el código de recuperación.",
+
+  //  GUIDES
+  walletGuides: "GUÍAS DE CARTERA",
+  howToFindPrimaryAddress:
+    "Cómo encontrar la dirección principal y la clave de vista privada (también conocida como clave de vista secreta):",
+  toGetYourPrimaryAddress: "Para obtener tu dirección principal:",
+  toGetYourViewKey: "Para obtener tu clave de vista",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Haz clic en "Recibir"',
+    primaryAddress2: "2. Copia la dirección que comienza con 4",
+    viewKey1: "1. Haz clic en Configuración",
+    viewKey2: '2. Copia la "Clave de vista (privada)"',
+    securityAndBackup: "Seguridad y copia de seguridad",
+    showSeed: "Mostrar semilla/claves",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Haz clic en Configuración",
+    guide2: '2. Copia la "Dirección principal" y la "Clave de vista secreta"',
+    seedsAndKeys: "Semillas y claves",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Haz clic en Cartera",
+    guide2: '2. Copia la "Dirección principal" y la "Clave de vista secreta"',
+    keys: "Claves",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Haz clic en Cartera",
+    clickOnTheMenu: "Haz clic en el menú",
+    selectShowSecrets: 'Selecciona "¡Mostrar secretos!"',
+    guide2: '2. Copia la "Dirección pública"',
+    guide3: '3. Expande "Información detallada"',
+    copyViewKey: 'Copia la "Clave de vista"',
+  },
 };

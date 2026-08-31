@@ -55,6 +55,7 @@ export default {
   here: "هنا",
   backToHome: "العودة إلى الصفحة الرئيسية",
   somethingWentWrong: "حدث خطأ ما!",
+  donate: "تبرع",
 
   xmrchat: "XMRChat",
   heroDescription: "تبرّع لصانع المحتوى المفضل لديك بالعملات المشفرة",
@@ -188,6 +189,24 @@ export default {
   cancel: "إلغاء",
   copyAddress: "نسخ العنوان",
   waitingForPayment: "في انتظار الدفع",
+  tipSwapFailed:
+    "فشلت عملية المبادلة. يرجى زيارة رابط Trocador أدناه للتحقق من الحالة وإلغاء المبادلة إذا لزم الأمر.",
+  paymentExpired:
+    "انتهت صلاحية الدفع. إذا كنت قد أرسلت دفعتك بالفعل، يرجى التواصل مع الدعم.",
+  sendTestTip: "إرسال إكرامية تجريبية",
+  swapStatus: "حالة المبادلة: ",
+  swapStatusMessage: {
+    waiting: "في انتظار الدفع.",
+    confirming: "في انتظار تأكيد المعاملة على البلوكشين.",
+    sending: "جارٍ إرسال المبادلة إلى XMRChat.",
+    failed: "فشلت عملية المبادلة، يرجى التواصل مع دعم Trocador.",
+  },
+  paymentReceived: "تم استلام الدفع.",
+  exactly: "بالضبط",
+  swapPaymentSend:
+    "يرجى إرسال {exactly} {amount} إلى هذا العنوان لعرض xmrchat الخاص بك.",
+  swapETA: "من المتوقع أن تستغرق المبادلة حوالي {eta} دقيقة.",
+  trackSwap: "يمكنك تتبع مبادلتك مباشرة من {trocador}.",
 
   // CONTACT US PAGE
   contactUsDescription: "اتصل بنا لأي أسئلة أو ملاحظات",
@@ -534,4 +553,41 @@ export default {
   superDMRecoveryCodesTitle: "رموز استرداد SuperDM",
   superDMRecoveryCodesDes:
     "لا يتم حفظ رموز الاسترداد على الخادم. يرجى حفظ رمز الاسترداد الخاص بك. ستحتاج إلى رمز الاسترداد ومعرّف SuperDM للوصول إلى رسائلك المشفّرة. إذا مسحت ذاكرة التخزين المؤقت أو استخدمت جهازًا مختلفًا، فستحتاج إلى إدخال رمز الاسترداد.",
+
+  // GUIDES
+  walletGuides: "أدلة المحفظة",
+  howToFindPrimaryAddress:
+    "كيفية العثور على العنوان الأساسي ومفتاح العرض الخاص (المعروف أيضًا بمفتاح العرض السري):",
+  toGetYourPrimaryAddress: "للحصول على عنوانك الأساسي:",
+  toGetYourViewKey: "للحصول على مفتاح العرض الخاص بك",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. انقر على "استلام"',
+    primaryAddress2: "2. انسخ العنوان الذي يبدأ بالرقم 4",
+    viewKey1: "1. انقر على الإعدادات",
+    viewKey2: '2. انسخ "مفتاح العرض (الخاص)"',
+    securityAndBackup: "الأمان والنسخ الاحتياطي",
+    showSeed: "إظهار العبارة الأولية/المفاتيح",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. انقر على الإعدادات",
+    guide2: '2. انسخ "العنوان الأساسي" و"مفتاح العرض السري"',
+    seedsAndKeys: "العبارات الأولية والمفاتيح",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. انقر على Wallet",
+    guide2: '2. انسخ "العنوان الأساسي" و"مفتاح العرض السري"',
+    keys: "المفاتيح",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. انقر على Wallet",
+    clickOnTheMenu: "انقر على القائمة",
+    selectShowSecrets: 'اختر "Show Secrets!"',
+    guide2: '2. انسخ "العنوان العام"',
+    guide3: '3. وسّع "المعلومات التفصيلية"',
+    copyViewKey: 'انسخ "مفتاح العرض"',
+  },
 };

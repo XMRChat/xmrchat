@@ -57,6 +57,7 @@ export default {
   here: "اینجا",
   backToHome: "بازگشت به خانه",
   somethingWentWrong: "خطایی ناخواسته پیش آمده ",
+  donate: "اهدا",
 
   xmrchat: "XMRChat",
   heroDescription: "به استریمر مورد علاقه خود با ارز دیجیتال انعام دهید.",
@@ -193,6 +194,24 @@ export default {
   cancel: "لغو کردن",
   copyAddress: "کپی آدرس",
   waitingForPayment: "در انتظار پرداخت",
+  tipSwapFailed:
+    "تراکنش سواپ ناموفق بود. لطفاً برای بررسی وضعیت و لغو سواپ در صورت نیاز، به لینک Trocador در زیر مراجعه کنید.",
+  paymentExpired:
+    "مهلت پرداخت به پایان رسیده است. اگر پرداخت خود را قبلاً ارسال کرده‌اید، لطفاً با پشتیبانی تماس بگیرید.",
+  sendTestTip: "ارسال انعام آزمایشی",
+  swapStatus: "وضعیت سواپ: ",
+  swapStatusMessage: {
+    waiting: "در انتظار پرداخت.",
+    confirming: "در انتظار تأیید در بلاکچین.",
+    sending: "سواپ در حال ارسال به XMRChat است.",
+    failed: "سواپ ناموفق بود، لطفاً با پشتیبانی Trocador تماس بگیرید.",
+  },
+  paymentReceived: "پرداخت دریافت شد.",
+  exactly: "دقیقاً",
+  swapPaymentSend:
+    "لطفاً {exactly} {amount} را به این آدرس ارسال کنید تا xmrchat شما نمایش داده شود.",
+  swapETA: "زمان تقریبی انجام سواپ حدود {eta} دقیقه است.",
+  trackSwap: "می‌توانید سواپ خود را مستقیماً از طریق {trocador} پیگیری کنید.",
 
   // CONTACT US PAGE
   contactUsDescription: "جهت هرگونه سوال یا بازخورد با ما تماس بگیرید.",
@@ -548,4 +567,41 @@ export default {
   superDMRecoveryCodesTitle: "کدهای بازیابی SuperDM",
   superDMRecoveryCodesDes:
     "کدهای بازیابی روی سرور ذخیره نمی‌شوند. لطفاً کد بازیابی خود را ذخیره کنید. برای دسترسی به پیام‌های رمزنگاری‌شده به کد بازیابی و شناسه SuperDM نیاز خواهید داشت. اگر کش را پاک کنید یا از دستگاه دیگری استفاده کنید، باید کد بازیابی را وارد کنید.",
+
+  // GUIDES
+  walletGuides: "راهنماهای کیف پول",
+  howToFindPrimaryAddress:
+    "چگونه آدرس اصلی و کلید مشاهده خصوصی (که به کلید مشاهده مخفی نیز معروف است) را پیدا کنیم:",
+  toGetYourPrimaryAddress: "برای دریافت آدرس اصلی خود:",
+  toGetYourViewKey: "برای دریافت کلید مشاهده خود",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '۱. روی "Receive" کلیک کنید',
+    primaryAddress2: "۲. آدرسی را که با ۴ شروع می‌شود کپی کنید",
+    viewKey1: "۱. روی Settings کلیک کنید",
+    viewKey2: '۲. "View key (private)" را کپی کنید',
+    securityAndBackup: "امنیت و پشتیبان‌گیری",
+    showSeed: "نمایش سید/کلیدها",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "۱. روی Settings کلیک کنید",
+    guide2: '۲. "Primary address" و "Secret view key" را کپی کنید',
+    seedsAndKeys: "سیدها و کلیدها",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "۱. روی Wallet کلیک کنید",
+    guide2: '۲. "Primary address" و "Secret view key" را کپی کنید',
+    keys: "کلیدها",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "۱. روی Wallet کلیک کنید",
+    clickOnTheMenu: "روی منو کلیک کنید",
+    selectShowSecrets: '"Show Secrets!" را انتخاب کنید',
+    guide2: '۲. "Public Address" را کپی کنید',
+    guide3: '۳. "Detailed information" را باز کنید',
+    copyViewKey: '"View Key" را کپی کنید',
+  },
 };

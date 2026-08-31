@@ -58,6 +58,7 @@ export default {
   here: "hier",
   backToHome: "Zurück zur Startseite",
   somethingWentWrong: "Etwas ist schiefgelaufen!",
+  donate: "Spenden",
 
   xmrchat: "XMRChat",
   heroDescription: "Unterstütze deinen Lieblings-Streamer mit Kryptowährung",
@@ -196,6 +197,25 @@ export default {
   cancel: "Abbrechen",
   copyAddress: "Adresse kopieren",
   waitingForPayment: "Warte auf Zahlung",
+  tipSwapFailed:
+    "Der Swap ist fehlgeschlagen. Bitte besuche den folgenden Trocador-Link, um den Status zu überprüfen und den Swap gegebenenfalls zu stornieren.",
+  paymentExpired:
+    "Die Zahlung ist abgelaufen. Wenn du deine Zahlung bereits gesendet hast, kontaktiere bitte den Support.",
+  sendTestTip: "Test-Tipp senden",
+  swapStatus: "Swap-Status: ",
+  swapStatusMessage: {
+    waiting: "Warten auf Zahlung.",
+    confirming: "Warten auf die Bestätigung auf der Blockchain.",
+    sending: "Der Swap wird an XMRChat gesendet.",
+    failed:
+      "Der Swap ist fehlgeschlagen. Bitte kontaktiere den Trocador-Support.",
+  },
+  paymentReceived: "Zahlung erhalten.",
+  exactly: "genau",
+  swapPaymentSend:
+    "Bitte sende {exactly} {amount} an diese Adresse, damit dein xmrchat angezeigt werden kann.",
+  swapETA: "Die voraussichtliche Swap-Dauer beträgt etwa {eta} Minuten.",
+  trackSwap: "Du kannst deinen Swap direkt über {trocador} verfolgen.",
 
   // CONTACT US PAGE
   contactUsDescription: "Kontaktiere uns bei Fragen oder Feedback.",
@@ -561,4 +581,41 @@ export default {
   superDMRecoveryCodesTitle: "SuperDM-Wiederherstellungscodes",
   superDMRecoveryCodesDes:
     "Die Wiederherstellungscodes werden nicht auf dem Server gespeichert. Bitte speichere deinen Wiederherstellungscode. Du benötigst den Wiederherstellungscode und die SuperDM-ID, um auf deine verschlüsselten Nachrichten zuzugreifen. Wenn du den Cache löschst oder ein anderes Gerät verwendest, musst du den Wiederherstellungscode eingeben.",
+
+  // GUIDES
+  walletGuides: "WALLET-ANLEITUNGEN",
+  howToFindPrimaryAddress:
+    "So findest du die primäre Adresse und den privaten View-Key (auch bekannt als geheimer View-Key):",
+  toGetYourPrimaryAddress: "So erhältst du deine primäre Adresse:",
+  toGetYourViewKey: "So erhältst du deinen View-Key",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. Klicke auf "Empfangen"',
+    primaryAddress2: "2. Kopiere die Adresse, die mit 4 beginnt",
+    viewKey1: "1. Klicke auf Einstellungen",
+    viewKey2: '2. Kopiere den "View Key (privat)"',
+    securityAndBackup: "Sicherheit und Backup",
+    showSeed: "Seed/Schlüssel anzeigen",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. Klicke auf Einstellungen",
+    guide2: '2. Kopiere die "Primäre Adresse" und den "Geheimen View Key"',
+    seedsAndKeys: "Seeds & Schlüssel",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Klicke auf Wallet",
+    guide2: '2. Kopiere die "Primäre Adresse" und den "Geheimen View Key"',
+    keys: "Schlüssel",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Klicke auf Wallet",
+    clickOnTheMenu: "Klicke auf das Menü",
+    selectShowSecrets: 'Wähle "Show Secrets!"',
+    guide2: '2. Kopiere die "Öffentliche Adresse"',
+    guide3: '3. Erweitere "Detaillierte Informationen"',
+    copyViewKey: 'Kopiere den "View Key"',
+  },
 };

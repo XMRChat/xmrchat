@@ -14,6 +14,7 @@ const emit = defineEmits<{
 }>();
 
 const { expired, remaining, initialize } = usePaymentExpiration();
+const { t } = useI18n();
 
 const renderStatusClassName = computed(() => {
   return `text-${
@@ -22,19 +23,17 @@ const renderStatusClassName = computed(() => {
 });
 
 const showCountdown = computed(
-  () => props.createdTip?.swap?.status === SwapStatusEnum.WAITING
+  () => props.createdTip?.swap?.status === SwapStatusEnum.WAITING,
 );
 
 const renderStatusMessage = computed(() => {
   const status = props.createdTip?.swap?.status;
 
-  if (status === SwapStatusEnum.WAITING) return "Waiting for payment.";
+  if (status === SwapStatusEnum.WAITING) return t("swapStatusMessage.waiting");
   if (status === SwapStatusEnum.CONFIRMING)
-    return "Waiting for blockchain confirmation.";
-  if (status === SwapStatusEnum.SENDING)
-    return "Swap is being sent to XMRChat.";
-  if (status === SwapStatusEnum.FAILED)
-    return "Swap failed, please contact Trocador support.";
+    return t("swapStatusMessage.confirming");
+  if (status === SwapStatusEnum.SENDING) return t("swapStatusMessage.sending");
+  if (status === SwapStatusEnum.FAILED) return t("swapStatusMessage.failed");
 
   return undefined;
 });
@@ -44,7 +43,7 @@ const showLoading = computed(() =>
     SwapStatusEnum.WAITING,
     SwapStatusEnum.CONFIRMING,
     SwapStatusEnum.SENDING,
-  ].includes(props.createdTip?.swap?.status!)
+  ].includes(props.createdTip?.swap?.status!),
 );
 
 const showAddress = computed(() => {
@@ -73,15 +72,15 @@ const renderMessage = computed(() => {
       SwapStatusEnum.FINISHED,
     ].includes(status)
   )
-    return "Payment received.";
+    return t("paymentReceived");
 
   return undefined;
 });
 
 const renderCancelText = computed(() => {
   const status = props.createdTip?.swap?.status!;
-  if (status !== SwapStatusEnum.WAITING) return "Close";
-  return "Cancel";
+  if (status !== SwapStatusEnum.WAITING) return t("close");
+  return t("cancel");
 });
 
 const showETA = computed(() => {
@@ -95,13 +94,13 @@ watch(
   (v) => {
     if (v) initialize(v);
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
 <template>
   <TipPaymentViewContainer
-    title="Send Tip"
+    :title="$t('sendTip')"
     @cancel="emit('cancel')"
     :cancelText="renderCancelText"
     :expiresAt="props.createdTip?.tip.expiresAt"
@@ -115,15 +114,13 @@ watch(
       >
         <template #description>
           <p class="text-base">
-            Swap failed. Please visit the Trocador link below to check the
-            status and cancel the swap if necessary.
+            {{ $t("tipSwapFailed") }}
           </p>
         </template>
       </UAlert>
 
       <p class="text-red-500 text-center" v-else-if="expired">
-        Payment is expired. If you have already sent your payment please contact
-        support.
+        {{ $t("paymentExpired") }}
       </p>
 
       <template v-else>
@@ -131,13 +128,17 @@ watch(
           <UAlert color="emerald" variant="subtle" v-if="renderMessage">
             <template #description>
               <p class="text-base" v-if="renderMessage === 'DEFAULT'">
-                Please send
-                <span class="font-bold">exactly </span>
-                <span class="font-bold"
-                  >{{ createdTip?.swap?.inputAmount }}
-                  {{ createdTip?.swap?.coin?.name }}</span
-                >
-                to this address for your xmrchat to be displayed.
+                <I18nT keypath="swapPaymentSend" scope="global">
+                  <template #exactly>
+                    <span class="font-bold">{{ $t("exactly") }}</span>
+                  </template>
+                  <template #amount>
+                    <span class="font-bold"
+                      >{{ createdTip?.swap?.inputAmount }}
+                      {{ createdTip?.swap?.coin?.name }}</span
+                    >
+                  </template>
+                </I18nT>
               </p>
               <p class="text-base" v-else>
                 {{ renderMessage }}
@@ -186,7 +187,7 @@ watch(
 
       <div class="p-2 rounded-lg border border-border mt-2">
         <div v-if="createdTip?.swap" class="text-center text-sm">
-          <span>Swap Status: </span>
+          <span>{{ $t("swapStatus") }}</span>
           <span :class="[renderStatusClassName]">{{
             SWAP_STATUSES[createdTip.swap.status as SwapStatusEnum]?.label
           }}</span>
@@ -196,17 +197,20 @@ watch(
           class="text-pale text-xs text-center mt-1"
           v-if="showETA && createdTip?.swap?.eta"
         >
-          Swap ETA is about {{ createdTip?.swap?.eta }} minutes.
+          {{ $t("swapETA", { eta: createdTip?.swap?.eta }) }}
         </p>
         <div class="text-pale text-xs text-center mt-1">
-          You can track your swap directly from
-          <ULink
-            target="_blank"
-            class="text-primary"
-            :to="`https://trocador.app/en/checkout/${createdTip?.swap?.swapId}`"
-          >
-            Trocador </ULink
-          >.
+          <I18nT keypath="trackSwap" scope="global">
+            <template #trocador>
+              <ULink
+                target="_blank"
+                class="text-primary"
+                :to="`https://trocador.app/en/checkout/${createdTip?.swap?.swapId}`"
+              >
+                Trocador
+              </ULink>
+            </template>
+          </I18nT>
         </div>
       </div>
     </div>

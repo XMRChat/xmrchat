@@ -55,6 +55,7 @@ export default {
   here: "여기",
   backToHome: "홈으로 돌아가기",
   somethingWentWrong: "문제가 발생했습니다!",
+  donate: "후원하기",
 
   xmrchat: "XMRChat",
   heroDescription: "좋아하는 스트리머에게 암호화폐로 팁을 주세요.",
@@ -191,7 +192,24 @@ export default {
   cancel: "취소",
   copyAddress: "주소 복사",
   waitingForPayment: "결제 대기 중",
-
+  tipSwapFailed:
+    "스왑에 실패했습니다. 아래 Trocador 링크에서 상태를 확인하고 필요한 경우 스왑을 취소해 주세요.",
+  paymentExpired:
+    "결제 시간이 만료되었습니다. 이미 결제를 보냈다면 고객 지원팀에 문의해 주세요.",
+  sendTestTip: "테스트 팁 보내기",
+  swapStatus: "스왑 상태: ",
+  swapStatusMessage: {
+    waiting: "결제를 기다리는 중입니다.",
+    confirming: "블록체인 확인을 기다리는 중입니다.",
+    sending: "스왑을 XMRChat으로 보내는 중입니다.",
+    failed: "스왑에 실패했습니다. Trocador 지원팀에 문의해 주세요.",
+  },
+  paymentReceived: "결제가 완료되었습니다.",
+  exactly: "정확히",
+  swapPaymentSend:
+    "xmrchat이 표시되도록 {amount}을(를) {exactly} 이 주소로 보내주세요.",
+  swapETA: "스왑 완료까지 약 {eta}분이 소요됩니다.",
+  trackSwap: "{trocador}에서 스왑 상태를 직접 확인할 수 있습니다.",
   contactUsDescription: "질문이나 피드백이 있다면 문의해주세요.",
   contactUsForm: "문의 양식",
   contactUsFormDescription: "질문이나 피드백이 있다면 문의해주세요.",
@@ -536,4 +554,41 @@ export default {
   superDMRecoveryCodesTitle: "SuperDM 복구 코드",
   superDMRecoveryCodesDes:
     "복구 코드는 서버에 저장되지 않습니다. 복구 코드를 저장해 주세요. 암호화된 메시지에 액세스하려면 복구 코드와 SuperDM ID가 필요합니다. 캐시를 삭제하거나 다른 기기를 사용하면 복구 코드를 다시 입력해야 합니다.",
+
+  // GUIDES
+  walletGuides: "지갑 가이드",
+  howToFindPrimaryAddress:
+    "기본 주소와 프라이빗 뷰 키(시크릿 뷰 키라고도 함)를 찾는 방법:",
+  toGetYourPrimaryAddress: "기본 주소를 확인하려면:",
+  toGetYourViewKey: "뷰 키를 확인하려면",
+  cakeWallet: {
+    title: "Cake Wallet:",
+    primaryAddress1: '1. "받기"를 클릭하세요',
+    primaryAddress2: "2. 4로 시작하는 주소를 복사하세요",
+    viewKey1: "1. 설정을 클릭하세요",
+    viewKey2: '2. "뷰 키(비공개)"를 복사하세요',
+    securityAndBackup: "보안 및 백업",
+    showSeed: "시드/키 표시",
+  },
+  GUIWallet: {
+    title: "GUI Wallet:",
+    guide1: "1. 설정을 클릭하세요",
+    guide2: '2. "기본 주소"와 "시크릿 뷰 키"를 복사하세요',
+    seedsAndKeys: "시드 및 키",
+  },
+  featherWallet: {
+    title: "Feather Wallet:",
+    guide1: "1. Wallet을 클릭하세요",
+    guide2: '2. "기본 주소"와 "시크릿 뷰 키"를 복사하세요',
+    keys: "키",
+  },
+  monerujoWallet: {
+    title: "Monerujo Wallet:",
+    guide1: "1. Wallet을 클릭하세요",
+    clickOnTheMenu: "메뉴를 클릭하세요",
+    selectShowSecrets: '"Show Secrets!"를 선택하세요',
+    guide2: '2. "공개 주소"를 복사하세요',
+    guide3: '3. "상세 정보"를 펼치세요',
+    copyViewKey: '"뷰 키"를 복사하세요',
+  },
 };
