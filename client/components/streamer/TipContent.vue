@@ -353,10 +353,10 @@ const renderInputPadding = computed(
 
           <div class="flex-1">
             <div class="flex justify-end">
-              <div class="flex flex-col flex-1 max-w-[320px] w-full">
+              <div class="flex flex-col flex-1">
                 <p class="text-xs text-pale">Ad</p>
                 <div
-                  class="aspect-[320/50] bg-background-2 border border-border rounded-lg min-w-0 w-full flex items-center justify-center relative overflow-hidden"
+                  class="aspect-[320/50] bg-background-2 border border-border rounded-lg min-w-[300px] w-full flex items-center justify-center relative overflow-hidden"
                 >
                   <p class="relative z-10">Your ad goes here</p>
                 </div>
