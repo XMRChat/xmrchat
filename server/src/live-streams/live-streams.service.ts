@@ -20,6 +20,7 @@ import { Link } from 'src/links/link.entity';
 import { Tip } from 'src/tips/tip.entity';
 import { PeertubeProvider } from './providers/peertube.provider';
 import { KickProvider } from './providers/kick.provider';
+import { XProvider } from './providers/x.provider';
 
 @Injectable()
 export class LiveStreamsService implements OnModuleInit {
@@ -30,6 +31,7 @@ export class LiveStreamsService implements OnModuleInit {
     private youtubeProvider: YoutubeProvider,
     private twitchProvider: TwitchProvider,
     private kickProvider: KickProvider,
+    private xProvider: XProvider,
     private rumbleProvider: RumbleProvider,
     private peertubeProvider: PeertubeProvider,
     private config: ConfigService,
@@ -103,6 +105,7 @@ export class LiveStreamsService implements OnModuleInit {
     const youtube = await this.getYoutubeLiveStreams();
     const twitch = await this.getTwitchLiveStreams();
     const kick = await this.getKickLiveStreams();
+    const x = await this.getXLiveStreams();
     const rumble = await this.getRumbleLiveStreams();
     const peertube = await this.getPeertubeLiveStreams();
 
@@ -110,6 +113,7 @@ export class LiveStreamsService implements OnModuleInit {
       ...youtube,
       ...twitch,
       ...kick,
+      ...x,
       ...rumble,
       ...peertube,
     ]);
@@ -233,5 +237,50 @@ export class LiveStreamsService implements OnModuleInit {
 
   async getPeertubeLiveStreams() {
     return this.peertubeProvider.getLiveStreams();
+  }
+
+  async getXProviderParams() {
+    const links = await this.linksService.findByPlatform(LinkPlatformEnum.X);
+    if (!links.length) return [];
+
+    const streamableLinkPlatforms = [
+      LinkPlatformEnum.YOUTUBE,
+      LinkPlatformEnum.TWITCH,
+      LinkPlatformEnum.KICK,
+      LinkPlatformEnum.RUMBLE,
+      LinkPlatformEnum.PEERTUBE,
+    ];
+
+    const streamableLinks = await Promise.all(
+      streamableLinkPlatforms.map((platform) =>
+        this.linksService.findByPlatform(platform),
+      ),
+    );
+    const streamablePageIds = new Set(
+      streamableLinks.flat().map((link) => link.page.id),
+    );
+
+    const twitchPages = await this.pagesRepo.find({
+      where: {
+        twitchChannel: And(Not(IsNull()), Not('')),
+        isPublic: true,
+        status: Not(PageStatusEnum.DEACTIVE),
+      },
+    });
+    twitchPages.forEach((page) => streamablePageIds.add(page.id));
+
+    return links
+      .filter((link) => !streamablePageIds.has(link.page.id))
+      .map((link) => ({
+        username: link.value,
+        pageId: link.page.id,
+      }));
+  }
+
+  async getXLiveStreams() {
+    if (!this.xProvider.isEnabled()) return [];
+
+    const params = await this.getXProviderParams();
+    return this.xProvider.getLiveStreams(params);
   }
 }

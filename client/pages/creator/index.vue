@@ -57,7 +57,7 @@ const { status, refresh, error, data } = useLazyAsyncData("creators", () =>
             <div class="flex items-center gap-4">
               <GeneralImage
                 variant="logo"
-                :url="item?.logo.thumbnail || item.logo.url"
+                :url="item?.logo?.thumbnail || item?.logo?.url"
                 class="w-[90px] h-[90px]"
               />
               <p v-if="item.bio" class="pt-1 text-xs text-pale line-clamp-4">
