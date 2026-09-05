@@ -2,12 +2,12 @@
 const appConfig = useAppConfig();
 
 const email = computed(() => appConfig.socials?.email);
+const url = computed(() => `mailto:${email.value}`);
 </script>
 
 <template>
   <div>
     <div class="inner">
-      <!-- hero -->
       <div class="flex justify-center py-24 text-center">
         <div class="max-w-lg flex flex-col gap-4">
           <h1 class="text-4xl font-bold">
@@ -19,12 +19,11 @@ const email = computed(() => appConfig.socials?.email);
             period.
           </p>
           <div>
-            <UButton size="lg">Create an ad</UButton>
+            <UButton size="lg" :to="url" target="_blank">Create an ad</UButton>
           </div>
         </div>
       </div>
 
-      <!-- placement -->
       <section class="pb-24">
         <div class="flex flex-col gap-4 mb-6">
           <div>
@@ -40,7 +39,9 @@ const email = computed(() => appConfig.socials?.email);
         <div class="flex justify-center">
           <div class="max-w-lg flex flex-col gap-4">
             <AdPlacementCard />
-            <UButton size="lg" class="justify-center">Create ad</UButton>
+            <UButton size="lg" class="justify-center" :to="url" target="_blank">
+              Send us an email
+            </UButton>
           </div>
         </div>
       </section>
