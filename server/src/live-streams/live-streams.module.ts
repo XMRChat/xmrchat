@@ -18,6 +18,7 @@ import { PeertubeModule } from 'src/integrations/peertube/peertube.module';
 import { PeertubeProvider } from './providers/peertube.provider';
 import { KickModule } from 'src/integrations/kick/kick.module';
 import { KickProvider } from './providers/kick.provider';
+import { XProvider } from './providers/x.provider';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { KickProvider } from './providers/kick.provider';
     YoutubeProvider,
     TwitchProvider,
     KickProvider,
+    XProvider,
     RumbleProvider,
     PeertubeProvider,
     LiveStreamProcessor,

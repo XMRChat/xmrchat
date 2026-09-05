@@ -13,6 +13,7 @@ docker-compose.build.yml
 migrations/data/*.json
 typeorm.server.config.ts
 /backups
+/.cache
 
 # Logs
 logs

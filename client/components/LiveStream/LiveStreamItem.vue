@@ -41,7 +41,7 @@ const liveStreamPlatform = computed(() =>
       <!-- header -->
       <span class="flex items-center gap-2">
         <GeneralImage
-          :url="liveStream?.page?.logo.thumbnail"
+          :url="liveStream?.page?.logo?.thumbnail || liveStream?.page?.logo?.url"
           variant="logo"
           class="w-[32px] h-[32px]"
         />

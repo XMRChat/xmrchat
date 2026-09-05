@@ -23,6 +23,11 @@ export const useStreamerIdSeoMeta = (
   const {
     public: { imageBaseUrl },
   } = useRuntimeConfig();
+  const imageUrl = computed(() => {
+    const image = page.value?.logo?.thumbnail || page.value?.logo?.url;
+    return image ? `${imageBaseUrl}${image}` : undefined;
+  });
+
   useSeoMeta({
     title: () => t("head.tip", { path: page.value?.path || "" }),
   });
@@ -32,11 +37,11 @@ export const useStreamerIdSeoMeta = (
 
     ogTitle: t("head.XMRChatTip", { path: page.value?.path }),
     ogDescription: t("head.XMRChatTip", { path: page.value?.path }),
-    ogImage: `${imageBaseUrl}${page.value?.logo.url}`,
+    ogImage: imageUrl,
 
     twitterTitle: t("head.XMRChatTip", { path: page.value?.path }),
     twitterDescription: null,
-    twitterImage: `${imageBaseUrl}${page.value?.logo.thumbnail}`,
+    twitterImage: imageUrl,
     twitterCard: "summary",
   });
 };

@@ -77,9 +77,9 @@ useStreamerIdSeoMeta(computed(() => data.value?.page));
       <template v-if="data">
         <StreamerHeader
           class="pt-2"
-          :bannerUrl="data.page.coverImage.url"
+          :bannerUrl="data.page.coverImage?.url"
           :liveStreams="data.page.liveStreams"
-          :logoUrl="data.page.logo.url"
+          :logoUrl="data.page.logo?.url"
           :name="data.page.name"
           :links="data.page.links"
           :superDmActive="data.superDmState.active"
