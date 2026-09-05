@@ -56,5 +56,6 @@ export const useRouteLocation = () => {
     toStreamerTipGoal: () => localeRoute("/streamer/tip-goal"),
     toCreateStreamerTipGoal: () => localeRoute("/streamer/tip-goal/create"),
     toEditStreamerTipGoal: () => localeRoute(`/streamer/tip-goal/edit`),
+    toCreateAd: () => localeRoute("/ads/create"),
   };
 };
