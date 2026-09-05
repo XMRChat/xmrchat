@@ -26,14 +26,12 @@ const email = computed(() => appConfig.socials?.email);
 
       <!-- placement -->
       <section class="pb-24">
-        <div
-          class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6"
-        >
+        <div class="flex flex-col gap-4 mb-6">
           <div>
             <p class="text-primary text-sm font-medium">Create your campaign</p>
             <h2 class="text-3xl font-bold mt-1">Ad placement</h2>
           </div>
-          <p class="text-pale md:max-w-sm md:text-right">
+          <p class="text-pale max-w-sm">
             Reserve the exclusive tip page banner, add your campaign details,
             and pay securely with Monero.
           </p>
@@ -46,6 +44,8 @@ const email = computed(() => appConfig.socials?.email);
           </div>
         </div>
       </section>
+
+      <AdRules />
     </div>
   </div>
 </template>

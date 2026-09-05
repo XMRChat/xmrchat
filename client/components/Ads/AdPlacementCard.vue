@@ -27,14 +27,15 @@ const features = [
       </UBadge>
     </div>
 
-    <div
+    <!-- <div
       class="aspect-[4/1] w-full rounded-lg bg-background-2 flex items-center justify-center"
     >
       <p class="text-sm text-pale">4:1 banner</p>
-    </div>
+    </div> -->
 
     <p class="text-3xl font-bold tracking-tight">
-      {{ price || "$75.00" }}
+      Email for pricing
+      <!-- {{ price || "$75.00" }} -->
       <span class="text-base font-normal text-pale">/ week</span>
     </p>
 
