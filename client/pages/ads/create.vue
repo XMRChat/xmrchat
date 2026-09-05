@@ -33,7 +33,7 @@ const email = computed(() => appConfig.socials?.email);
             <p class="text-primary text-sm font-medium">Create your campaign</p>
             <h2 class="text-3xl font-bold mt-1">Ad placement</h2>
           </div>
-          <p class="text-pale">
+          <p class="text-pale md:max-w-sm md:text-right">
             Reserve the exclusive tip page banner, add your campaign details,
             and pay securely with Monero.
           </p>
@@ -42,7 +42,7 @@ const email = computed(() => appConfig.socials?.email);
         <div class="flex justify-center">
           <div class="max-w-lg flex flex-col gap-4">
             <AdPlacementCard />
-            <UButton size="lg" class="text-center">Create ad</UButton>
+            <UButton size="lg" class="justify-center">Create ad</UButton>
           </div>
         </div>
       </section>
