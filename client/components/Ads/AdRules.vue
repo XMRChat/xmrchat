@@ -8,18 +8,12 @@ const rules = [
   },
   {
     number: "02",
-    title: "Monero must be relevant",
-    description:
-      "The product, service, project, or community must meaningfully support Monero, accept XMR, or directly serve Monero users.",
-  },
-  {
-    number: "03",
     title: "No illegal services",
     description:
       "Ads cannot promote unlawful products, services, content, or activity. We may ask for more information when the offering is unclear.",
   },
   {
-    number: "04",
+    number: "03",
     title: "Every campaign is reviewed",
     description:
       "An admin checks the service and creative before anything goes live on tip pages. A campaign rejected during this review receives a full refund.",
@@ -28,40 +22,27 @@ const rules = [
 </script>
 
 <template>
-  <section class="pb-24 grid grid-cols-1 gap-8 md:grid-cols-3">
-    <div class="col-span-1 md:col-span-2">
-      <div class="mb-8">
-        <p class="text-primary text-sm font-medium">Before you submit</p>
-        <h2 class="text-3xl font-bold mt-1">Advertising rules</h2>
-      </div>
-
-      <ul class="flex flex-col gap-6">
-        <li
-          v-for="(rule, index) in rules"
-          :key="rule.number"
-          class="flex gap-4 sm:gap-6 pt-6"
-          :class="{ 'border-t border-border': index > 0 }"
-        >
-          <span class="text-primary font-medium shrink-0 w-8">{{
-            rule.number
-          }}</span>
-          <div>
-            <h3 class="font-bold text-lg">{{ rule.title }}</h3>
-            <p class="mt-2">{{ rule.description }}</p>
-          </div>
-        </li>
-      </ul>
+  <section class="pb-24">
+    <div class="mb-8">
+      <p class="text-primary text-sm font-medium">Before you submit</p>
+      <h2 class="text-3xl font-bold mt-1">Advertising rules</h2>
     </div>
 
-    <div class="mt-10 md:mt-0">
-      <p class="text-primary text-sm font-medium">Independent coverage</p>
-      <h3 class="text-2xl font-bold mt-1">We will publish an honest review</h3>
-      <p class="mt-3 max-w-3xl">
-        As part of the process, an admin will inspect your service and publish
-        an honest review about what they find. Buying an ad does not buy a
-        positive opinion, an endorsement, or editorial control. Readers get an
-        independent assessment and advertisers get credible exposure.
-      </p>
-    </div>
+    <ul class="flex flex-col gap-6">
+      <li
+        v-for="(rule, index) in rules"
+        :key="rule.number"
+        class="flex gap-4 sm:gap-6 pt-6"
+        :class="{ 'border-t border-border': index > 0 }"
+      >
+        <span class="text-primary font-medium shrink-0 w-8">{{
+          rule.number
+        }}</span>
+        <div>
+          <h3 class="font-bold text-lg">{{ rule.title }}</h3>
+          <p class="mt-2">{{ rule.description }}</p>
+        </div>
+      </li>
+    </ul>
   </section>
 </template>
