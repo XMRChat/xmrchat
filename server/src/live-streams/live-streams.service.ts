@@ -241,7 +241,34 @@ export class LiveStreamsService implements OnModuleInit {
   }
 
   async getXProviderParams() {
-    const links = await this.linksService.findByPlatform(LinkPlatformEnum.X);
+    const query = this.linkRepo
+      .createQueryBuilder('link')
+      .leftJoinAndSelect('link.page', 'page')
+      .where('link.platform = :platform', {
+        platform: LinkPlatformEnum.X,
+      })
+      .andWhere('link.value IS NOT NULL')
+      .andWhere(`link.value <> ''`)
+      .andWhere('page.isPublic = :isPublic', { isPublic: true })
+      .andWhere('page.status != :deactive', {
+        deactive: PageStatusEnum.DEACTIVE,
+      })
+      .andWhere(
+        (qb) => {
+          const subQuery = qb
+            .subQuery()
+            .select('COUNT(tip.id)')
+            .from(Tip, 'tip')
+            .leftJoin('tip.payment', 'payment')
+            .where('tip.page_id = page.id')
+            .andWhere('payment.paid_at IS NOT NULL')
+            .getQuery();
+          return `(${subQuery}) > :minTips`;
+        },
+        { minTips: 3 },
+      );
+
+    const links = await query.getMany();
 
     return links.map((link) => ({
       username: link.value,
