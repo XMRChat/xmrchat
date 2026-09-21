@@ -239,6 +239,12 @@ const linkProps = { padded: false, target: "_blank", variant: "link" } as any; /
                       monerica.com
                     </UButton>
                   </template>
+
+                  <template #shopinbit>
+                    <UButton to="https://shopinbit.com" v-bind="linkProps">
+                      shopinbit.com
+                    </UButton>
+                  </template>
                 </I18nT>
               </p>
             </li>

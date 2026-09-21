@@ -100,7 +100,7 @@ export default {
   quickAndEasy: {
     title: "Rapide et Facile",
     description:
-      "Pas besoin pour les spectateurs de créer un compte, de vérifier leur email ou de saisir les informations de leur carte de crédit. Les fans vont sur votre page de pourboire, saisissent leur nom, leur message, le montant et soumettent leur pourboire XMR.",
+      "Les spectateurs n'ont pas besoin de créer un compte, de vérifier leur e-mail ou de saisir leurs informations de carte bancaire. Les fans se rendent sur votre page de pourboires, saisissent leur nom, leur message, le montant, scannent un code QR pour payer, et envoient leur pourboire en XMR.",
   },
   openSource: {
     title: "Open Source",
@@ -121,7 +121,7 @@ export default {
   accepted: {
     title: "Accepté",
     description:
-      "Évitez les tracas liés à la vente de votre crypto sur un échange centralisé. Achetez des biens et des services directement auprès des marchands qui acceptent Monero sur {xmrbazaar} et {monerica}.",
+      "Évitez la contrainte de vendre vos cryptomonnaies sur une plateforme d'échange centralisée. Achetez des biens et services directement auprès de commerçants qui acceptent Monero sur {xmrbazaar} et {monerica}, ou via le service de conciergerie {shopinbit}.",
   },
   andMore: {
     title: "Et plus encore",
@@ -136,7 +136,7 @@ export default {
       ifStreamyard: "Si vous utilisez Streamyard :",
       ifOBS: "Si vous utilisez OBS :",
       ifLiveJoiner: "Si vous utilisez LiveJoiner :",
-      streamyard: `Allez dans le menu "Modifier la page de pourboires". Assurez-vous d'avoir ajouté votre nom d'utilisateur de chaîne Twitch. Lors du démarrage du stream dans Streamyard, ajoutez Twitch comme destination. Le bot XMRChat (xmr-chat sur Twitch) enverra le message de pourboire sur Twitch et vous pourrez l'afficher sur votre écran depuis Streamyard. Le logo du bot xmrchat s'affiche le mieux avec le paramètre "Minimal".`,
+      streamyard: `Allez dans l'élément de menu "Edit tip page". Assurez-vous d'avoir ajouté votre nom d'utilisateur de chaîne Twitch. Lorsque vous démarrez le stream dans Streamyard, ajoutez Twitch comme destination. Le bot XMRChat (xmr-chat sur Twitch) enverra le message du pourboire sur Twitch et vous pourrez l'afficher à l'écran depuis Streamyard. Vérifiez les paramètres Automod de Twitch, car ils peuvent filtrer les superchats souhaités. Le logo du bot xmrchat affiché est le plus lisible avec le réglage "Minimal".`,
       obs: `Allez dans le menu "OBS". Cliquez sur "Copier le lien de la page OBS". Ajoutez une source navigateur dans OBS et collez le lien.`,
       liveJoiner:
         "Choisissez XMRChat dans la liste des plateformes prises en charge, puis saisissez le chemin ou l’URL de votre page de pourboires XMRChat.",
