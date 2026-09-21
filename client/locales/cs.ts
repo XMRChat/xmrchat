@@ -96,7 +96,7 @@ export default {
   quickAndEasy: {
     title: "Rychlé a snadné",
     description:
-      "Není třeba vytvářet účet, ověřovat e-mail nebo zadávat údaje o kartě. Fanoušci navštíví vaši stránku, zadají jméno, zprávu, částku a odešlou XMR.",
+      "Diváci nemusí vytvářet účet, ověřovat svůj e-mail ani zadávat údaje o kreditní kartě. Fanoušci přejdou na vaši stránku se spropitným, napíší své jméno, zprávu, částku, naskenují QR kód k platbě a odešlou své spropitné v XMR.",
   },
   openSource: {
     title: "Open Source",
@@ -115,7 +115,7 @@ export default {
   accepted: {
     title: "Akceptované",
     description:
-      "Vyhněte se prodeji kryptoměn na centralizovaných burzách. Raději nakupujte přímo u obchodníků, kteří přijímají Monero na {xmrbazaar} a {monerica}.",
+      "Vyhněte se starostem s prodejem své kryptoměny na centralizované burze. Nakupujte zboží a služby přímo od obchodníků, kteří přijímají Monero na {xmrbazaar} a {monerica} nebo prostřednictvím concierge služby {shopinbit}.",
   },
   andMore: {
     title: "A mnoho dalšího",
@@ -131,7 +131,7 @@ export default {
       ifStreamyard: "Pokud používáte Streamyard:",
       ifOBS: "Pokud používáte OBS:",
       ifLiveJoiner: "Pokud používáte LiveJoiner:",
-      streamyard: `Jděte do nabídky "Upravit tip stránku". Ujistěte se, že jste přidali uživatelské jméno Twitch kanálu. Při spuštění streamu ve Streamyard přidejte Twitch jako cíl. XMRChat bot (xmr-chat na twitchi) odešle tip zprávy na Twitch a můžete je zobrazit na obrazovce přes Streamyard. Nejlépe vypadá s nastavením "Minimal".`,
+      streamyard: `Přejděte na položku nabídky "Edit tip page". Ujistěte se, že jste přidali své uživatelské jméno kanálu Twitch. Při spouštění streamu ve Streamyardu přidejte Twitch jako cíl. Bot XMRChat (xmr-chat na Twitchi) odešle zprávu o spropitném na Twitch a vy ji můžete zobrazit na obrazovce ze Streamyardu. Zkontrolujte nastavení Automod na Twitchi, protože může odfiltrovat požadované superchaty. Zobrazené logo bota xmrchat vypadá nejlépe s nastavením "Minimal".`,
       obs: `Přejděte do položky "OBS". Klikněte na "Zkopírovat odkaz na OBS stránku". V OBS přidejte zdroj prohlížeče a vložte odkaz.`,
       liveJoiner:
         "Vyberte XMRChat ze seznamu podporovaných platforem a zadejte cestu nebo URL své stránky s tipy na XMRChat.",

@@ -96,7 +96,7 @@ export default {
   quickAndEasy: {
     title: "Fast and Easy",
     description:
-      "No need make person create account or enter card info. Just enter name, message, amount and send tip sharparly.",
+      "Viewers no need to create account, verify dia email, or enter credit card info. Fans go go your tip page, type dia name, message, amount, scan QR code to pay, and send dia XMR tip.",
   },
   openSource: {
     title: "Open Source",
@@ -116,7 +116,7 @@ export default {
   accepted: {
     title: "E Dey Accepted",
     description:
-      "No need sell your crypto for exchange. You fi use Monero buy things directly from {xmrbazaar} and {monerica}.",
+      "Avoid the wahala of selling your crypto for centralized exchange. Buy goods and services straight from merchants wey dey accept Monero for {xmrbazaar} and {monerica} or through concierge service {shopinbit}.",
   },
   andMore: {
     title: "And more",
@@ -144,7 +144,7 @@ export default {
       ifStreamyard: "If you dey use Streamyard:",
       ifOBS: "If you dey use OBS:",
       ifLiveJoiner: "If you dey use LiveJoiner:",
-      streamyard: `Go to "Edit tip page" menu. Make sure say you don add your Twitch channel name. When you start stream for Streamyard, add Twitch as destination. XMRChat bot (xmr-chat for Twitch) go send di tip message for Twitch and you fit show am for your screen from Streamyard. Di xmrchat bot logo go look better with "Minimal" setting.`,
+      streamyard: `Go to "Edit tip page" menu item. Make sure say you don add your twitch channel username. When you dey start the stream for Streamyard, add Twitch as destination. XMRChat bot ( xmr-chat on twitch ) go send the tip message for Twitch and you fit show am for your screen from Streamyard. Check Twitch Automod settings because e fit filter out the superchats wey you want. The xmrchat bot logo wey dey show go look sharp well-well with "Minimal" setting.`,
       obs: `Go to "OBS" menu. Click on "Copy OBS Page Link". Add browser source for OBS and paste di link.`,
       liveJoiner:
         "Choose XMRChat from di list of supported platforms, den enter di path or URL for your XMRChat tip page.",
