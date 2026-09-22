@@ -98,7 +98,7 @@ export default {
   quickAndEasy: {
     title: "Rápido y fácil",
     description:
-      "No es necesario que los espectadores creen una cuenta, verifiquen su correo electrónico o ingresen información de la tarjeta de crédito. Los fanáticos van a su página de propinas, escriben su nombre, mensaje, monto y envían su propina XMR.",
+      "Los espectadores no necesitan crear una cuenta, verificar su correo electrónico ni introducir los datos de su tarjeta de crédito. Los fans van a tu página de propinas, escriben su nombre, mensaje, monto, escanean un código QR para pagar y envían su propina en XMR.",
   },
   openSource: {
     title: "Código abierto",
@@ -119,7 +119,7 @@ export default {
   accepted: {
     title: "Aceptado",
     description:
-      "Evite la molestia de vender su criptomoneda en un intercambio centralizado. Compre bienes y servicios directamente de comerciantes que aceptan Monero en {xmrbazaar} y {monerica}.",
+      "Evita la molestia de vender tu criptomoneda en un exchange centralizado. Compra bienes y servicios directamente a comerciantes que aceptan Monero en {xmrbazaar} y {monerica}, o a través del servicio de conserjería {shopinbit}.",
   },
   andMore: {
     title: "Y más",
@@ -134,7 +134,7 @@ export default {
       ifStreamyard: "Si usas Streamyard:",
       ifOBS: "Si usas OBS:",
       ifLiveJoiner: "Si utiliza LiveJoiner:",
-      streamyard: `Ve al elemento del menú "Editar página de propinas". Asegúrate de haber añadido tu nombre de usuario de canal de Twitch. Al iniciar el stream en Streamyard, añade Twitch como destino. El bot XMRChat (xmr-chat en Twitch) enviará el mensaje de propina en Twitch y podrás mostrarlo en tu pantalla desde Streamyard. El logo del bot xmrchat se ve mejor con la configuración "Minimal".`,
+      streamyard: `Ve al elemento de menú "Edit tip page". Asegúrate de haber añadido tu nombre de usuario del canal de Twitch. Al iniciar la transmisión en Streamyard, añade Twitch como destino. El bot de XMRChat (xmr-chat en Twitch) enviará el mensaje de propina en Twitch y podrás mostrarlo en tu pantalla desde Streamyard. Revisa la configuración de Automod de Twitch, ya que puede filtrar los superchats deseados. El logo del bot de xmrchat se ve mejor con la opción "Minimal".`,
       obs: `Ve al elemento del menú "OBS". Haz clic en "Copiar enlace de página OBS". Añade una fuente de navegador en OBS y pega el enlace.`,
       liveJoiner:
         "Seleccione XMRChat de la lista de plataformas compatibles e introduzca la ruta o URL de su página de propinas de XMRChat.",

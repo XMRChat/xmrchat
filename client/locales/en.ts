@@ -98,7 +98,7 @@ export default {
   quickAndEasy: {
     title: "Quick And Easy",
     description:
-      "No need for viewers to create an account, verify their email, or enter credit card info. Fans go to your tip page, type their name, message, amount, and submit their XMR tip.",
+      "No need for viewers to create an account, verify their email, or enter credit card info. Fans go to your tip page, type their name, message, amount, scan a QR code to pay, and submit their XMR tip.",
   },
   openSource: {
     title: "Open Source",
@@ -117,7 +117,7 @@ export default {
   accepted: {
     title: "Accepted",
     description:
-      "Avoid the hassle of selling your crypto on a centralized exchange. Buy goods and services directly from merchants that accept Monero on {xmrbazaar} and {monerica}.",
+      "Avoid the hassle of selling your crypto on a centralized exchange. Buy goods and services directly from merchants that accept Monero on {xmrbazaar} and {monerica} or via concierge service {shopinbit}.",
   },
   andMore: {
     title: "And more",
@@ -133,7 +133,7 @@ export default {
       ifStreamyard: "If you use Streamyard:",
       ifOBS: "If you use OBS:",
       ifLiveJoiner: "If you use LiveJoiner:",
-      streamyard: `Go to "Edit tip page" menu item. Make sure you have added your twitch channel username. When starting the stream in Streamyard add Twitch as a destination. XMRChat bot ( xmr-chat on twitch ) will send the tip message on Twitch and you can display it on your screen from Streamyard. Displayed xmrchat bot logo looks best with "Minimal" setting.`,
+      streamyard: `Go to "Edit tip page" menu item. Make sure you have added your twitch channel username. When starting the stream in Streamyard add Twitch as a destination. XMRChat bot ( xmr-chat on twitch ) will send the tip message on Twitch and you can display it on your screen from Streamyard. Review Twitch Automod settings as this may filter out desired superchats. Displayed xmrchat bot logo looks best with "Minimal" setting.`,
       obs: `Go to "OBS" menu item. Click on "Copy OBS Page Link". Add a browser source in OBS and paste the link.`,
       liveJoiner:
         "Choose XMRChat from the list of supported platforms, and enter your XMRChat tip page path or URL.",
