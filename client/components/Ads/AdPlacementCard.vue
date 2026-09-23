@@ -1,7 +1,6 @@
 <script setup lang="ts">
 defineProps<{
   reserved?: boolean;
-  bookedThrough?: string;
   price?: string;
 }>();
 
@@ -42,8 +41,8 @@ const features = [
       </li>
     </ul>
 
-    <p v-if="reserved && bookedThrough" class="text-sm text-pale pt-2">
-      Currently booked through {{ bookedThrough }}.
+    <p v-if="reserved" class="text-sm text-pale pt-2">
+      Available to book 12/16/2026.
     </p>
     <p v-else class="text-sm text-pale pt-2">Available to book now.</p>
   </div>
