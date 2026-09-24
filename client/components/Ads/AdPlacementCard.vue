@@ -18,12 +18,6 @@ const features = [
         <p class="text-primary text-sm font-medium">4:1</p>
         <h3 class="text-xl font-bold mt-1">Tip page banner</h3>
       </div>
-      <UBadge v-if="reserved" size="xs" color="red" variant="outline">
-        Reserved
-      </UBadge>
-      <UBadge v-else size="xs" color="green" variant="outline">
-        Available
-      </UBadge>
     </div>
 
     <p class="text-pale">
