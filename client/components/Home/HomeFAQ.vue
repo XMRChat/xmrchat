@@ -192,7 +192,7 @@ const linkProps = { padded: false, target: "_blank", variant: "link" } as any; /
                       {{ $t("forContentCreators.description.streamyard") }}
                     </p>
                   </div>
-                  <div>
+                  <!-- <div>
                     <h3 class="text-text font-medium pb-1">
                       How to combine xmrchats with messages from other
                       platforms:
@@ -216,7 +216,7 @@ const linkProps = { padded: false, target: "_blank", variant: "link" } as any; /
                       </p>
                     </div>
                     <p></p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </template>
