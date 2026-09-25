@@ -20,7 +20,7 @@ const url = computed(() => `mailto:${email.value}`);
       <section class="pb-24">
         <div class="flex justify-center">
           <div class="max-w-lg flex flex-col gap-4">
-            <AdPlacementCard />
+            <AdPlacementCard reserved />
             <UButton size="lg" class="justify-center" :to="url" target="_blank">
               Send us an email
             </UButton>

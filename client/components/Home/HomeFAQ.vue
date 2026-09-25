@@ -192,6 +192,31 @@ const linkProps = { padded: false, target: "_blank", variant: "link" } as any; /
                       {{ $t("forContentCreators.description.streamyard") }}
                     </p>
                   </div>
+                  <!-- <div>
+                    <h3 class="text-text font-medium pb-1">
+                      How to combine xmrchats with messages from other
+                      platforms:
+                    </h3>
+                    <div>
+                      <p>
+                        <span class="font-medium">1. LiveJoiner:</span> You can
+                        use "https://joiner.live/" to get xmrchats and other
+                        platform messages in one place.
+                      </p>
+                      <p>
+                        <span class="font-medium">2. API:</span> You can use the
+                        API of XMRChat directly to get the list of tips for your
+                        page using
+                        <span class="">"/tips/page/[your page path]"</span> URL.
+                      </p>
+                      <p>
+                        <span class="font-medium">3. Websocket:</span> You can
+                        get all xmrchats by connecting to "/tips-broadcast"
+                        socket io namespace and listening to "tip" event.
+                      </p>
+                    </div>
+                    <p></p>
+                  </div> -->
                 </div>
               </div>
             </template>
