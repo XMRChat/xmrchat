@@ -13,6 +13,8 @@ import { contentLinksWithDefaults } from 'src/shared/utils';
 import { LinkPlatformEnum, PageStatusEnum } from 'src/shared/constants';
 import { User } from 'src/users/user.entity';
 import { LinkVerificationsService } from 'src/link-verifications/link-verifications.service';
+import Parser from 'rss-parser';
+import { getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
 export class LinksService {
@@ -66,11 +68,11 @@ export class LinksService {
       );
     }
 
-    // update name and search term from pages
-    // await this.pagesService.updateNameAndSearchTerms(page.id, {
-    //   name: data.name,
-    //   searchTerms: data.searchTerms,
-    // });
+    const { isValid, error } = await this.validateRSSLink({
+      pageId: page.id,
+      data,
+    });
+    if (!isValid) throw new BadRequestException(error);
 
     // Get existing links to compare values
     const existingLinks = await this.repo.find({
@@ -104,6 +106,79 @@ export class LinksService {
     });
 
     return this.repo.upsert(links, ['page.id', 'platform']);
+  }
+
+  async validateRSSLink({
+    pageId,
+    data,
+  }: {
+    pageId: number;
+    data: UpdateLinksDto;
+  }) {
+    const value = data?.links.find(
+      (l) => l.platform === LinkPlatformEnum.PODCAST_RSS,
+    )?.value;
+
+    if (!value) return { isValid: true, error: null };
+
+    const valueUrl = this.normalizeRSSLink(value);
+    if (!valueUrl) return { isValid: false, error: 'Invalid RSS link.' };
+
+    const pageRSSLink = await this.repo.findOne({
+      where: {
+        platform: LinkPlatformEnum.PODCAST_RSS,
+        value: And(Not(IsNull()), Not('')),
+        page: { id: pageId },
+      },
+    });
+    if (
+      pageRSSLink?.value &&
+      this.normalizeRSSLink(pageRSSLink.value) === valueUrl
+    )
+      return { isValid: true, error: null };
+
+    const allRSSLinks = await this.repo.find({
+      where: {
+        platform: LinkPlatformEnum.PODCAST_RSS,
+        value: And(Not(IsNull()), Not('')),
+        page: { id: Not(pageId) },
+      },
+    });
+
+    const isDuplicate = allRSSLinks.some(
+      (link) =>
+        Boolean(link.value) && this.normalizeRSSLink(link.value) === valueUrl,
+    );
+    if (isDuplicate)
+      return {
+        isValid: false,
+        error:
+          'That podcast is already in use. Contact support to resolve if necessary.',
+      };
+
+    // validate new rss link
+    const parser = new Parser();
+    try {
+      await parser.parseURL(value);
+    } catch (error) {
+      return { isValid: false, error: 'Invalid RSS link.' };
+    }
+
+    return { isValid: true, error: null };
+  }
+
+  normalizeRSSLink(value: string) {
+    try {
+      const parsed = new URL(value.trim());
+      parsed.hash = '';
+      parsed.protocol = 'https:';
+      parsed.hostname = parsed.hostname.replace(/^www\./, '');
+      if (parsed.pathname.length > 1)
+        parsed.pathname = parsed.pathname.replace(/\/+$/, '');
+      return parsed.href;
+    } catch {
+      return undefined;
+    }
   }
 
   getLinkData(dto: UpdateLinksDto, platform: LinkPlatformEnum): any {
