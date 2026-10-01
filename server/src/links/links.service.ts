@@ -14,6 +14,7 @@ import { LinkPlatformEnum, PageStatusEnum } from 'src/shared/constants';
 import { User } from 'src/users/user.entity';
 import { LinkVerificationsService } from 'src/link-verifications/link-verifications.service';
 import Parser from 'rss-parser';
+import { getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
 export class LinksService {
@@ -67,11 +68,11 @@ export class LinksService {
       );
     }
 
-    // update name and search term from pages
-    // await this.pagesService.updateNameAndSearchTerms(page.id, {
-    //   name: data.name,
-    //   searchTerms: data.searchTerms,
-    // });
+    const { isValid, error } = await this.validateRSSLink({
+      pageId: page.id,
+      data,
+    });
+    if (!isValid) throw new BadRequestException(error);
 
     // Get existing links to compare values
     const existingLinks = await this.repo.find({
@@ -156,8 +157,6 @@ export class LinksService {
     try {
       await parser.parseURL(value);
     } catch (error) {
-      console.log(error);
-
       return { isValid: false, error: 'Invalid RSS link.' };
     }
 
