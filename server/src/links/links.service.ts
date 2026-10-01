@@ -107,25 +107,21 @@ export class LinksService {
     return this.repo.upsert(links, ['page.id', 'platform']);
   }
 
-  async validateRSSLink({ pageId, value }: { pageId: number; value?: string }) {
+  async validateRSSLink({
+    pageId,
+    data,
+  }: {
+    pageId: number;
+    data: UpdateLinksDto;
+  }) {
+    const value = data?.links.find(
+      (l) => l.platform === LinkPlatformEnum.PODCAST_RSS,
+    )?.value;
+
     if (!value) return { isValid: true, error: null };
 
-    const normalizeRssValue = (raw: string) => {
-      try {
-        const parsed = new URL(raw.trim());
-        parsed.hash = '';
-        parsed.protocol = 'https:';
-        parsed.hostname = parsed.hostname.replace(/^www\./, '');
-        if (parsed.pathname.length > 1)
-          parsed.pathname = parsed.pathname.replace(/\/+$/, '');
-        return parsed.href;
-      } catch {
-        return undefined;
-      }
-    };
-
-    const normalizedValue = normalizeRssValue(value);
-    if (!normalizedValue) return { isValid: false, error: 'Invalid RSS link.' };
+    const valueUrl = this.normalizeRSSLink(value);
+    if (!valueUrl) return { isValid: false, error: 'Invalid RSS link.' };
 
     const pageRSSLink = await this.repo.findOne({
       where: {
@@ -136,7 +132,7 @@ export class LinksService {
     });
     if (
       pageRSSLink?.value &&
-      normalizeRssValue(pageRSSLink.value) === normalizedValue
+      this.normalizeRSSLink(pageRSSLink.value) === valueUrl
     )
       return { isValid: true, error: null };
 
@@ -150,7 +146,7 @@ export class LinksService {
 
     const isDuplicate = allRSSLinks.some(
       (link) =>
-        !!link.value && normalizeRssValue(link.value) === normalizedValue,
+        Boolean(link.value) && this.normalizeRSSLink(link.value) === valueUrl,
     );
     if (isDuplicate)
       return { isValid: false, error: 'This RSS link is already used.' };
@@ -166,6 +162,20 @@ export class LinksService {
     }
 
     return { isValid: true, error: null };
+  }
+
+  normalizeRSSLink(value: string) {
+    try {
+      const parsed = new URL(value.trim());
+      parsed.hash = '';
+      parsed.protocol = 'https:';
+      parsed.hostname = parsed.hostname.replace(/^www\./, '');
+      if (parsed.pathname.length > 1)
+        parsed.pathname = parsed.pathname.replace(/\/+$/, '');
+      return parsed.href;
+    } catch {
+      return undefined;
+    }
   }
 
   getLinkData(dto: UpdateLinksDto, platform: LinkPlatformEnum): any {
