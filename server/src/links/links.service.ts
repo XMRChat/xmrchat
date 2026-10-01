@@ -150,7 +150,11 @@ export class LinksService {
         Boolean(link.value) && this.normalizeRSSLink(link.value) === valueUrl,
     );
     if (isDuplicate)
-      return { isValid: false, error: 'This RSS link is already used.' };
+      return {
+        isValid: false,
+        error:
+          'That podcast is already in use. Contact support to resolve if necessary.',
+      };
 
     // validate new rss link
     const parser = new Parser();
