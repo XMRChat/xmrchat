@@ -13,6 +13,7 @@ import { contentLinksWithDefaults } from 'src/shared/utils';
 import { LinkPlatformEnum, PageStatusEnum } from 'src/shared/constants';
 import { User } from 'src/users/user.entity';
 import { LinkVerificationsService } from 'src/link-verifications/link-verifications.service';
+import Parser from 'rss-parser';
 
 @Injectable()
 export class LinksService {
@@ -104,6 +105,67 @@ export class LinksService {
     });
 
     return this.repo.upsert(links, ['page.id', 'platform']);
+  }
+
+  async validateRSSLink({ pageId, value }: { pageId: number; value?: string }) {
+    if (!value) return { isValid: true, error: null };
+
+    const normalizeRssValue = (raw: string) => {
+      try {
+        const parsed = new URL(raw.trim());
+        parsed.hash = '';
+        parsed.protocol = 'https:';
+        parsed.hostname = parsed.hostname.replace(/^www\./, '');
+        if (parsed.pathname.length > 1)
+          parsed.pathname = parsed.pathname.replace(/\/+$/, '');
+        return parsed.href;
+      } catch {
+        return undefined;
+      }
+    };
+
+    const normalizedValue = normalizeRssValue(value);
+    if (!normalizedValue) return { isValid: false, error: 'Invalid RSS link.' };
+
+    const pageRSSLink = await this.repo.findOne({
+      where: {
+        platform: LinkPlatformEnum.PODCAST_RSS,
+        value: And(Not(IsNull()), Not('')),
+        page: { id: pageId },
+      },
+    });
+    if (
+      pageRSSLink?.value &&
+      normalizeRssValue(pageRSSLink.value) === normalizedValue
+    )
+      return { isValid: true, error: null };
+
+    const allRSSLinks = await this.repo.find({
+      where: {
+        platform: LinkPlatformEnum.PODCAST_RSS,
+        value: And(Not(IsNull()), Not('')),
+        page: { id: Not(pageId) },
+      },
+    });
+
+    const isDuplicate = allRSSLinks.some(
+      (link) =>
+        !!link.value && normalizeRssValue(link.value) === normalizedValue,
+    );
+    if (isDuplicate)
+      return { isValid: false, error: 'This RSS link is already used.' };
+
+    // validate new rss link
+    const parser = new Parser();
+    try {
+      await parser.parseURL(value);
+    } catch (error) {
+      console.log(error);
+
+      return { isValid: false, error: 'Invalid RSS link.' };
+    }
+
+    return { isValid: true, error: null };
   }
 
   getLinkData(dto: UpdateLinksDto, platform: LinkPlatformEnum): any {
