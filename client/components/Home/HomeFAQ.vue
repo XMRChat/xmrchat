@@ -240,6 +240,12 @@ const linkProps = { padded: false, target: "_blank", variant: "link" } as any; /
                     </UButton>
                   </template>
 
+                  <template #xmrlist>
+                    <UButton to="https://xmrlist.com" v-bind="linkProps">
+                      xmrlist.com
+                    </UButton>
+                  </template>
+
                   <template #shopinbit>
                     <UButton to="https://shopinbit.com" v-bind="linkProps">
                       shopinbit.com

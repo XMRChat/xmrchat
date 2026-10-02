@@ -116,7 +116,7 @@ export default {
   accepted: {
     title: "E Dey Accepted",
     description:
-      "Avoid the wahala of selling your crypto for centralized exchange. Buy goods and services straight from merchants wey dey accept Monero for {xmrbazaar} and {monerica} or through concierge service {shopinbit}.",
+      "Avoid the wahala of selling your crypto for centralized exchange. Buy goods and services straight from merchants wey dey accept Monero for {xmrbazaar}, {monerica}, {xmrlist} or through concierge service {shopinbit}.",
   },
   andMore: {
     title: "And more",
