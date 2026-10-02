@@ -117,7 +117,7 @@ export default {
   accepted: {
     title: "Accepted",
     description:
-      "Avoid the hassle of selling your crypto on a centralized exchange. Buy goods and services directly from merchants that accept Monero on {xmrbazaar} and {monerica} or via concierge service {shopinbit}.",
+      "Avoid the hassle of selling your crypto on a centralized exchange. Buy goods and services directly from merchants that accept Monero on {xmrbazaar}, {monerica}, {xmrlist} or via concierge service {shopinbit}.",
   },
   andMore: {
     title: "And more",
