@@ -280,11 +280,6 @@ export class LiveStreamsService implements OnModuleInit {
     if (!this.xProvider.isEnabled()) return [];
 
     const params = await this.getXProviderParams();
-    this.logger.log(
-      `X live detection selected ${params.length} profile(s)${params.length ? `: ${params.map((param) => param.username).join(', ')}` : ''}`,
-    );
-    const streams = await this.xProvider.getLiveStreams(params);
-    this.logger.log(`X live detection found ${streams.length} live stream(s)`);
-    return streams;
+    return this.xProvider.getLiveStreams(params);
   }
 }

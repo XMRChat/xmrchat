@@ -17,7 +17,6 @@ import {
 
 type XProviderParam = LiveStreamProviderParams & { username: string };
 type XLiveLink = { url: string; title?: string };
-type XRecord = Record<string, any>;
 
 @Injectable()
 export class XProvider implements LiveStreamProvider, OnModuleDestroy {
@@ -40,12 +39,8 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
     const streams: CreateLiveStreamDto[] = [];
     // Check one profile at a time to limit load on X.
     for (const param of params) {
-      if (!param.username || !/^[a-zA-Z0-9_]{1,15}$/.test(param.username)) {
-        this.logger.warn(
-          `X live detection skipped invalid username "${param.username ?? ''}" for page ${param.pageId}`,
-        );
+      if (!param.username || !/^[a-zA-Z0-9_]{1,15}$/.test(param.username))
         continue;
-      }
       const stream = await this.getLiveStream(param as XProviderParam);
       if (stream) streams.push(stream);
     }
@@ -63,45 +58,25 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         param.username,
       );
       if (!liveLink) {
-        this.logger.log(`X @${param.username}: HTTP missed, trying browser`);
         const context = await this.getContext();
         page = await context.newPage();
         const pending = new Set<Promise<void>>();
-        const notes: string[] = [];
-        let scanned = 0;
-        let skippedType = 0;
         const onResponse = (response: Response) => {
           const url = new URL(response.url());
           if (
             !response.ok() ||
             !['x.com', 'api.x.com', 'twitter.com', 'api.twitter.com'].includes(
               url.hostname,
-            )
+            ) ||
+            !/json|html/.test(response.headers()['content-type'] || '')
           )
             return;
-          const contentType = response.headers()['content-type'] || '';
-          if (!/json|html/.test(contentType)) {
-            skippedType++;
-            return;
-          }
-          scanned++;
-          const path = url.pathname.slice(0, 80);
           const read = response
             .text()
             .then((body) => {
-              const found = this.findLiveLinkInResponse(body, param.username);
-              if (found) liveLink ||= found;
-              else if (
-                notes.length < 5 &&
-                /Broadcast|AudioSpace|broadcast_id|Running|is_live/.test(body)
-              ) {
-                notes.push(`${path} ${this.bodySummary(body)}`);
-              }
+              liveLink ||= this.findLiveLinkInResponse(body, param.username);
             })
-            .catch((error) => {
-              if (notes.length < 5)
-                notes.push(`${path} read failed: ${getErrorMessage(error)}`);
-            });
+            .catch(() => undefined);
           pending.add(read);
           void read.finally(() => pending.delete(read));
         };
@@ -124,9 +99,6 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         } finally {
           clearTimeout(timer);
         }
-        this.logger.log(
-          `X @${param.username}: browser ${page.url()} scanned=${scanned} skippedType=${skippedType}${liveLink ? `, live ${liveLink.url}` : `, no live link${notes.length ? `; ${notes.join(' || ')}` : '; no broadcast markers'}`}`,
-        );
       }
       if (!liveLink) return;
       return {
@@ -161,16 +133,11 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
       try {
         if (!response.ok()) {
           this.logger.warn(
-            `X profile request returned ${response.status()} for ${username} (${response.url()})`,
+            `X profile request returned ${response.status()} for ${username}`,
           );
           return;
         }
-        const body = await response.text();
-        const liveLink = this.findLiveLinkInResponse(body, username);
-        this.logger.log(
-          `X @${username}: HTTP ${response.status()} ${response.url()} type=${response.headers()['content-type'] || 'none'} (${body.length} bytes)${liveLink ? `, live ${liveLink.url}` : `, no live link; ${this.bodySummary(body)}`}`,
-        );
-        return liveLink;
+        return this.findLiveLinkInResponse(await response.text(), username);
       } finally {
         await response.dispose();
       }
@@ -185,130 +152,23 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
     body: string,
     username: string,
   ): XLiveLink | undefined {
-    // JSON API responses contain nested records; SSR responses use Relay references.
-    let data: unknown;
-    try {
-      data = JSON.parse(body);
-    } catch {
-      return this.findLiveLinkInRelayResponse(body, username);
-    }
-    const visit = (value: unknown): XLiveLink | undefined => {
-      if (!value || typeof value !== 'object') return;
-      const record = value as XRecord;
-      const liveLink = this.liveLinkFromRecord(record, username);
-      if (liveLink) return liveLink;
-      for (const child of Object.values(record)) {
-        const result = visit(child);
-        if (result) return result;
-      }
-    };
-    return visit(data);
-  }
-
-  private findLiveLinkInRelayResponse(body: string, username: string) {
-    const records = new Map<string, XRecord>();
-    // Read scalar fields and Relay references from X's serialized response data.
-    // Never execute the scripts received from X or infer live status from link text.
-    for (const script of body.matchAll(
-      /<script\b[^>]*>([\s\S]*?)<\/script>/gi,
-    )) {
-      for (const match of script[1].matchAll(
-        /\{__id:("(?:\\.|[^"\\])*"),__typename:("(?:\\.|[^"\\])*")([\s\S]*?)(?=\{__id:|$)/g,
-      )) {
-        const record: XRecord = { __typename: JSON.parse(match[2]) };
-        for (const field of match[3].matchAll(
-          /[,{}](\w+):("(?:\\.|[^"\\])*"|null|\d+|\$R\[\d+\]=\{__ref:("(?:\\.|[^"\\])*")\})/g,
-        )) {
-          record[field[1]] = field[3]
-            ? { __ref: JSON.parse(field[3]) }
-            : JSON.parse(field[2]);
-        }
-        records.set(JSON.parse(match[1]), record);
-      }
-    }
-    const resolve = (value: XRecord | undefined): XRecord | undefined =>
-      value?.__ref ? records.get(value.__ref) : value;
-    for (const record of records.values()) {
-      const liveLink = this.liveLinkFromRecord(record, username, resolve);
-      if (liveLink) return liveLink;
-    }
-    const candidates = [...records.values()]
-      .filter(
-        (record) =>
-          record.__typename === 'Broadcast' ||
-          record.__typename === 'AudioSpace' ||
-          record.broadcast_id,
-      )
-      .slice(0, 5)
-      .map((record) => {
-        const metadata = resolve(record.metadata) || record;
-        return `${record.__typename || 'record'} state=${metadata.state ?? 'none'} id=${record.broadcast_id || record.rest_id || 'none'}`;
-      });
-    if (candidates.length) {
-      this.logger.log(
-        `X @${username}: relay records=${records.size} candidates=${candidates.join('; ')}`,
+    // Read broadcast fields from the page text. Never execute scripts from X.
+    for (const match of body.matchAll(/broadcast_id:"([a-zA-Z0-9]+)"/g)) {
+      const start = match.index + match[0].length;
+      const next = body.indexOf('broadcast_id:"', start);
+      const chunk = body.slice(
+        start,
+        Math.min(next === -1 ? body.length : next, start + 12000),
       );
+      const owner = chunk.match(/username:"([a-zA-Z0-9_]+)"/)?.[1];
+      if (!chunk.includes('state:"Running"')) continue;
+      if (owner?.toLowerCase() !== username.toLowerCase()) continue;
+      const title = chunk.match(/status:"((?:\\.|[^"\\])*)"/)?.[1];
+      return {
+        url: `https://x.com/i/broadcasts/${match[1]}`,
+        title: title?.slice(0, 240),
+      };
     }
-  }
-
-  private bodySummary(body: string) {
-    const json = /^\s*[[{]/.test(body);
-    const markers = [
-      'Broadcast',
-      'AudioSpace',
-      'broadcast_id',
-      'Running',
-      'is_live',
-      '__typename',
-      '__id',
-    ].filter((marker) => body.includes(marker));
-    const title = body.match(/<title[^>]*>([^<]{0,80})/i)?.[1]?.trim();
-    const relayIds = json ? 0 : (body.match(/\{__id:/g)?.length ?? 0);
-    let excerpt = '';
-    for (const needle of ['broadcast_id', 'Broadcast', 'AudioSpace', 'is_live']) {
-      const at = body.indexOf(needle);
-      if (at === -1) continue;
-      excerpt = JSON.stringify(body.slice(Math.max(0, at - 60), at + 140));
-      break;
-    }
-    return `${json ? 'json' : 'html'}${title ? ` title="${title}"` : ''} markers=${markers.join(',') || 'none'}${json ? '' : ` relayIds=${relayIds}`}${excerpt ? ` excerpt=${excerpt}` : ''}`;
-  }
-
-  private liveLinkFromRecord(
-    record: XRecord,
-    username: string,
-    resolve: (value: XRecord | undefined) => XRecord | undefined = (value) =>
-      value,
-  ): XLiveLink | undefined {
-    const metadata = resolve(record.metadata) || record;
-    if (metadata.state !== 'Running') return;
-    const isBroadcast =
-      record.__typename === 'Broadcast' || Boolean(record.broadcast_id);
-    const isSpace = record.__typename === 'AudioSpace';
-    if (!isBroadcast && !isSpace) return;
-
-    const userResults = resolve(
-      metadata.user_results || metadata.creator_results,
-    );
-    const user = resolve(userResults?.result);
-    const core = resolve(user?.core);
-    const legacy = resolve(user?.legacy);
-    const periscopeUser = resolve(record.periscope_user);
-    const owner =
-      core?.screen_name || legacy?.screen_name || periscopeUser?.username;
-    if (
-      typeof owner !== 'string' ||
-      owner.toLowerCase() !== username.toLowerCase()
-    )
-      return;
-
-    const id = isBroadcast ? record.broadcast_id : record.rest_id;
-    if (typeof id !== 'string' || !/^[a-zA-Z0-9]+$/.test(id)) return;
-    const title = isBroadcast ? record.status : metadata.title;
-    return {
-      url: `https://x.com/i/${isBroadcast ? 'broadcasts' : 'spaces'}/${id}`,
-      title: typeof title === 'string' ? title.slice(0, 240) : undefined,
-    };
   }
 
   private async getContext() {
