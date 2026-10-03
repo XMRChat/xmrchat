@@ -40,8 +40,12 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
     const streams: CreateLiveStreamDto[] = [];
     // Check one profile at a time to limit load on X.
     for (const param of params) {
-      if (!param.username || !/^[a-zA-Z0-9_]{1,15}$/.test(param.username))
+      if (!param.username || !/^[a-zA-Z0-9_]{1,15}$/.test(param.username)) {
+        this.logger.warn(
+          `X live detection skipped invalid username "${param.username ?? ''}" for page ${param.pageId}`,
+        );
         continue;
+      }
       const stream = await this.getLiveStream(param as XProviderParam);
       if (stream) streams.push(stream);
     }
@@ -59,6 +63,7 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         param.username,
       );
       if (!liveLink) {
+        this.logger.log(`X @${param.username}: HTTP missed, trying browser`);
         const context = await this.getContext();
         page = await context.newPage();
         const pending = new Set<Promise<void>>();
@@ -100,6 +105,9 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         } finally {
           clearTimeout(timer);
         }
+        this.logger.log(
+          `X @${param.username}: browser ${page.url()}${liveLink ? `, live ${liveLink.url}` : ', no live link'}`,
+        );
       }
       if (!liveLink) return;
       return {
@@ -134,11 +142,16 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
       try {
         if (!response.ok()) {
           this.logger.warn(
-            `X profile request returned ${response.status()} for ${username}`,
+            `X profile request returned ${response.status()} for ${username} (${response.url()})`,
           );
           return;
         }
-        return this.findLiveLinkInResponse(await response.text(), username);
+        const body = await response.text();
+        const liveLink = this.findLiveLinkInResponse(body, username);
+        this.logger.log(
+          `X @${username}: HTTP ${response.status()} ${response.url()} (${body.length} bytes)${liveLink ? `, live ${liveLink.url}` : ', no live link'}`,
+        );
+        return liveLink;
       } finally {
         await response.dispose();
       }
