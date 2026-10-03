@@ -67,22 +67,41 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         const context = await this.getContext();
         page = await context.newPage();
         const pending = new Set<Promise<void>>();
+        const notes: string[] = [];
+        let scanned = 0;
+        let skippedType = 0;
         const onResponse = (response: Response) => {
           const url = new URL(response.url());
           if (
             !response.ok() ||
             !['x.com', 'api.x.com', 'twitter.com', 'api.twitter.com'].includes(
               url.hostname,
-            ) ||
-            !/json|html/.test(response.headers()['content-type'] || '')
+            )
           )
             return;
+          const contentType = response.headers()['content-type'] || '';
+          if (!/json|html/.test(contentType)) {
+            skippedType++;
+            return;
+          }
+          scanned++;
+          const path = url.pathname.slice(0, 80);
           const read = response
             .text()
             .then((body) => {
-              liveLink ||= this.findLiveLinkInResponse(body, param.username);
+              const found = this.findLiveLinkInResponse(body, param.username);
+              if (found) liveLink ||= found;
+              else if (
+                notes.length < 5 &&
+                /Broadcast|AudioSpace|broadcast_id|Running|is_live/.test(body)
+              ) {
+                notes.push(`${path} ${this.bodySummary(body)}`);
+              }
             })
-            .catch(() => undefined);
+            .catch((error) => {
+              if (notes.length < 5)
+                notes.push(`${path} read failed: ${getErrorMessage(error)}`);
+            });
           pending.add(read);
           void read.finally(() => pending.delete(read));
         };
@@ -106,7 +125,7 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
           clearTimeout(timer);
         }
         this.logger.log(
-          `X @${param.username}: browser ${page.url()}${liveLink ? `, live ${liveLink.url}` : ', no live link'}`,
+          `X @${param.username}: browser ${page.url()} scanned=${scanned} skippedType=${skippedType}${liveLink ? `, live ${liveLink.url}` : `, no live link${notes.length ? `; ${notes.join(' || ')}` : '; no broadcast markers'}`}`,
         );
       }
       if (!liveLink) return;
@@ -149,7 +168,7 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         const body = await response.text();
         const liveLink = this.findLiveLinkInResponse(body, username);
         this.logger.log(
-          `X @${username}: HTTP ${response.status()} ${response.url()} (${body.length} bytes)${liveLink ? `, live ${liveLink.url}` : ', no live link'}`,
+          `X @${username}: HTTP ${response.status()} ${response.url()} type=${response.headers()['content-type'] || 'none'} (${body.length} bytes)${liveLink ? `, live ${liveLink.url}` : `, no live link; ${this.bodySummary(body)}`}`,
         );
         return liveLink;
       } finally {
@@ -213,6 +232,46 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
       const liveLink = this.liveLinkFromRecord(record, username, resolve);
       if (liveLink) return liveLink;
     }
+    const candidates = [...records.values()]
+      .filter(
+        (record) =>
+          record.__typename === 'Broadcast' ||
+          record.__typename === 'AudioSpace' ||
+          record.broadcast_id,
+      )
+      .slice(0, 5)
+      .map((record) => {
+        const metadata = resolve(record.metadata) || record;
+        return `${record.__typename || 'record'} state=${metadata.state ?? 'none'} id=${record.broadcast_id || record.rest_id || 'none'}`;
+      });
+    if (candidates.length) {
+      this.logger.log(
+        `X @${username}: relay records=${records.size} candidates=${candidates.join('; ')}`,
+      );
+    }
+  }
+
+  private bodySummary(body: string) {
+    const json = /^\s*[[{]/.test(body);
+    const markers = [
+      'Broadcast',
+      'AudioSpace',
+      'broadcast_id',
+      'Running',
+      'is_live',
+      '__typename',
+      '__id',
+    ].filter((marker) => body.includes(marker));
+    const title = body.match(/<title[^>]*>([^<]{0,80})/i)?.[1]?.trim();
+    const relayIds = json ? 0 : (body.match(/\{__id:/g)?.length ?? 0);
+    let excerpt = '';
+    for (const needle of ['broadcast_id', 'Broadcast', 'AudioSpace', 'is_live']) {
+      const at = body.indexOf(needle);
+      if (at === -1) continue;
+      excerpt = JSON.stringify(body.slice(Math.max(0, at - 60), at + 140));
+      break;
+    }
+    return `${json ? 'json' : 'html'}${title ? ` title="${title}"` : ''} markers=${markers.join(',') || 'none'}${json ? '' : ` relayIds=${relayIds}`}${excerpt ? ` excerpt=${excerpt}` : ''}`;
   }
 
   private liveLinkFromRecord(
