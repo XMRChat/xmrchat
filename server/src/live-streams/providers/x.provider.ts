@@ -152,14 +152,18 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
     body: string,
     username: string,
   ): XLiveLink | undefined {
-    // Read broadcast fields from the page text. Never execute scripts from X.
+    // Read broadcast and Space fields from the page text. Never execute scripts from X.
+    const broadcast = this.findRunningBroadcast(body, username);
+    if (broadcast) return broadcast;
+    return this.findRunningSpace(body, username);
+  }
+
+  private findRunningBroadcast(
+    body: string,
+    username: string,
+  ): XLiveLink | undefined {
     for (const match of body.matchAll(/broadcast_id:"([a-zA-Z0-9]+)"/g)) {
-      const start = match.index + match[0].length;
-      const next = body.indexOf('broadcast_id:"', start);
-      const chunk = body.slice(
-        start,
-        Math.min(next === -1 ? body.length : next, start + 12000),
-      );
+      const chunk = this.chunkAfter(body, match.index + match[0].length, 'broadcast_id:"');
       const owner = chunk.match(/username:"([a-zA-Z0-9_]+)"/)?.[1];
       if (!chunk.includes('state:"Running"')) continue;
       if (owner?.toLowerCase() !== username.toLowerCase()) continue;
@@ -169,6 +173,45 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         title: title?.slice(0, 240),
       };
     }
+  }
+
+  private findRunningSpace(
+    body: string,
+    username: string,
+  ): XLiveLink | undefined {
+    const marker = 'audio_space_by_rest_id:';
+    let from = 0;
+    while (from < body.length) {
+      const at = body.indexOf(marker, from);
+      if (at < 0) return;
+      const start = at + marker.length;
+      const chunk = this.chunkAfter(body, start, marker);
+      from = start;
+      if (!chunk.includes('state:"Running"')) continue;
+      const owner = chunk.match(
+        /(?:screen_name|username):"([a-zA-Z0-9_]+)"/,
+      )?.[1];
+      if (owner?.toLowerCase() !== username.toLowerCase()) continue;
+      const id = chunk.match(
+        /state:"Running"[\s\S]{0,2000}?rest_id:"([a-zA-Z0-9]+)"/,
+      )?.[1];
+      if (!id) continue;
+      const title = chunk.match(
+        /state:"Running",title:"((?:\\.|[^"\\])*)"/,
+      )?.[1];
+      return {
+        url: `https://x.com/i/spaces/${id}`,
+        title: title?.slice(0, 240),
+      };
+    }
+  }
+
+  private chunkAfter(body: string, start: number, marker: string) {
+    const next = body.indexOf(marker, start);
+    return body.slice(
+      start,
+      Math.min(next === -1 ? body.length : next, start + 12000),
+    );
   }
 
   private async getContext() {
