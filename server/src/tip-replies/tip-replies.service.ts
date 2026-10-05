@@ -38,16 +38,22 @@ export class TipRepliesService {
     const tip = await this.tipsService.findOneById(tipId);
     if (!tip) throw new NotFoundException('Tip is not found.');
 
+    const caslCreated = this.repo.create({
+      message: dto.message,
+      tip,
+    });
+    caslCreated.tip.pageId = tip.pageId;
+
+    const ability = await this.caslAbilityFactory.createForUser(user);
+    if (!ability.can(Action.Create, caslCreated))
+      throw new UnauthorizedException(
+        'You are not authorized to create a tip reply.',
+      );
+
     const created = this.repo.create({
       message: dto.message,
       tip,
     });
-
-    const ability = await this.caslAbilityFactory.createForUser(user);
-    if (!ability.can(Action.Create, created))
-      throw new UnauthorizedException(
-        'You are not authorized to create a tip reply.',
-      );
 
     return await this.repo.save(created);
   }

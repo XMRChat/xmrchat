@@ -17,7 +17,6 @@ import {
 
 type XProviderParam = LiveStreamProviderParams & { username: string };
 type XLiveLink = { url: string; title?: string };
-type XRecord = Record<string, any>;
 
 @Injectable()
 export class XProvider implements LiveStreamProvider, OnModuleDestroy {
@@ -153,90 +152,66 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
     body: string,
     username: string,
   ): XLiveLink | undefined {
-    // JSON API responses contain nested records; SSR responses use Relay references.
-    let data: unknown;
-    try {
-      data = JSON.parse(body);
-    } catch {
-      return this.findLiveLinkInRelayResponse(body, username);
-    }
-    const visit = (value: unknown): XLiveLink | undefined => {
-      if (!value || typeof value !== 'object') return;
-      const record = value as XRecord;
-      const liveLink = this.liveLinkFromRecord(record, username);
-      if (liveLink) return liveLink;
-      for (const child of Object.values(record)) {
-        const result = visit(child);
-        if (result) return result;
-      }
-    };
-    return visit(data);
+    // Read broadcast and Space fields from the page text. Never execute scripts from X.
+    const broadcast = this.findRunningBroadcast(body, username);
+    if (broadcast) return broadcast;
+    return this.findRunningSpace(body, username);
   }
 
-  private findLiveLinkInRelayResponse(body: string, username: string) {
-    const records = new Map<string, XRecord>();
-    // Read scalar fields and Relay references from X's serialized response data.
-    // Never execute the scripts received from X or infer live status from link text.
-    for (const script of body.matchAll(
-      /<script\b[^>]*>([\s\S]*?)<\/script>/gi,
-    )) {
-      for (const match of script[1].matchAll(
-        /\{__id:("(?:\\.|[^"\\])*"),__typename:("(?:\\.|[^"\\])*")([\s\S]*?)(?=\{__id:|$)/g,
-      )) {
-        const record: XRecord = { __typename: JSON.parse(match[2]) };
-        for (const field of match[3].matchAll(
-          /[,{}](\w+):("(?:\\.|[^"\\])*"|null|\d+|\$R\[\d+\]=\{__ref:("(?:\\.|[^"\\])*")\})/g,
-        )) {
-          record[field[1]] = field[3]
-            ? { __ref: JSON.parse(field[3]) }
-            : JSON.parse(field[2]);
-        }
-        records.set(JSON.parse(match[1]), record);
-      }
-    }
-    const resolve = (value: XRecord | undefined): XRecord | undefined =>
-      value?.__ref ? records.get(value.__ref) : value;
-    for (const record of records.values()) {
-      const liveLink = this.liveLinkFromRecord(record, username, resolve);
-      if (liveLink) return liveLink;
-    }
-  }
-
-  private liveLinkFromRecord(
-    record: XRecord,
+  private findRunningBroadcast(
+    body: string,
     username: string,
-    resolve: (value: XRecord | undefined) => XRecord | undefined = (value) =>
-      value,
   ): XLiveLink | undefined {
-    const metadata = resolve(record.metadata) || record;
-    if (metadata.state !== 'Running') return;
-    const isBroadcast =
-      record.__typename === 'Broadcast' || Boolean(record.broadcast_id);
-    const isSpace = record.__typename === 'AudioSpace';
-    if (!isBroadcast && !isSpace) return;
+    for (const match of body.matchAll(/broadcast_id:"([a-zA-Z0-9]+)"/g)) {
+      const chunk = this.chunkAfter(body, match.index + match[0].length, 'broadcast_id:"');
+      const owner = chunk.match(/username:"([a-zA-Z0-9_]+)"/)?.[1];
+      if (!chunk.includes('state:"Running"')) continue;
+      if (owner?.toLowerCase() !== username.toLowerCase()) continue;
+      const title = chunk.match(/status:"((?:\\.|[^"\\])*)"/)?.[1];
+      return {
+        url: `https://x.com/i/broadcasts/${match[1]}`,
+        title: title?.slice(0, 240),
+      };
+    }
+  }
 
-    const userResults = resolve(
-      metadata.user_results || metadata.creator_results,
+  private findRunningSpace(
+    body: string,
+    username: string,
+  ): XLiveLink | undefined {
+    const marker = 'audio_space_by_rest_id:';
+    let from = 0;
+    while (from < body.length) {
+      const at = body.indexOf(marker, from);
+      if (at < 0) return;
+      const start = at + marker.length;
+      const chunk = this.chunkAfter(body, start, marker);
+      from = start;
+      if (!chunk.includes('state:"Running"')) continue;
+      const owner = chunk.match(
+        /(?:screen_name|username):"([a-zA-Z0-9_]+)"/,
+      )?.[1];
+      if (owner?.toLowerCase() !== username.toLowerCase()) continue;
+      const id = chunk.match(
+        /state:"Running"[\s\S]{0,2000}?rest_id:"([a-zA-Z0-9]+)"/,
+      )?.[1];
+      if (!id) continue;
+      const title = chunk.match(
+        /state:"Running",title:"((?:\\.|[^"\\])*)"/,
+      )?.[1];
+      return {
+        url: `https://x.com/i/spaces/${id}`,
+        title: title?.slice(0, 240),
+      };
+    }
+  }
+
+  private chunkAfter(body: string, start: number, marker: string) {
+    const next = body.indexOf(marker, start);
+    return body.slice(
+      start,
+      Math.min(next === -1 ? body.length : next, start + 12000),
     );
-    const user = resolve(userResults?.result);
-    const core = resolve(user?.core);
-    const legacy = resolve(user?.legacy);
-    const periscopeUser = resolve(record.periscope_user);
-    const owner =
-      core?.screen_name || legacy?.screen_name || periscopeUser?.username;
-    if (
-      typeof owner !== 'string' ||
-      owner.toLowerCase() !== username.toLowerCase()
-    )
-      return;
-
-    const id = isBroadcast ? record.broadcast_id : record.rest_id;
-    if (typeof id !== 'string' || !/^[a-zA-Z0-9]+$/.test(id)) return;
-    const title = isBroadcast ? record.status : metadata.title;
-    return {
-      url: `https://x.com/i/${isBroadcast ? 'broadcasts' : 'spaces'}/${id}`,
-      title: typeof title === 'string' ? title.slice(0, 240) : undefined,
-    };
   }
 
   private async getContext() {

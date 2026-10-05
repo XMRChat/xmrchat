@@ -29,10 +29,32 @@ const updateLiveStreams = async () => {
   }
 };
 
+const state = reactive<{ search?: string }>({
+  search: undefined,
+});
+
 const { page, offset, limit } = useFilter({
   initialPage: parseInt(route.query.page as string) || 1,
   getAll: () => refresh(),
+  queryToData: () => {
+    state.search = (route.query.search as string) || undefined;
+  },
 });
+
+function onSearch() {
+  navigateTo({
+    query: {
+      ...route.query,
+      search: state.search || undefined,
+      page: 1,
+    },
+  });
+}
+
+function resetSearch() {
+  state.search = undefined;
+  onSearch();
+}
 
 const { data, error, pending, refresh } = useLazyAsyncData(
   async () => {
@@ -80,7 +102,29 @@ const columns = [
 <template>
   <PageTitle title="Pages"> </PageTitle>
 
-  <div class="mb-4 flex justify-end">
+  <div class="mb-4 flex items-center justify-between gap-4">
+    <UForm :state="state" class="flex gap-2" @submit="onSearch">
+      <UFormGroup name="search">
+        <UInput
+          v-model="state.search"
+          placeholder="Search"
+          autocomplete="off"
+          :ui="{ icon: { trailing: { pointer: '' } } }"
+        >
+          <template #trailing>
+            <UButton
+              v-show="!!state.search"
+              color="gray"
+              variant="link"
+              icon="i-heroicons-x-mark-20-solid"
+              :padded="false"
+              @click="resetSearch"
+            />
+          </template>
+        </UInput>
+      </UFormGroup>
+      <UButton type="submit">Search</UButton>
+    </UForm>
     <UButton @click="updateLiveStreams" :loading="pendingLiveStreams">
       Update live streams
     </UButton>
