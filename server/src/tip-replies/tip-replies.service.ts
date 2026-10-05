@@ -43,7 +43,6 @@ export class TipRepliesService {
       tip,
     });
     caslCreated.tip.pageId = tip.pageId;
-    console.log(caslCreated.tip.pageId);
 
     const ability = await this.caslAbilityFactory.createForUser(user);
     if (!ability.can(Action.Create, caslCreated))
