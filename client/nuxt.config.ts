@@ -87,6 +87,7 @@ export default defineNuxtConfig({
       { code: "ar", language: "ar-SA", iso: "ar", name: "Arabic", dir: "rtl" },
       { code: "cs", language: "cs-CZ", iso: "cs", name: "Czech", dir: "auto" },
       { code: "fa", language: "fa-IR", iso: "fa", name: "Farsi", dir: "rtl" },
+      { code: "vi", language: "vi-VN", iso: "vi", name: "Vietnamese", dir: "auto" },
     ],
     defaultLocale: "en",
     vueI18n: "./i18n.config.ts",
