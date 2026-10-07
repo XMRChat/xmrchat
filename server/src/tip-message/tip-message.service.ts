@@ -21,12 +21,16 @@ export class TipMessageService {
   private privateTemplate = `Private tipped {{value}}`;
   private template = `{{name}} tipped {{value}} {{#if message}}: {{message}} {{/if}}`;
 
-  async generateMessage(tipId: number, pageId: number) {
+  async generateMessage(
+    tipId: number,
+    pageId: number,
+    options: { censor?: boolean } = { censor: true },
+  ) {
     const tip = await this.tipsRepo.findOne({
       where: { id: tipId },
       relations: { payment: true },
     });
-    const message = clearMessage(tip.message);
+    const message = options.censor ? clearMessage(tip.message) : tip.message;
     const page = await this.pagesRepo.findOneBy({ id: pageId });
 
     const fiatPrice = await this.pricesService.getMoneroPrice(
