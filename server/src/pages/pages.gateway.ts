@@ -222,6 +222,7 @@ export class PagesGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const message = await this.tipMessageService.generateMessage(
       tip.id,
       tip.page.id,
+      { censor: false },
     );
 
     tip = Object.assign({}, tip, { pageTipTier: tier });
