@@ -164,9 +164,9 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
   ): XLiveLink | undefined {
     for (const match of body.matchAll(/broadcast_id:"([a-zA-Z0-9]+)"/g)) {
       const chunk = this.chunkAfter(body, match.index + match[0].length, 'broadcast_id:"');
-      const owner = chunk.match(/username:"([a-zA-Z0-9_]+)"/)?.[1];
       if (!chunk.includes('state:"Running"')) continue;
-      if (owner?.toLowerCase() !== username.toLowerCase()) continue;
+      // Periscope `username` can differ from the X `screen_name` on the same broadcast.
+      if (!this.isOwnedBy(chunk, username)) continue;
       const title = chunk.match(/status:"((?:\\.|[^"\\])*)"/)?.[1];
       return {
         url: `https://x.com/i/broadcasts/${match[1]}`,
@@ -188,10 +188,7 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
       const chunk = this.chunkAfter(body, start, marker);
       from = start;
       if (!chunk.includes('state:"Running"')) continue;
-      const owner = chunk.match(
-        /(?:screen_name|username):"([a-zA-Z0-9_]+)"/,
-      )?.[1];
-      if (owner?.toLowerCase() !== username.toLowerCase()) continue;
+      if (!this.isOwnedBy(chunk, username)) continue;
       const id = chunk.match(
         /state:"Running"[\s\S]{0,2000}?rest_id:"([a-zA-Z0-9]+)"/,
       )?.[1];
@@ -204,6 +201,15 @@ export class XProvider implements LiveStreamProvider, OnModuleDestroy {
         title: title?.slice(0, 240),
       };
     }
+  }
+
+  private isOwnedBy(chunk: string, username: string) {
+    const wanted = username.toLowerCase();
+    const handles = [
+      chunk.match(/username:"([a-zA-Z0-9_]+)"/)?.[1],
+      chunk.match(/screen_name:"([a-zA-Z0-9_]+)"/)?.[1],
+    ];
+    return handles.some((handle) => handle?.toLowerCase() === wanted);
   }
 
   private chunkAfter(body: string, start: number, marker: string) {
