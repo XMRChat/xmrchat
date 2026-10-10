@@ -114,7 +114,7 @@ export default {
   accepted: {
     title: "مقبول",
     description:
-      "تجنّب عناء بيع عملتك المشفرة في منصة تداول مركزية. اشترِ سلعًا وخدمات مباشرة من التجار الذين يقبلون Monero على {xmrbazaar} و{monerica} أو عبر خدمة الكونسيرج {shopinbit}.",
+      "تجنّب عناء بيع عملتك المشفرة في منصة تداول مركزية. اشترِ سلعًا وخدمات مباشرة من التجار الذين يقبلون Monero على {xmrbazaar} و{monerica} و{xmrlist} أو عبر خدمة الكونسيرج {shopinbit}.",
   },
   andMore: {
     title: "والمزيد",
@@ -129,7 +129,7 @@ export default {
       ifStreamyard: "إذا كنت تستخدم Streamyard:",
       ifOBS: "إذا كنت تستخدم OBS:",
       ifLiveJoiner: "إذا كنت تستخدم LiveJoiner:",
-      streamyard: `اذهب إلى عنصر القائمة "Edit tip page". تأكد من أنك أضفت اسم مستخدم قناتك على Twitch. عند بدء البث في Streamyard، أضف Twitch كوجهة. سيقوم بوت XMRChat (xmr-chat على Twitch) بإرسال رسالة الإكرامية على Twitch، ويمكنك عرضها على شاشتك من خلال Streamyard. راجع إعدادات Automod الخاصة بـ Twitch لأنها قد تُصفّي رسائل السوبرتشات المرغوبة. يبدو شعار بوت xmrchat المعروض بأفضل شكل مع إعداد "Minimal".`,
+      streamyard: `اذهب إلى عنصر القائمة "تعديل صفحة الإكرامية". تأكد من أنك أضفت اسم مستخدم قناتك على Twitch. عند بدء البث في Streamyard، أضف Twitch كوجهة. سيقوم بوت XMRChat (xmr-chat على Twitch) بإرسال رسالة الإكرامية على Twitch، ويمكنك عرضها على شاشتك من خلال Streamyard. راجع إعدادات Automod الخاصة بـ Twitch لأنها قد تُصفّي رسائل السوبرتشات المرغوبة. يبدو شعار بوت xmrchat المعروض بأفضل شكل مع إعداد "Minimal".`,
       obs: `انتقل إلى عنصر القائمة "OBS". انقر على "نسخ رابط صفحة OBS". أضف مصدر متصفح في OBS والصق الرابط.`,
       liveJoiner:
         "اختر XMRChat من قائمة المنصات المدعومة، ثم أدخل مسار أو رابط صفحة الإكراميات الخاصة بك على XMRChat.",

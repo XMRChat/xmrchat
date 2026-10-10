@@ -121,7 +121,7 @@ export default {
   accepted: {
     title: "Accepté",
     description:
-      "Évitez la contrainte de vendre vos cryptomonnaies sur une plateforme d'échange centralisée. Achetez des biens et services directement auprès de commerçants qui acceptent Monero sur {xmrbazaar} et {monerica}, ou via le service de conciergerie {shopinbit}.",
+      "Évitez la contrainte de vendre vos cryptomonnaies sur une plateforme d'échange centralisée. Achetez des biens et services directement auprès de commerçants qui acceptent Monero sur {xmrbazaar}, {monerica}, {xmrlist}, ou via le service de conciergerie {shopinbit}.",
   },
   andMore: {
     title: "Et plus encore",
@@ -136,7 +136,7 @@ export default {
       ifStreamyard: "Si vous utilisez Streamyard :",
       ifOBS: "Si vous utilisez OBS :",
       ifLiveJoiner: "Si vous utilisez LiveJoiner :",
-      streamyard: `Allez dans l'élément de menu "Edit tip page". Assurez-vous d'avoir ajouté votre nom d'utilisateur de chaîne Twitch. Lorsque vous démarrez le stream dans Streamyard, ajoutez Twitch comme destination. Le bot XMRChat (xmr-chat sur Twitch) enverra le message du pourboire sur Twitch et vous pourrez l'afficher à l'écran depuis Streamyard. Vérifiez les paramètres Automod de Twitch, car ils peuvent filtrer les superchats souhaités. Le logo du bot xmrchat affiché est le plus lisible avec le réglage "Minimal".`,
+      streamyard: `Allez dans l'élément de menu "Modifier la page de pourboire". Assurez-vous d'avoir ajouté votre nom d'utilisateur de chaîne Twitch. Lorsque vous démarrez le stream dans Streamyard, ajoutez Twitch comme destination. Le bot XMRChat (xmr-chat sur Twitch) enverra le message du pourboire sur Twitch et vous pourrez l'afficher à l'écran depuis Streamyard. Vérifiez les paramètres Automod de Twitch, car ils peuvent filtrer les superchats souhaités. Le logo du bot xmrchat affiché est le plus lisible avec le réglage "Minimal".`,
       obs: `Allez dans le menu "OBS". Cliquez sur "Copier le lien de la page OBS". Ajoutez une source navigateur dans OBS et collez le lien.`,
       liveJoiner:
         "Choisissez XMRChat dans la liste des plateformes prises en charge, puis saisissez le chemin ou l’URL de votre page de pourboires XMRChat.",

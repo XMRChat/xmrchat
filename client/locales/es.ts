@@ -119,7 +119,7 @@ export default {
   accepted: {
     title: "Aceptado",
     description:
-      "Evita la molestia de vender tu criptomoneda en un exchange centralizado. Compra bienes y servicios directamente a comerciantes que aceptan Monero en {xmrbazaar} y {monerica}, o a través del servicio de conserjería {shopinbit}.",
+      "Evita la molestia de vender tu criptomoneda en un exchange centralizado. Compra bienes y servicios directamente a comerciantes que aceptan Monero en {xmrbazaar}, {monerica}, {xmrlist}, o a través del servicio de conserjería {shopinbit}.",
   },
   andMore: {
     title: "Y más",
@@ -134,7 +134,7 @@ export default {
       ifStreamyard: "Si usas Streamyard:",
       ifOBS: "Si usas OBS:",
       ifLiveJoiner: "Si utiliza LiveJoiner:",
-      streamyard: `Ve al elemento de menú "Edit tip page". Asegúrate de haber añadido tu nombre de usuario del canal de Twitch. Al iniciar la transmisión en Streamyard, añade Twitch como destino. El bot de XMRChat (xmr-chat en Twitch) enviará el mensaje de propina en Twitch y podrás mostrarlo en tu pantalla desde Streamyard. Revisa la configuración de Automod de Twitch, ya que puede filtrar los superchats deseados. El logo del bot de xmrchat se ve mejor con la opción "Minimal".`,
+      streamyard: `Ve al elemento de menú "Editar página de propina". Asegúrate de haber añadido tu nombre de usuario del canal de Twitch. Al iniciar la transmisión en Streamyard, añade Twitch como destino. El bot de XMRChat (xmr-chat en Twitch) enviará el mensaje de propina en Twitch y podrás mostrarlo en tu pantalla desde Streamyard. Revisa la configuración de Automod de Twitch, ya que puede filtrar los superchats deseados. El logo del bot de xmrchat se ve mejor con la opción "Minimal".`,
       obs: `Ve al elemento del menú "OBS". Haz clic en "Copiar enlace de página OBS". Añade una fuente de navegador en OBS y pega el enlace.`,
       liveJoiner:
         "Seleccione XMRChat de la lista de plataformas compatibles e introduzca la ruta o URL de su página de propinas de XMRChat.",

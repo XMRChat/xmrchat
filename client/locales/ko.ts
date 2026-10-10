@@ -116,7 +116,7 @@ export default {
   accepted: {
     title: "사용 가능",
     description:
-      "중앙화 거래소에서 암호화폐를 파는 번거로움을 피하세요. {xmrbazaar}와 {monerica}에서, 또는 컨시어지 서비스 {shopinbit}를 통해 모네로를 받는 판매자로부터 직접 상품과 서비스를 구매하세요.",
+      "중앙화 거래소에서 암호화폐를 파는 번거로움을 피하세요. {xmrbazaar}, {monerica}, {xmrlist}에서, 또는 컨시어지 서비스 {shopinbit}를 통해 모네로를 받는 판매자로부터 직접 상품과 서비스를 구매하세요.",
   },
   andMore: {
     title: "그 외에도",
@@ -131,7 +131,7 @@ export default {
       ifStreamyard: "Streamyard를 사용하는 경우:",
       ifOBS: "OBS를 사용하는 경우:",
       ifLiveJoiner: "LiveJoiner를 사용하는 경우:",
-      streamyard: `"Edit tip page" 메뉴 항목으로 이동하세요. Twitch 채널 사용자 이름을 추가했는지 확인하세요. Streamyard에서 스트림을 시작할 때 Twitch를 대상으로 추가하세요. XMRChat 봇(Twitch의 xmr-chat)이 Twitch에 팁 메시지를 보내며, Streamyard를 통해 화면에 표시할 수 있습니다. 원하는 슈퍼챗이 필터링될 수 있으므로 Twitch의 Automod 설정을 확인하세요. 표시되는 xmrchat 봇 로고는 "Minimal" 설정에서 가장 잘 보입니다.`,
+      streamyard: `"팁 페이지 편집" 메뉴 항목으로 이동하세요. 트위치 채널 사용자 이름을 추가했는지 확인하세요. Streamyard에서 스트림을 시작할 때 Twitch를 대상으로 추가하세요. XMRChat 봇(트위치의 xmr-chat)이 Twitch에 팁 메시지를 보내며, Streamyard를 통해 화면에 표시할 수 있습니다. 원하는 슈퍼챗이 필터링될 수 있으므로 Twitch의 Automod 설정을 확인하세요. 표시되는 xmrchat 봇 로고는 "Minimal" 설정에서 가장 잘 보입니다.`,
       obs: `"OBS" 메뉴 항목으로 이동하세요. "OBS 페이지 링크 복사"를 클릭하세요. OBS에 브라우저 소스를 추가하고 링크를 붙여넣으세요.`,
       liveJoiner:
         "지원되는 플랫폼 목록에서 XMRChat을 선택한 후 XMRChat 팁 페이지의 경로 또는 URL을 입력하세요.",
