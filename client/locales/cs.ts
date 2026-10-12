@@ -115,7 +115,7 @@ export default {
   accepted: {
     title: "Akceptované",
     description:
-      "Vyhněte se starostem s prodejem své kryptoměny na centralizované burze. Nakupujte zboží a služby přímo od obchodníků, kteří přijímají Monero na {xmrbazaar} a {monerica} nebo prostřednictvím concierge služby {shopinbit}.",
+      "Vyhněte se starostem s prodejem své kryptoměny na centralizované burze. Nakupujte zboží a služby přímo od obchodníků, kteří přijímají Monero na {xmrbazaar}, {monerica}, {xmrlist} nebo prostřednictvím concierge služby {shopinbit}.",
   },
   andMore: {
     title: "A mnoho dalšího",
@@ -131,7 +131,7 @@ export default {
       ifStreamyard: "Pokud používáte Streamyard:",
       ifOBS: "Pokud používáte OBS:",
       ifLiveJoiner: "Pokud používáte LiveJoiner:",
-      streamyard: `Přejděte na položku nabídky "Edit tip page". Ujistěte se, že jste přidali své uživatelské jméno kanálu Twitch. Při spouštění streamu ve Streamyardu přidejte Twitch jako cíl. Bot XMRChat (xmr-chat na Twitchi) odešle zprávu o spropitném na Twitch a vy ji můžete zobrazit na obrazovce ze Streamyardu. Zkontrolujte nastavení Automod na Twitchi, protože může odfiltrovat požadované superchaty. Zobrazené logo bota xmrchat vypadá nejlépe s nastavením "Minimal".`,
+      streamyard: `Přejděte na položku nabídky "Upravit stránku se spropitným". Ujistěte se, že jste přidali své uživatelské jméno kanálu Twitch. Při spouštění streamu ve Streamyardu přidejte Twitch jako cíl. Bot XMRChat (xmr-chat na Twitchi) odešle zprávu o spropitném na Twitch a vy ji můžete zobrazit na obrazovce ze Streamyardu. Zkontrolujte nastavení Automod na Twitchi, protože může odfiltrovat požadované superchaty. Zobrazené logo bota xmrchat vypadá nejlépe s nastavením "Minimal".`,
       obs: `Přejděte do položky "OBS". Klikněte na "Zkopírovat odkaz na OBS stránku". V OBS přidejte zdroj prohlížeče a vložte odkaz.`,
       liveJoiner:
         "Vyberte XMRChat ze seznamu podporovaných platforem a zadejte cestu nebo URL své stránky s tipy na XMRChat.",
