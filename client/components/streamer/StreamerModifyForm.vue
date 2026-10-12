@@ -194,7 +194,7 @@ const v = useVuelidate<State["form"]>(
     primaryAddress: {
       required,
       minLength: minLength(95),
-      maxLength: maxLength(106),
+      maxLength: maxLength(95),
       moneroPrimary: moneroPrimaryAddress,
     },
     secretViewKey: {
