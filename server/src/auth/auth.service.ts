@@ -204,6 +204,22 @@ export class AuthService {
     };
   }
 
+  async logoutAllSessions(user: User) {
+    const tokenVersion = (user.tokenVersion ?? 0) + 1;
+
+    await this.usersService.update(user.id, {
+      tokenVersion,
+    });
+
+    return {
+      message: this.i18n.t('general.loggedOutOfAllSessions'),
+      access_token: await this.generateJwt({
+        ...user,
+        tokenVersion,
+      }),
+    };
+  }
+
   async getUser(id: number) {
     return this.usersService.findById(id);
   }

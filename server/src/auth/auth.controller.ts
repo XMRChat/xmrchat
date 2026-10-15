@@ -76,4 +76,10 @@ export class AuthController {
   updatePassword(@Body() body: UpdatePasswordDto, @CurrentUser() user: User) {
     return this.authService.updatePassword(user, body);
   }
+
+  @Throttle({ default: { ttl: seconds(1), limit: 2 } })
+  @Post('/logout-all')
+  logoutAll(@CurrentUser() user: User) {
+    return this.authService.logoutAllSessions(user);
+  }
 }

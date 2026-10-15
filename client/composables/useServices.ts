@@ -122,6 +122,13 @@ export const useServices = () => {
     return res;
   };
 
+  const logoutAllSessions = async () => {
+    const res = await axios.post<{ message: string; access_token: string }>(
+      "/auth/logout-all"
+    );
+    return res.data;
+  };
+
   const forgotPassword = async (params: any) => {
     const res = await axios.post("/auth/forgot-password", params);
     return res;
@@ -190,6 +197,7 @@ export const useServices = () => {
     signup,
     updatePassword,
     logout,
+    logoutAllSessions,
     checkSlug,
     reserveSlug,
     uploadImage,

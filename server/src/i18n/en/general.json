@@ -29,5 +29,6 @@
   "weSentYouEmailFollowTheLink": "We have already sent you a verification email. Follow the link in the email or try again after few minutes.",
   "passwordChanged": "Password is changed successfully.",
   "invalidCredentials": "Invalid credentials.",
-  "accountPasswordUpdated": "Account password updated."
+  "accountPasswordUpdated": "Account password updated.",
+  "loggedOutOfAllSessions": "Other sessions have been logged out."
 }
