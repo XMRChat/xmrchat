@@ -37,10 +37,10 @@ export class AddressChangeNotificationService implements OnModuleInit {
 
     if (!saved?.primaryAddress || !saved?.address) {
       await this.notify(
-        'Wallet address baseline saved',
+        'Website addresses saved',
         [
-          'No saved wallet address baseline was found.',
-          'The current addresses were saved as baseline.',
+          'No saved website addresses were found.',
+          'These addresses were saved.',
           `ADMIN_MONERO_PRIMARY_ADDRESS: ${addresses.primaryAddress || '(empty)'}`,
           `XMRCHAT_WALLET_ADDRESS: ${addresses.address || '(empty)'}`,
         ].join('\n'),
@@ -68,7 +68,7 @@ export class AddressChangeNotificationService implements OnModuleInit {
       );
     }
 
-    await this.notify('Wallet address changed', lines.join('\n'));
+    await this.notify('Website addresses changed', lines.join('\n'));
     await this.cacheManager.set(CACHE_KEY, addresses);
   }
 
