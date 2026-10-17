@@ -23,6 +23,8 @@ export class AddressChangeNotificationService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
+    if (this.configService.get('ADDRESS_CHANGE_EMAIL_ACTIVE') !== 'true')
+      return;
     await this.checkAndNotifyAddressChange();
   }
 
