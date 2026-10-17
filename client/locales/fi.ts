@@ -116,7 +116,7 @@ export default {
   accepted: {
     title: "Hyväksytty",
     description:
-      "Vältä kryptosi myymisen vaiva keskitetyssä pörssissä. Osta tuotteita ja palveluita suoraan kauppiailta, jotka hyväksyvät Moneroa palveluissa {xmrbazaar} ja {monerica} tai conciergepalvelun {shopinbit} kautta.",
+      "Vältä kryptosi myymisen vaiva keskitetyssä pörssissä. Osta tuotteita ja palveluita suoraan kauppiailta, jotka hyväksyvät Moneroa palveluissa {xmrbazaar}, {monerica}, {xmrlist} tai conciergepalvelun {shopinbit} kautta.",
   },
   andMore: {
     title: "Ja paljon muuta",
@@ -131,7 +131,7 @@ export default {
       ifStreamyard: "Jos käytät Streamyardia:",
       ifOBS: "Jos käytät OBS:ia:",
       ifLiveJoiner: "Jos käytät LiveJoineria:",
-      streamyard: `Siirry valikkokohtaan "Edit tip page". Varmista, että olet lisännyt Twitch-kanavasi käyttäjänimen. Kun aloitat lähetyksen Streamyardissa, lisää Twitch kohteeksi. XMRChat-botti (xmr-chat Twitchissä) lähettää tippiviestin Twitchiin, ja voit näyttää sen näytölläsi Streamyardin kautta. Tarkista Twitchin Automod-asetukset, sillä ne saattavat suodattaa halutut superchatit pois. Näytettävä xmrchat-botin logo näyttää parhaalta "Minimal"-asetuksella.`,
+      streamyard: `Siirry valikkokohtaan "Muokkaa tippisivua". Varmista, että olet lisännyt Twitch-kanavasi käyttäjänimen. Kun aloitat lähetyksen Streamyardissa, lisää Twitch kohteeksi. XMRChat-botti (xmr-chat Twitchissä) lähettää tippiviestin Twitchiin, ja voit näyttää sen näytölläsi Streamyardin kautta. Tarkista Twitchin Automod-asetukset, sillä ne saattavat suodattaa halutut superchatit pois. Näytettävä xmrchat-botin logo näyttää parhaalta "Minimal"-asetuksella.`,
       obs: `Siirry "OBS" -valikkoon. Klikkaa "Kopioi OBS-sivun linkki". Lisää selainlähde OBS:ään ja liitä linkki.`,
       liveJoiner:
         "Valitse XMRChat tuettujen alustojen luettelosta ja syötä XMRChat-tippisivusi polku tai URL-osoite.",

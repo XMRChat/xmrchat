@@ -119,7 +119,7 @@ export default {
   accepted: {
     title: "Akzeptiert",
     description:
-      "Vermeide den Aufwand, deine Kryptowährung auf einer zentralisierten Börse zu verkaufen. Kaufe Waren und Dienstleistungen direkt von Händlern, die Monero akzeptieren, auf {xmrbazaar} und {monerica} oder über den Concierge-Service {shopinbit}.",
+      "Vermeide den Aufwand, deine Kryptowährung auf einer zentralisierten Börse zu verkaufen. Kaufe Waren und Dienstleistungen direkt von Händlern, die Monero akzeptieren, auf {xmrbazaar}, {monerica}, {xmrlist} oder über den Concierge-Service {shopinbit}.",
   },
   andMore: {
     title: "Und mehr",
@@ -134,7 +134,7 @@ export default {
       ifStreamyard: "Wenn Sie Streamyard verwenden:",
       ifOBS: "Wenn du OBS verwendest:",
       ifLiveJoiner: "Wenn Sie LiveJoiner verwenden:",
-      streamyard: `Gehe zum Menüpunkt "Edit tip page". Stelle sicher, dass du deinen Twitch-Kanalnamen hinzugefügt hast. Wenn du den Stream in Streamyard startest, füge Twitch als Ziel hinzu. Der XMRChat-Bot (xmr-chat auf Twitch) sendet die Trinkgeldnachricht auf Twitch, und du kannst sie über Streamyard auf deinem Bildschirm anzeigen. Überprüfe die Automod-Einstellungen von Twitch, da diese gewünschte Superchats herausfiltern könnten. Das angezeigte xmrchat-Bot-Logo sieht mit der Einstellung "Minimal" am besten aus.`,
+      streamyard: `Gehe zum Menüpunkt "Trinkgeldseite bearbeiten". Stelle sicher, dass du deinen Twitch-Kanalnamen hinzugefügt hast. Wenn du den Stream in Streamyard startest, füge Twitch als Ziel hinzu. Der XMRChat-Bot (xmr-chat auf Twitch) sendet die Trinkgeldnachricht auf Twitch, und du kannst sie über Streamyard auf deinem Bildschirm anzeigen. Überprüfe die Automod-Einstellungen von Twitch, da diese gewünschte Superchats herausfiltern könnten. Das angezeigte xmrchat-Bot-Logo sieht mit der Einstellung "Minimal" am besten aus.`,
       obs: `Gehe zum "OBS"-Menüpunkt. Klicke auf "OBS-Seitenlink kopieren". Füge eine Browserquelle in OBS hinzu und füge den Link ein.`,
       liveJoiner:
         "Wählen Sie XMRChat aus der Liste der unterstützten Plattformen aus und geben Sie den Pfad oder die URL Ihrer XMRChat-Trinkgeldseite ein.",

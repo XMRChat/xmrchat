@@ -18,6 +18,7 @@ import { NotificationTestsService } from './notification-tests.service';
 import { QueuesModule } from 'src/queues/queues.module';
 import { SuperDm } from 'src/super-dms/super-dm.entity';
 import { SuperDmMessage } from 'src/super-dms/super-dm-message.entity';
+import { AddressChangeNotificationService } from './address-change-notification.service';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { SuperDmMessage } from 'src/super-dms/super-dm-message.entity';
     NotificationDispatcherService,
     DailySummaryProcessor,
     NotificationTestsService,
+    AddressChangeNotificationService,
   ],
   exports: [
     NotificationsService,

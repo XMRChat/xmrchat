@@ -9,6 +9,8 @@ const authStore = useAuthStore();
       :description="$t('updateYourLoginPassword')"
     ></PageTitle>
     <ResetPasswordForm />
+    <UDivider class="my-10" />
+    <LogoutAllSessions />
     <template v-if="authStore.isPremiumOrAdmin">
       <UDivider class="my-10" />
       <PageTitle title="Cohosts" description="Manage your cohosts" />

@@ -18,6 +18,7 @@ export const useAuthStore = defineStore(
       login: loginApi,
       signup: signupApi,
       logout: logoutApi,
+      logoutAllSessions: logoutAllSessionsApi,
     } = useServices();
 
     const state: State = reactive({
@@ -76,6 +77,11 @@ export const useAuthStore = defineStore(
       }
     };
 
+    const logoutAll = async () => {
+      const { access_token } = await logoutAllSessionsApi();
+      state.token = access_token;
+    };
+
     const isLoggedIn = computed(() => state.token);
     const isAdmin = computed(() => state.user?.roles.includes(RolesEnum.ADMIN));
     const isPremium = computed(() => state.page?.isPremium);
@@ -97,6 +103,7 @@ export const useAuthStore = defineStore(
       login,
       signup,
       logout,
+      logoutAll,
     };
   },
   {
@@ -106,5 +113,5 @@ export const useAuthStore = defineStore(
         serialize: stringify,
       },
     },
-  }
+  },
 );
