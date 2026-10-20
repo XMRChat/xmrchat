@@ -157,7 +157,11 @@ export class LinksService {
       };
 
     // validate new rss link
-    const parser = new Parser();
+    const parser = new Parser({
+      headers: {
+        Accept: 'application/rss+xml, application/xml, text/xml, */*',
+      },
+    });
     try {
       await parser.parseURL(value);
     } catch (error) {
