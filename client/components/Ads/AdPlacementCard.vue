@@ -19,6 +19,10 @@ const features = [
         <h3 class="text-xl font-bold mt-1">Tip page banner</h3>
       </div>
     </div>
+    <p>
+      <span class="text-4xl font-bold">$300.00</span>
+      <span class="text-pale"> / month </span>
+    </p>
 
     <p class="text-pale">
       The high-visibility banner shown on creator tip pages across XMRChat.
