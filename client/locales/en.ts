@@ -426,7 +426,7 @@ export default {
   // HEAD
   head: {
     description:
-      "Viewers, send messages and tips with ease and privacy. Streamers, keep nearly all of your tips instead of giving 30-50% to big tech.",
+      "Viewers, send superchats with ease and privacy from your browser or XMRPod. Streamers, sign up, create your tip page, then keep 100% of your tips instead of losing  30% or more to big tech.",
     title: "Message and Tip with Monero",
     XMRChatTip: "XMRChat - Tip {path} with Monero",
     tip: "Tip {path}",
