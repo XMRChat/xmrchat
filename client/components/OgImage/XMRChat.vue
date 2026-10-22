@@ -6,7 +6,12 @@ const props = defineProps({
   headline: { type: String, required: false },
 });
 const title = computed(() => (props.title || "").slice(0, 60));
-const description = computed(() => (props.description || "").slice(0, 300));
+const description = computed(() =>
+  (props.description || "")
+    .slice(0, 300)
+    .replace(/([.!?])\s+/g, "$1\n")
+    .trim(),
+);
 </script>
 
 <template>
@@ -54,13 +59,13 @@ const description = computed(() => (props.description || "").slice(0, 300));
 
     <div class="flex flex-col items-center w-[240px]">
       <img
-        width="200"
-        height="240"
+        width="240"
+        height="260"
         src="/images/xmrpod.png"
         alt=""
         class="object-contain"
       />
-      <p class="m-0 mt-4 text-[32px] font-semibold text-black">XMRPod</p>
+      <p class="m-0 mt-4 text-[40px] font-semibold text-black">XMRPod</p>
     </div>
     <div class="w-[440px]">
       <p
@@ -69,24 +74,29 @@ const description = computed(() => (props.description || "").slice(0, 300));
       >
         {{ headline }}
       </p>
-      <h1
+      <!-- <h1
         v-if="title"
         class="w-[600px] m-0 text-[75px] font-semibold mb-4 text-black"
         style="display: block; line-clamp: 2; text-overflow: ellipsis"
       >
         {{ title }}
-      </h1>
+      </h1> -->
       <p
         v-if="description"
         class="text-[32px] text-[#232323] leading-tight"
-        style="display: block; line-clamp: 8; text-overflow: ellipsis"
+        style="
+          display: block;
+          white-space: pre-line;
+          line-clamp: 10;
+          text-overflow: ellipsis;
+        "
       >
         {{ description }}
       </p>
     </div>
     <div class="flex flex-col items-center w-[240px]">
-      <img width="240" height="240" src="/images/xmrchat-logo.png" alt="" />
-      <p class="m-0 mt-4 text-[32px] font-semibold text-black">XMRChat</p>
+      <img width="260" height="260" src="/images/xmrchat-logo.png" alt="" />
+      <p class="m-0 mt-4 text-[40px] font-semibold text-black">XMRChat</p>
     </div>
   </div>
 </template>
