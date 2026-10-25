@@ -76,6 +76,11 @@ const items = computed(() => {
           to: toStreamerEdit(),
         },
         {
+          label: t("contentLinks"),
+          icon: "i-heroicons-link-20-solid",
+          to: toStreamerContentLinks(),
+        },
+        {
           label: t("tipPage"),
           icon: "i-heroicons-banknotes",
           to: toStreamer(page.value.path),
@@ -109,11 +114,6 @@ const items = computed(() => {
             to: toStreamerPageTiers(),
           },
           {
-            label: "SuperDMs",
-            icon: "i-heroicons-chat-bubble-left-right",
-            to: toStreamerSuperDms(),
-          },
-          {
             label: "Tip Goal",
             icon: "i-tabler-progress",
             to: toStreamerTipGoal(),
@@ -122,6 +122,11 @@ const items = computed(() => {
             label: "Notifications",
             icon: "i-heroicons-bell",
             to: toStreamerNotificationPreferences(),
+          },
+          {
+            label: "SuperDMs",
+            icon: "i-heroicons-chat-bubble-left-right",
+            to: toStreamerSuperDms(),
           },
           {
             label: "Integrations",
@@ -134,11 +139,6 @@ const items = computed(() => {
 
     res.push(
       ...[
-        {
-          label: t("contentLinks"),
-          icon: "i-heroicons-link-20-solid",
-          to: toStreamerContentLinks(),
-        },
         {
           label: t("obs"),
           icon: "i-heroicons-video-camera",
