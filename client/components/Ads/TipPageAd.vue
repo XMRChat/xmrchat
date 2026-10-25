@@ -7,7 +7,7 @@ const { toCreateAd } = useRouteLocation();
     <ULink
       to="https://sageswap.io/"
       target="_blank"
-      class="aspect-[240/60] border border-border rounded-lg min-w-[300px] w-full flex items-center justify-center gap-4 overflow-hidden"
+      class="border border-border rounded-lg min-w-[300px] w-full flex items-center justify-center gap-4 overflow-hidden"
     >
       <!-- <p class="text-lg font-medium">Advertise with XMRChat</p> -->
       <!-- <img src="/images/xmrchat-logo.png" alt="XMRChat Logo" class="w-[80px]" /> -->
