@@ -89,8 +89,8 @@ export class SuperDmsService {
     if (!isActive)
       throw new BadRequestException('SuperDM is not active for this page.');
 
-    if (!page.isPremium)
-      throw new BadRequestException('SuperDM is not available for this page.');
+    // if (!page.isPremium)
+    //   throw new BadRequestException('SuperDM is not available for this page.');
 
     await this.validateMinSuperDmAmount(page.path, dto.amount);
 

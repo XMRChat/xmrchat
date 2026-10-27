@@ -254,7 +254,7 @@ const tipReplyModal = reactive<{
   tip: undefined,
 });
 
-const showReply = computed(() => props.showReply && props.page?.isPremium);
+const showReply = computed(() => props.showReply);
 
 const handleReplyClick = async (tip?: Tip) => {
   tipReplyModal.tip = tip;
