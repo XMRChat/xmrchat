@@ -40,7 +40,7 @@ const features = [
     </ul>
 
     <p v-if="reserved" class="text-sm text-pale pt-2">
-      Available to book 12/16/2026.
+      Available to book 3/17/2027.
     </p>
     <p v-else class="text-sm text-pale pt-2">Available to book now.</p>
   </div>
