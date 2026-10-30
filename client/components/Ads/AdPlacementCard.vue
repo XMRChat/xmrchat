@@ -20,7 +20,7 @@ const features = [
       </div>
     </div>
     <p>
-      <span class="text-4xl font-bold">$300.00</span>
+      <span class="text-4xl font-bold">$350.00</span>
       <span class="text-pale"> / month </span>
     </p>
 
