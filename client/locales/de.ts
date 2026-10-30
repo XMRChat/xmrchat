@@ -119,7 +119,7 @@ export default {
   accepted: {
     title: "Akzeptiert",
     description:
-      "Vermeide den Aufwand, deine Kryptowährung auf einer zentralisierten Börse zu verkaufen. Kaufe Waren und Dienstleistungen direkt von Händlern, die Monero akzeptieren, auf {xmrbazaar}, {monerica}, {xmrlist} oder über den Concierge-Service {shopinbit}.",
+      "Vermeide den Aufwand, deine Kryptowährung auf einer zentralisierten Börse zu verkaufen. Kaufe Waren und Dienstleistungen direkt von Händlern, die Monero akzeptieren, auf {xmrbazaar}, {monerica} oder über den Concierge-Service {shopinbit}.",
   },
   andMore: {
     title: "Und mehr",

@@ -116,7 +116,7 @@ export default {
   accepted: {
     title: "Hyväksytty",
     description:
-      "Vältä kryptosi myymisen vaiva keskitetyssä pörssissä. Osta tuotteita ja palveluita suoraan kauppiailta, jotka hyväksyvät Moneroa palveluissa {xmrbazaar}, {monerica}, {xmrlist} tai conciergepalvelun {shopinbit} kautta.",
+      "Vältä kryptosi myymisen vaiva keskitetyssä pörssissä. Osta tuotteita ja palveluita suoraan kauppiailta, jotka hyväksyvät Moneroa palveluissa {xmrbazaar}, {monerica} tai conciergepalvelun {shopinbit} kautta.",
   },
   andMore: {
     title: "Ja paljon muuta",
