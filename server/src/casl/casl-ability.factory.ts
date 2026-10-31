@@ -60,17 +60,18 @@ export class CaslAbilityFactory {
       can(Action.Manage, 'all');
     }
 
-    if (pageResult?.isPremium) {
+    // This used to be checking for premium page. We allow all pages to access these actions.
+    if (pageResult) {
       can(Action.Manage, 'notification');
       can(Action.Receive, 'notification');
       can(Action.Manage, 'integration');
       can(Action.Manage, 'cohost');
       can(Action.Create, CohostInvitation);
-      can(Action.Manage, PageTipTier, { pageId: pageResult?.id });
+      can(Action.Manage, PageTipTier, { pageId: pageResult.id });
 
       // TIP REPLY ACTIONS
-      can(Action.Manage, TipReply, { 'tip.pageId': pageResult?.id } as any);
-      can(Action.Manage, TipGoal, { pageId: pageResult?.id });
+      can(Action.Manage, TipReply, { 'tip.pageId': pageResult.id } as any);
+      can(Action.Manage, TipGoal, { pageId: pageResult.id });
     }
 
     // OBS ACTIONS
@@ -90,7 +91,7 @@ export class CaslAbilityFactory {
       key: PageSettingKey.OBS_SOUND,
       value: { $ne: null },
     });
-    if (pageResult?.isPremium || isAdmin) can(Action.Update, PageSetting);
+    if (pageResult || isAdmin) can(Action.Update, PageSetting);
 
     // COHOST ACTIONS
     can(Action.Delete, CohostInvitation, {

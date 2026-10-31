@@ -6,7 +6,6 @@ import { IntegrationConfigType } from "~/types/enums";
 const { axios } = useApp();
 const toast = useToast();
 const { numberic } = useValidations();
-const authStore = useAuthStore();
 
 interface State {
   // form: Form;
@@ -34,8 +33,6 @@ const {
 const { simplex: simplexConfig, signal: signalConfig } = useIntegrations({
   integrations: computed(() => integrations.value?.integrations),
 });
-
-const isPremium = computed(() => authStore.isPremiumOrAdmin);
 </script>
 
 <template>
@@ -44,8 +41,6 @@ const isPremium = computed(() => authStore.isPremiumOrAdmin);
       :title="$t('integrationsTitle')"
       :description="$t('integrationsDes')"
     />
-
-    <PremiumAlert v-if="!isPremium" class="mb-6" />
 
     <ErrorView :error="error" v-if="error" />
     <div

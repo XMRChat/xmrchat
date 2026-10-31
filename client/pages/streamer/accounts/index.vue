@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-const authStore = useAuthStore();
+<script setup lang="ts">
+const { state } = useAuthStore();
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const authStore = useAuthStore();
     <ResetPasswordForm />
     <UDivider class="my-10" />
     <LogoutAllSessions />
-    <template v-if="authStore.isPremiumOrAdmin">
+    <template v-if="state.page">
       <UDivider class="my-10" />
       <PageTitle title="Cohosts" description="Manage your cohosts" />
       <Cohosts />

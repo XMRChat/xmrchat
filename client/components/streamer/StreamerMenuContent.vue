@@ -76,6 +76,11 @@ const items = computed(() => {
           to: toStreamerEdit(),
         },
         {
+          label: t("contentLinks"),
+          icon: "i-heroicons-link-20-solid",
+          to: toStreamerContentLinks(),
+        },
+        {
           label: t("tipPage"),
           icon: "i-heroicons-banknotes",
           to: toStreamer(page.value.path),
@@ -97,8 +102,7 @@ const items = computed(() => {
       );
     }
 
-    const showPremiumPages =
-      config.public.showPremiumPages && authStore.isPremiumOrAdmin;
+    const showPremiumPages = config.public.showPremiumPages;
 
     if (showPremiumPages) {
       res.push(
@@ -107,11 +111,6 @@ const items = computed(() => {
             label: "Tip Tiers",
             icon: "i-heroicons-numbered-list-20-solid",
             to: toStreamerPageTiers(),
-          },
-          {
-            label: "SuperDMs",
-            icon: "i-heroicons-chat-bubble-left-right",
-            to: toStreamerSuperDms(),
           },
           {
             label: "Tip Goal",
@@ -124,6 +123,11 @@ const items = computed(() => {
             to: toStreamerNotificationPreferences(),
           },
           {
+            label: "SuperDMs",
+            icon: "i-heroicons-chat-bubble-left-right",
+            to: toStreamerSuperDms(),
+          },
+          {
             label: "Integrations",
             icon: "i-tabler-plug",
             to: toStreamerIntegrations(),
@@ -134,11 +138,6 @@ const items = computed(() => {
 
     res.push(
       ...[
-        {
-          label: t("contentLinks"),
-          icon: "i-heroicons-link-20-solid",
-          to: toStreamerContentLinks(),
-        },
         {
           label: t("obs"),
           icon: "i-heroicons-video-camera",

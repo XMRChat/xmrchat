@@ -190,10 +190,7 @@ const handleUploadSound = (file: UploadedFile) => {
           />
         </template>
       </div>
-      <div
-        v-if="authStore.isPremiumOrAdmin || state.uploadedSound"
-        class="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-2"
-      >
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-2">
         <UFormGroup
           description="Custom sound to play on OBS and Cohost pages ( mp3, wav, ogg )."
         >
