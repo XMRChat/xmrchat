@@ -115,7 +115,7 @@ export default {
   accepted: {
     title: "Akceptované",
     description:
-      "Vyhněte se starostem s prodejem své kryptoměny na centralizované burze. Nakupujte zboží a služby přímo od obchodníků, kteří přijímají Monero na {xmrbazaar}, {monerica}, {xmrlist} nebo prostřednictvím concierge služby {shopinbit}.",
+      "Vyhněte se starostem s prodejem své kryptoměny na centralizované burze. Nakupujte zboží a služby přímo od obchodníků, kteří přijímají Monero na {xmrbazaar}, {monerica} nebo prostřednictvím concierge služby {shopinbit}.",
   },
   andMore: {
     title: "A mnoho dalšího",

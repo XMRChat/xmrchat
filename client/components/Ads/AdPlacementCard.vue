@@ -20,7 +20,7 @@ const features = [
       </div>
     </div>
     <p>
-      <span class="text-4xl font-bold">$300.00</span>
+      <span class="text-4xl font-bold">$350.00</span>
       <span class="text-pale"> / month </span>
     </p>
 
@@ -40,7 +40,7 @@ const features = [
     </ul>
 
     <p v-if="reserved" class="text-sm text-pale pt-2">
-      Available to book 12/16/2026.
+      Available to book 3/17/2027.
     </p>
     <p v-else class="text-sm text-pale pt-2">Available to book now.</p>
   </div>

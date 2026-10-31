@@ -119,7 +119,7 @@ export default {
   accepted: {
     title: "Aceptado",
     description:
-      "Evita la molestia de vender tu criptomoneda en un exchange centralizado. Compra bienes y servicios directamente a comerciantes que aceptan Monero en {xmrbazaar}, {monerica}, {xmrlist}, o a través del servicio de conserjería {shopinbit}.",
+      "Evita la molestia de vender tu criptomoneda en un exchange centralizado. Compra bienes y servicios directamente a comerciantes que aceptan Monero en {xmrbazaar}, {monerica}, o a través del servicio de conserjería {shopinbit}.",
   },
   andMore: {
     title: "Y más",

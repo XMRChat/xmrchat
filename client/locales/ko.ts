@@ -116,7 +116,7 @@ export default {
   accepted: {
     title: "사용 가능",
     description:
-      "중앙화 거래소에서 암호화폐를 파는 번거로움을 피하세요. {xmrbazaar}, {monerica}, {xmrlist}에서, 또는 컨시어지 서비스 {shopinbit}를 통해 모네로를 받는 판매자로부터 직접 상품과 서비스를 구매하세요.",
+      "중앙화 거래소에서 암호화폐를 파는 번거로움을 피하세요. {xmrbazaar}, {monerica}에서, 또는 컨시어지 서비스 {shopinbit}를 통해 모네로를 받는 판매자로부터 직접 상품과 서비스를 구매하세요.",
   },
   andMore: {
     title: "그 외에도",

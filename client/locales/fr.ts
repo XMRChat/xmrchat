@@ -121,7 +121,7 @@ export default {
   accepted: {
     title: "Accepté",
     description:
-      "Évitez la contrainte de vendre vos cryptomonnaies sur une plateforme d'échange centralisée. Achetez des biens et services directement auprès de commerçants qui acceptent Monero sur {xmrbazaar}, {monerica}, {xmrlist}, ou via le service de conciergerie {shopinbit}.",
+      "Évitez la contrainte de vendre vos cryptomonnaies sur une plateforme d'échange centralisée. Achetez des biens et services directement auprès de commerçants qui acceptent Monero sur {xmrbazaar}, {monerica}, ou via le service de conciergerie {shopinbit}.",
   },
   andMore: {
     title: "Et plus encore",

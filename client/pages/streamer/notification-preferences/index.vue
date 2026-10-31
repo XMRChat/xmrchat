@@ -13,7 +13,6 @@ import {
 const { axios } = useApp();
 const toast = useToast();
 const { numberic } = useValidations();
-const authStore = useAuthStore();
 const { dayjs } = useDate();
 const { t } = useI18n();
 
@@ -152,8 +151,6 @@ const v = useVuelidate<any>(
 );
 
 const { getValidationAttrs } = useValidations(v);
-
-const isPremium = computed(() => authStore.isPremiumOrAdmin);
 </script>
 
 <template>
@@ -162,8 +159,6 @@ const isPremium = computed(() => authStore.isPremiumOrAdmin);
       :title="$t('notifications')"
       :description="$t('manageYourNotifs')"
     />
-
-    <PremiumAlert v-if="!isPremium" class="mb-6" />
 
     <ErrorView :error="error" v-if="error" />
 
