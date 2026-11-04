@@ -3,6 +3,7 @@ import type { LiveStream } from "~/types";
 
 useHead({});
 
+const { toCreateAd } = useRouteLocation();
 const { axios } = useApp();
 const { data, status, error } = useLazyAsyncData(
   "live-streams",
@@ -45,6 +46,16 @@ const { data, status, error } = useLazyAsyncData(
         :pending="status === 'pending' || status === 'idle'"
         class="row-start-1 lg:row-start-auto"
       />
+    </div>
+    <div
+      :class="[
+        'mt-4 justify-self-center w-full',
+        data?.liveStreams?.length ? 'max-w-full' : 'max-w-[1024px]',
+      ]"
+    >
+      <UButton :to="toCreateAd()" variant="outline">
+        {{ $t("advertise") }} <DirectionalArrow />
+      </UButton>
     </div>
   </div>
 </template>

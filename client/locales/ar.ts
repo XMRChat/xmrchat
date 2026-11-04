@@ -152,6 +152,7 @@ export default {
     monerica:
       "اضافة دفع Monero في متجرك يؤهلك لادراج متجرك على خرائط Monero و مجانا على المواقع التالية: {monerica} و {monerodirectory} و {xmrbazaar} و {bankexit}",
   },
+  advertise: "أعلن على XMRChat",
 
   // TIP PAGE
   tipName: "الاسم",

@@ -156,6 +156,7 @@ export default {
     monerica:
       "Принимайте Monero в своём бизнесе и появляйтесь в каталогах {monerica}, {monerodirectory} и на карте на {xmrbazaar} и {bankexit}.",
   },
+  advertise: "Рекламируйтесь на XMRChat",
 
   tipName: "Имя",
   tipAmount: "Сумма",
