@@ -19,6 +19,7 @@ import { PeertubeProvider } from './providers/peertube.provider';
 import { KickModule } from 'src/integrations/kick/kick.module';
 import { KickProvider } from './providers/kick.provider';
 import { XProvider } from './providers/x.provider';
+import { LivePushModule } from 'src/live-push/live-push.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { XProvider } from './providers/x.provider';
     LinksModule,
     TypeOrmModule.forFeature([LiveStream, Link, Page]),
     QueuesModule,
+    LivePushModule,
   ],
   controllers: [LiveStreamsController],
   providers: [

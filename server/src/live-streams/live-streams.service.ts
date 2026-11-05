@@ -21,6 +21,8 @@ import { Tip } from 'src/tips/tip.entity';
 import { PeertubeProvider } from './providers/peertube.provider';
 import { KickProvider } from './providers/kick.provider';
 import { XProvider } from './providers/x.provider';
+import { LivePushService } from 'src/live-push/live-push.service';
+import { getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
 export class LiveStreamsService implements OnModuleInit {
@@ -39,6 +41,7 @@ export class LiveStreamsService implements OnModuleInit {
     @InjectRepository(Page) private pagesRepo: Repository<Page>,
     @InjectRepository(Link) private linkRepo: Repository<Link>,
     @InjectQueue('live-stream') private liveStreamQueue: Queue,
+    private livePush: LivePushService,
   ) {}
 
   onModuleInit() {
@@ -78,11 +81,24 @@ export class LiveStreamsService implements OnModuleInit {
 
   async updateLiveStreams(dto: CreateLiveStreamDto[]) {
     await this.repo.manager.transaction(async (manager) => {
+      // Live push sessions run in a savepoint, so a push failure only drops
+      // the session fields and never blocks the live list update.
+      let streams = dto;
+      try {
+        streams = await manager.transaction((savepoint) =>
+          this.livePush.updateSnapshot(savepoint, dto),
+        );
+      } catch (error) {
+        this.logger.error(
+          `Live push snapshot failed: ${getErrorMessage(error)}`,
+        );
+      }
+
       // Delete all existing streams
       await manager.delete(LiveStream, {});
 
-      if (!dto.length) return;
-      const created = dto.map((stream) => {
+      if (!streams.length) return;
+      const created = streams.map((stream) => {
         return this.repo.create({
           platform: stream.platform,
           title: stream.title,
