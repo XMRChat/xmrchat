@@ -10,6 +10,7 @@ import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
       { name: 'notifications-simplex' },
       { name: 'notifications-signal' },
       { name: 'live-stream' },
+      { name: 'xmrpod-push' },
       { name: 'notifications-daily-summary' },
       { name: 'link-verification-validation' }
     ),
