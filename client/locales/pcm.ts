@@ -155,6 +155,7 @@ export default {
     description:
       "Go to di URL of your content creator tip page. Type your name and message, choose tip amount, then send. One small box go show with di tip details. Your xmrchat go show for di streamer page after you don send di tip.",
   },
+  advertise: "Advertise for XMRChat",
 
   // TIP PAGE
   tipName: "Name",

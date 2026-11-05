@@ -154,6 +154,7 @@ export default {
     monerica:
       "Přijímejte Monero ve svém podniku a buďte zveřejněni na stránkách {monerica}, {monerodirectory} a na mapě obchodních nabídek na {xmrbazaar} a {bankexit}.",
   },
+  advertise: "Inzerujte na XMRChat",
 
   tipName: "Jméno",
   tipAmount: "Částka",

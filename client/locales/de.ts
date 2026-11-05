@@ -159,6 +159,7 @@ export default {
     monerica:
       "Akzeptiere Monero in deinem Unternehmen und werde auf den Seiten {monerica} und {monerodirectory}, sowie auf der Geschäftsübersichtskarte bei {xmrbazaar} und {bankexit} gelistet.",
   },
+  advertise: "Auf XMRChat werben",
 
   // TIP PAGE
   tipName: "Name",
