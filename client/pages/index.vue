@@ -52,11 +52,7 @@ const { data, status, error } = useLazyAsyncData(
         'mt-4 justify-self-center w-full',
         data?.liveStreams?.length ? 'max-w-full' : 'max-w-[1024px]',
       ]"
-    >
-      <UButton :to="toCreateAd()" variant="outline">
-        {{ $t("advertise") }} <DirectionalArrow />
-      </UButton>
-    </div>
+    ></div>
   </div>
 </template>
 
