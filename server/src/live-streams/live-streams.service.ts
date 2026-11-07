@@ -21,7 +21,10 @@ import { Tip } from 'src/tips/tip.entity';
 import { PeertubeProvider } from './providers/peertube.provider';
 import { KickProvider } from './providers/kick.provider';
 import { XProvider } from './providers/x.provider';
-import { LivePushService } from 'src/live-push/live-push.service';
+import {
+  LivePushMessage,
+  LivePushService,
+} from 'src/live-push/live-push.service';
 import { getErrorMessage } from 'src/shared/utils/errors';
 
 @Injectable()
@@ -80,14 +83,15 @@ export class LiveStreamsService implements OnModuleInit {
   }
 
   async updateLiveStreams(dto: CreateLiveStreamDto[]) {
+    let alerts: LivePushMessage[] = [];
     await this.repo.manager.transaction(async (manager) => {
       // Live push sessions run in a savepoint, so a push failure only drops
       // the session fields and never blocks the live list update.
       let streams = dto;
       try {
-        streams = await manager.transaction((savepoint) =>
+        ({ streams, alerts } = await manager.transaction((savepoint) =>
           this.livePush.updateSnapshot(savepoint, dto),
-        );
+        ));
       } catch (error) {
         this.logger.error(
           `Live push snapshot failed: ${getErrorMessage(error)}`,
@@ -116,6 +120,14 @@ export class LiveStreamsService implements OnModuleInit {
 
       await manager.save(LiveStream, created);
     });
+
+    // Queue alerts only after the sessions are committed, so a rolled back
+    // scan cannot announce a session that the next scan would create again.
+    try {
+      await this.livePush.announce(alerts);
+    } catch (error) {
+      this.logger.error(`Live push announce failed: ${getErrorMessage(error)}`);
+    }
   }
 
   async getAndUpdateLiveStreams() {

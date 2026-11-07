@@ -9,7 +9,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InjectQueue } from '@nestjs/bullmq';
-import { Interval } from '@nestjs/schedule';
 import { Queue, UnrecoverableError } from 'bullmq';
 import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
 import { request } from 'node:https';
@@ -20,12 +19,25 @@ import { PageStatusEnum } from 'src/shared/constants';
 import { CreateLiveStreamDto } from 'src/live-streams/dtos/create-live-stream.dto';
 import { PushSubscription } from './push-subscription.entity';
 import { LivePushState } from './live-push-state.entity';
-import { LivePushEvent, LivePushMessage } from './live-push-event.entity';
 import { PushRegistrationDto } from './dtos/push-registration.dto';
 import { resolvePushEndpoint } from './push-endpoint';
 import { isNewSession, streamIdentities } from './live-session';
 
 const PUSH_FANOUT_PAGE = 250;
+
+export type LivePushMessage = {
+  type: 'live' | 'verify' | 'test';
+  sessionId?: string;
+  path?: string;
+  startedAt?: string;
+  detectedAt?: string;
+  nonce?: string;
+};
+
+export type LivePushFanoutJob = {
+  message: LivePushMessage;
+  expiresAt: number;
+};
 
 export type LivePushJob = {
   id: string;
@@ -42,8 +54,6 @@ export class LivePushService {
     private readonly config: ConfigService,
     @InjectRepository(PushSubscription)
     private readonly subscriptions: Repository<PushSubscription>,
-    @InjectRepository(LivePushEvent)
-    private readonly events: Repository<LivePushEvent>,
     @InjectQueue('xmrpod-push') private readonly queue: Queue,
   ) {}
 
@@ -147,6 +157,14 @@ export class LivePushService {
     return { removed: true };
   }
 
+  // 5 retries: 5 + 10 + 20 + 40 + 80 s, within the 5 minute expiry.
+  private readonly retry = {
+    attempts: 6,
+    backoff: { type: 'exponential', delay: 5000 },
+    removeOnComplete: { age: 24 * 60 * 60 },
+    removeOnFail: { age: 24 * 60 * 60 },
+  };
+
   private job(
     subscription: PushSubscription,
     message: LivePushMessage,
@@ -161,14 +179,7 @@ export class LivePushService {
         message,
         expiresAt,
       } as LivePushJob,
-      opts: {
-        jobId: `${eventId}-${subscription.id}`,
-        // 5 retries: 5 + 10 + 20 + 40 + 80 s, within the 5 minute expiry.
-        attempts: 6,
-        backoff: { type: 'exponential', delay: 5000 },
-        removeOnComplete: { age: 24 * 60 * 60 },
-        removeOnFail: { age: 24 * 60 * 60 },
-      },
+      opts: { jobId: `${eventId}-${subscription.id}`, ...this.retry },
     };
   }
 
@@ -189,9 +200,10 @@ export class LivePushService {
 
   /**
    * Tracks one notification session per page and returns the streams with
-   * notificationSessionId and notificationStartedAt in their data. Sessions are
-   * always tracked; live events are written to the outbox only when VAPID keys
-   * are configured. Run it inside its own savepoint: it may throw.
+   * notificationSessionId and notificationStartedAt in their data, plus the
+   * live alerts to pass to announce() once the transaction has committed.
+   * Sessions are always tracked; alerts are returned only when VAPID keys are
+   * configured. Run it inside its own savepoint: it may throw.
    */
   async updateSnapshot(manager: EntityManager, streams: CreateLiveStreamDto[]) {
     const sending = this.enabled();
@@ -221,6 +233,7 @@ export class LivePushService {
     const result: CreateLiveStreamDto[] = streams.filter(
       (stream) => !known.has(stream.pageId),
     );
+    const alerts: LivePushMessage[] = [];
     for (const page of pages) {
       const current = streams.filter((stream) => stream.pageId === page.id);
       const identities = streamIdentities(current);
@@ -243,17 +256,12 @@ export class LivePushService {
           page.isPublic &&
           page.status !== PageStatusEnum.DEACTIVE
         ) {
-          await manager.save(LivePushEvent, {
-            id: state.sessionId,
-            dispatched: false,
-            expiresAt: new Date(now.getTime() + 5 * 60_000),
-            message: {
-              type: 'live',
-              sessionId: state.sessionId,
-              path: page.path,
-              startedAt: state.startedAt.toISOString(),
-              detectedAt: now.toISOString(),
-            },
+          alerts.push({
+            type: 'live',
+            sessionId: state.sessionId,
+            path: page.path,
+            startedAt: state.startedAt.toISOString(),
+            detectedAt: now.toISOString(),
           });
         }
       } else {
@@ -272,63 +280,53 @@ export class LivePushService {
         })),
       );
     }
-    return result;
+    return { streams: result, alerts };
   }
 
-  @Interval(30_000)
-  async dispatch() {
-    if (!this.enabled()) return;
-    await this.events.manager.transaction(async (manager) => {
-      const pending = await manager
-        .getRepository(LivePushEvent)
-        .createQueryBuilder('event')
-        .where('event.dispatched = false')
-        .andWhere('event.expiresAt > :now', { now: new Date() })
-        .setLock('pessimistic_write')
-        .setOnLocked('skip_locked')
-        .take(20)
-        .getMany();
-      for (const event of pending) {
-        let offset = 0;
-        while (true) {
-          const subscriptions = await this.subscriptions.find({
-            where: {
-              verifiedAt: MoreThan(new Date(0)),
-              expiresAt: MoreThan(new Date()),
-            },
-            order: { id: 'ASC' },
-            skip: offset,
-            take: PUSH_FANOUT_PAGE,
-          });
-          if (subscriptions.length)
-            await this.queue.addBulk(
-              subscriptions.map((subscription) =>
-                this.job(
-                  subscription,
-                  event.message,
-                  event.id,
-                  event.expiresAt.getTime(),
-                ),
-              ),
-            );
-          if (subscriptions.length < PUSH_FANOUT_PAGE) break;
-          offset += subscriptions.length;
-        }
-        await manager.update(LivePushEvent, event.id, { dispatched: true });
-      }
-    });
-    await this.events
-      .createQueryBuilder()
-      .delete()
-      .where('expires_at < :cutoff', {
-        cutoff: new Date(Date.now() - 24 * 60 * 60_000),
-      })
-      .execute();
+  /**
+   * Queues one fanout job per new session. The job ID is the session ID, so
+   * a session can only be queued once, and a fanout retry reuses the same
+   * per-subscription job IDs. Call it after the live list has committed.
+   */
+  async announce(alerts: LivePushMessage[]) {
+    if (!alerts.length) return;
+    const expiresAt = Date.now() + 5 * 60_000;
+    await this.queue.addBulk(
+      alerts.map((message) => ({
+        name: 'fanout',
+        data: { message, expiresAt } as LivePushFanoutJob,
+        opts: { jobId: `live-${message.sessionId}`, ...this.retry },
+      })),
+    );
+  }
+
+  async fanout({ message, expiresAt }: LivePushFanoutJob) {
     await this.subscriptions
       .createQueryBuilder()
       .delete()
       .where('expires_at < :now', { now: new Date() })
       .execute();
+    if (expiresAt < Date.now()) return;
+    let offset = 0;
+    while (true) {
+      const subscriptions = await this.subscriptions.find({
+        where: {
+          verifiedAt: MoreThan(new Date(0)),
+          expiresAt: MoreThan(new Date()),
+        },
+        order: { id: 'ASC' },
+        skip: offset,
+        take: PUSH_FANOUT_PAGE,
+      });
+      if (subscriptions.length)
+        await this.queue.addBulk(
+          subscriptions.map((subscription) =>
+            this.job(subscription, message, message.sessionId, expiresAt),
+          ),
+        );
+      if (subscriptions.length < PUSH_FANOUT_PAGE) break;
+      offset += subscriptions.length;
+    }
   }
 
   async send(job: LivePushJob) {

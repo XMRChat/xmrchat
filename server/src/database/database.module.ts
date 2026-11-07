@@ -26,7 +26,6 @@ import { TipReply } from 'src/tip-replies/tip-reply.entity';
 import { TipGoal } from 'src/tip-goals/tip-goal.entity';
 import { PushSubscription } from 'src/live-push/push-subscription.entity';
 import { LivePushState } from 'src/live-push/live-push-state.entity';
-import { LivePushEvent } from 'src/live-push/live-push-event.entity';
 
 @Module({
   imports: [
@@ -63,7 +62,6 @@ import { LivePushEvent } from 'src/live-push/live-push-event.entity';
           TipGoal,
           PushSubscription,
           LivePushState,
-          LivePushEvent,
         ],
         namingStrategy: new SnakeNamingStrategy(),
         migrationsRun: process.env.NODE_ENV === 'production',

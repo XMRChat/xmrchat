@@ -4,14 +4,6 @@ import { LiveStreamPlatformEnum } from 'src/shared/constants';
 
 export class LiveStreamDto {
   @Expose()
-  @Transform(({ obj }) => obj.data?.notificationSessionId)
-  notificationSessionId: string;
-
-  @Expose()
-  @Transform(({ obj }) => obj.data?.notificationStartedAt)
-  notificationStartedAt: string;
-
-  @Expose()
   id: number;
 
   @Expose()
@@ -46,6 +38,14 @@ export class LiveStreamDto {
     if (obj.data?.embedUrl) return obj.data.embedUrl;
   })
   embedUrl: string;
+
+  @Expose()
+  @Transform(({ obj }) => obj.data?.notificationSessionId)
+  notificationSessionId: string;
+
+  @Expose()
+  @Transform(({ obj }) => obj.data?.notificationStartedAt)
+  notificationStartedAt: string;
 
   @Expose()
   @Type(() => PageDto)
