@@ -47,16 +47,6 @@ const { data, status, error } = useLazyAsyncData(
         class="row-start-1 lg:row-start-auto"
       />
     </div>
-    <div
-      :class="[
-        'mt-4 justify-self-center w-full',
-        data?.liveStreams?.length ? 'max-w-full' : 'max-w-[1024px]',
-      ]"
-    >
-      <UButton :to="toCreateAd()" variant="outline">
-        {{ $t("advertise") }} <DirectionalArrow />
-      </UButton>
-    </div>
   </div>
 </template>
 

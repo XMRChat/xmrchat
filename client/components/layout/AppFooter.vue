@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { toCreateAd } = useRouteLocation();
 const { socials } = useAppConfig();
 const currentYear = ref(new Date().getFullYear());
 </script>
@@ -27,6 +28,10 @@ const currentYear = ref(new Date().getFullYear());
         >
           <UIcon name="i-mdi-twitter" class="text-xl"></UIcon>
           <span class="sr-only">Follow us on X</span>
+        </UButton>
+
+        <UButton variant="ghost" color="white" :to="toCreateAd()">
+          {{ $t("advertise") }}
         </UButton>
       </div>
     </div>
