@@ -156,6 +156,7 @@ export default {
     monerica:
       "Accept Monero at your business and get listed at the {monerica} and {monerodirectory} pages and the business listings map on {xmrbazaar} and {bankexit}.",
   },
+  advertise: "Advertise on XMRChat",
 
   // TIP PAGE
   tipName: "Name",

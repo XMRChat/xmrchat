@@ -156,6 +156,7 @@ export default {
     monerica:
       "پذیرش Monero در کسب‌وکار خود و ثبت در صفحات {monerica} و {monerodirectory} و نقشه لیست کسب‌وکارها در {xmrbazaar} و {bankexit}.",
   },
+  advertise: "در XMRChat تبلیغ کنید",
 
   // TIP PAGE
   tipName: "نام انعام",

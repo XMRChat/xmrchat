@@ -155,6 +155,7 @@ export default {
     monerica:
       "Hyväksy Monero liiketoiminnassasi ja listaa itsesi {monerica}, {monerodirectory} ja {xmrbazaar} ja {bankexit} sivuille.",
   },
+  advertise: "Mainosta XMRChatissa",
 
   tipName: "Nimi",
   tipAmount: "Summa",

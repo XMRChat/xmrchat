@@ -3,6 +3,7 @@ import type { LiveStream } from "~/types";
 
 useHead({});
 
+const { toCreateAd } = useRouteLocation();
 const { axios } = useApp();
 const { data, status, error } = useLazyAsyncData(
   "live-streams",

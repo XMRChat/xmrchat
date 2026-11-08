@@ -147,6 +147,7 @@ export default {
     description:
       "Allez à l'URL de la page de pourboires de votre créateur de contenu. Saisissez votre nom d'utilisateur et votre message, choisissez le montant du pourboire, puis envoyez. Une boîte de dialogue apparaîtra avec les détails du pourboire. Votre xmrchat sera affiché sur la page du streamer après l'envoi du pourboire.",
   },
+  advertise: "Faites de la publicité sur XMRChat",
 
   // TIP PAGE
   tipName: "Nom",

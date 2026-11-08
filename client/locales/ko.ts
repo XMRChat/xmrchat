@@ -156,6 +156,7 @@ export default {
     monerica:
       "당신의 사업에서 모네로 결제를 허용하고 {monerica}, {monerodirectory} 그리고 {xmrbazaar}, {bankexit}의 모네로 사용 가능 사업 목록에 등록되세요.",
   },
+  advertise: "XMRChat에 광고하기",
 
   tipName: "이름",
   tipAmount: "금액",
