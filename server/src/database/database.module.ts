@@ -24,6 +24,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { LinkVerification } from 'src/link-verifications/link-verification.entity';
 import { TipReply } from 'src/tip-replies/tip-reply.entity';
 import { TipGoal } from 'src/tip-goals/tip-goal.entity';
+import { PushSubscription } from 'src/live-push/push-subscription.entity';
+import { LivePushState } from 'src/live-push/live-push-state.entity';
 
 @Module({
   imports: [
@@ -58,6 +60,8 @@ import { TipGoal } from 'src/tip-goals/tip-goal.entity';
           LinkVerification,
           TipReply,
           TipGoal,
+          PushSubscription,
+          LivePushState,
         ],
         namingStrategy: new SnakeNamingStrategy(),
         migrationsRun: process.env.NODE_ENV === 'production',
