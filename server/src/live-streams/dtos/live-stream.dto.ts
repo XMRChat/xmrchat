@@ -40,6 +40,14 @@ export class LiveStreamDto {
   embedUrl: string;
 
   @Expose()
+  @Transform(({ obj }) => obj.data?.notificationSessionId)
+  notificationSessionId: string;
+
+  @Expose()
+  @Transform(({ obj }) => obj.data?.notificationStartedAt)
+  notificationStartedAt: string;
+
+  @Expose()
   @Type(() => PageDto)
   page: PageDto;
 }
