@@ -22,6 +22,7 @@ const {
   toStreamerPageTiers,
   toStreamerSuperDms,
   toStreamerTipGoal,
+  toStreamerPatrons,
 } = useRouteLocation();
 
 const items = computed(() => {
@@ -126,6 +127,11 @@ const items = computed(() => {
             label: "SuperDMs",
             icon: "i-heroicons-chat-bubble-left-right",
             to: toStreamerSuperDms(),
+          },
+          {
+            label: "Patrons",
+            icon: "i-heroicons-star",
+            to: toStreamerPatrons(),
           },
           {
             label: "Integrations",

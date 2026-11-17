@@ -26,6 +26,12 @@ import { TipReply } from 'src/tip-replies/tip-reply.entity';
 import { TipGoal } from 'src/tip-goals/tip-goal.entity';
 import { PushSubscription } from 'src/live-push/push-subscription.entity';
 import { LivePushState } from 'src/live-push/live-push-state.entity';
+import { PatronEntity } from 'src/patrons/patron.entity';
+import { PatronPageProfileEntity } from 'src/patrons/patron-page-profile.entity';
+import { MembershipLevelEntity } from 'src/patrons/membership-level.entity';
+import { PatronMembershipEntity } from 'src/patrons/patron-membership.entity';
+import { PatronContactEntity } from 'src/patrons/patron-contact.entity';
+import { PatronMessageEntity } from 'src/patrons/patron-message.entity';
 
 @Module({
   imports: [
@@ -62,6 +68,12 @@ import { LivePushState } from 'src/live-push/live-push-state.entity';
           TipGoal,
           PushSubscription,
           LivePushState,
+          PatronEntity,
+          PatronPageProfileEntity,
+          MembershipLevelEntity,
+          PatronMembershipEntity,
+          PatronContactEntity,
+          PatronMessageEntity,
         ],
         namingStrategy: new SnakeNamingStrategy(),
         migrationsRun: process.env.NODE_ENV === 'production',
