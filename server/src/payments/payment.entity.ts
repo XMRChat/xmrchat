@@ -8,8 +8,11 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  RelationId,
 } from 'typeorm';
 import { SuperDm } from 'src/super-dms/super-dm.entity';
+import { PatronMembershipEntity } from 'src/patrons/patron-membership.entity';
 
 @Entity({ name: 'payments' })
 export class Payment {
@@ -44,6 +47,20 @@ export class Payment {
   })
   @JoinColumn()
   superDm?: SuperDm;
+
+  @ManyToOne(
+    () => PatronMembershipEntity,
+    (m: PatronMembershipEntity) => m.payments,
+    {
+      nullable: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  @JoinColumn({ foreignKeyConstraintName: 'payments_membership_id_fkey' })
+  membership?: PatronMembershipEntity;
+
+  @RelationId((p: Payment) => p.membership)
+  membershipId?: number;
 
   @Column({ type: 'varchar', length: 32 })
   amount: string;

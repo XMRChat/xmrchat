@@ -61,6 +61,7 @@ import { EntitlementsModule } from './entitlements/entitlements.module';
 import { TipsBroadcastModule } from './tips-broadcast/tips-broadcast.module';
 import { TipRepliesModule } from './tip-replies/tip-replies.module';
 import { TipGoalsModule } from './tip-goals/tip-goals.module';
+import { PatronsModule } from './patrons/patrons.module';
 
 @Module({
   imports: [
@@ -196,6 +197,7 @@ import { TipGoalsModule } from './tip-goals/tip-goals.module';
     TipsBroadcastModule,
     TipRepliesModule,
     TipGoalsModule,
+    PatronsModule,
   ],
   controllers: [AppController],
   providers: [AppService, IsMoneroPrimaryAdrress],

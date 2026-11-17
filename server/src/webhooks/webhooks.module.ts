@@ -5,6 +5,7 @@ import { PagesModule } from 'src/pages/pages.module';
 import { TipsModule } from 'src/tips/tips.module';
 import { SwapsModule } from 'src/swaps/swaps.module';
 import { SuperDmsModule } from 'src/super-dms/super-dms.module';
+import { PatronsModule } from 'src/patrons/patrons.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { SuperDmsModule } from 'src/super-dms/super-dms.module';
     TipsModule,
     SwapsModule,
     SuperDmsModule,
+    PatronsModule,
   ],
   controllers: [WebhooksController],
 })

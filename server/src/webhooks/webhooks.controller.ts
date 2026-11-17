@@ -21,6 +21,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { SuperDmsService } from 'src/super-dms/super-dms.service';
 import { SuperDmsGateway } from 'src/super-dms/super-dms.gateway';
+import { PatronsService } from 'src/patrons/patrons.service';
 
 @Controller('webhooks')
 export class WebhooksController {
@@ -35,6 +36,7 @@ export class WebhooksController {
     private swapsService: SwapsService,
     private superDmsService: SuperDmsService,
     private superDmsGateway: SuperDmsGateway,
+    private patronsService: PatronsService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
@@ -93,6 +95,8 @@ export class WebhooksController {
       return this.tipsService.handleTipPayment(payment, amount);
     else if (payment.superDm)
       return this.superDmsService.handleSuperDmPayment(payment, amount);
+    else if (payment.membership)
+      return this.patronsService.handleMembershipPayment(payment, amount);
   }
 
   @IsPublic()
