@@ -22,7 +22,7 @@ import {
 import { PageRecipientsService } from 'src/page-recipients/page-recipients.service';
 import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
 import { User } from 'src/users/user.entity';
-import { ILike, In, MoreThan, Repository } from 'typeorm';
+import { ILike, In, LessThanOrEqual, MoreThan, Repository } from 'typeorm';
 import { CreateMembershipDto } from './dtos/create-membership.dto';
 import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
@@ -74,6 +74,69 @@ export class PatronsService {
       where: { page: { id: page.id } },
       order: { price: 'ASC' },
     });
+  }
+
+  private async attachProfiles(
+    memberships: PatronMembershipEntity[],
+    pageId: number,
+  ) {
+    if (!memberships.length) return memberships;
+
+    const profiles = await this.profileRepo.find({
+      where: {
+        page: { id: pageId },
+        patron: { id: In(memberships.map((m) => m.patronId)) },
+      },
+    });
+
+    for (const membership of memberships) {
+      (membership as PatronMembershipEntity & {
+        profile?: PatronPageProfileEntity;
+      }).profile = profiles.find((p) => p.patronId === membership.patronId);
+    }
+
+    return memberships;
+  }
+
+  async findActiveMemberships(user: User) {
+    const page = await this.pagesService.findMyPage(user);
+    if (!page) throw new NotFoundException('Page is not found');
+
+    const memberships = await this.membershipRepo.find({
+      where: {
+        page: { id: page.id },
+        status: PatronMembershipStatus.ACTIVE,
+        durationEnd: MoreThan(new Date()),
+      },
+      relations: { membershipLevel: true },
+      order: { durationStart: 'ASC' },
+    });
+
+    return this.attachProfiles(memberships, page.id);
+  }
+
+  async findExpiredMemberships(user: User) {
+    const page = await this.pagesService.findMyPage(user);
+    if (!page) throw new NotFoundException('Page is not found');
+
+    const now = new Date();
+    const memberships = await this.membershipRepo.find({
+      where: [
+        {
+          page: { id: page.id },
+          status: PatronMembershipStatus.EXPIRED,
+        },
+        {
+          page: { id: page.id },
+          status: PatronMembershipStatus.ACTIVE,
+          durationEnd: LessThanOrEqual(now),
+        },
+      ],
+      relations: { membershipLevel: true },
+      order: { durationEnd: 'DESC' },
+    });
+
+    return this.attachProfiles(memberships, page.id);
   }
 
   async findActiveMembers(page: Page) {
@@ -189,7 +252,7 @@ export class PatronsService {
           manager.create(PatronMembershipEntity, {
             patron: { id: patron.id },
             page: { id: page.id },
-            plan: { id: level.id },
+            membershipLevel: { id: level.id },
             status: PatronMembershipStatus.PENDING,
             durationStart: now,
             durationEnd: now,
@@ -305,7 +368,7 @@ export class PatronsService {
 
     const membership = await this.membershipRepo.findOne({
       where: { id: membershipRef.id },
-      relations: { plan: true },
+      relations: { membershipLevel: true },
     });
 
     if (!membership) {
@@ -344,7 +407,9 @@ export class PatronsService {
 
     const base = stillActive ? membership.durationEnd : now;
     const durationEnd = new Date(base);
-    durationEnd.setUTCDate(durationEnd.getUTCDate() + membership.plan.duration);
+    durationEnd.setUTCDate(
+      durationEnd.getUTCDate() + membership.membershipLevel.duration,
+    );
 
     membership.status = PatronMembershipStatus.ACTIVE;
     if (!stillActive) {

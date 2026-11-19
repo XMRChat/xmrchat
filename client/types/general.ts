@@ -332,6 +332,14 @@ export interface PatronMember {
   name: string;
 }
 
+export interface StreamerMembership {
+  id: number;
+  name: string;
+  membershipLevel: MembershipLevel;
+  durationStart: string;
+  durationEnd: string;
+}
+
 export interface PatronFormFields {
   membershipLevelId?: number;
   name?: string;

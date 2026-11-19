@@ -26,6 +26,7 @@ import {
   MembershipLevelsRO,
 } from './dtos/membership-level.dto';
 import { PatronMembersRO } from './dtos/patron-member.dto';
+import { StreamerMembershipsRO } from './dtos/streamer-membership.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
 import { PatronsService } from './patrons.service';
 
@@ -77,6 +78,22 @@ export class PatronsController {
     @Body() dto: CreateMembershipDto,
   ) {
     return await this.patronsService.createMembership(pageSlug, dto);
+  }
+
+  @Get('/memberships/active')
+  @Serialize(StreamerMembershipsRO)
+  async findActiveMemberships(@CurrentUser() user: User) {
+    const memberships =
+      await this.patronsService.findActiveMemberships(user);
+    return { memberships };
+  }
+
+  @Get('/memberships/expired')
+  @Serialize(StreamerMembershipsRO)
+  async findExpiredMemberships(@CurrentUser() user: User) {
+    const memberships =
+      await this.patronsService.findExpiredMemberships(user);
+    return { memberships };
   }
 
   @Get('/membership-levels')

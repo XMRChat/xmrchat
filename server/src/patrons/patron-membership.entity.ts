@@ -34,10 +34,10 @@ export class PatronMembershipEntity {
   pageId: number;
 
   @ManyToOne(() => MembershipLevelEntity, { nullable: false })
-  plan: MembershipLevelEntity;
+  membershipLevel: MembershipLevelEntity;
 
-  @RelationId((m: PatronMembershipEntity) => m.plan)
-  planId: number;
+  @RelationId((m: PatronMembershipEntity) => m.membershipLevel)
+  membershipLevelId: number;
 
   @Column({ default: PatronMembershipStatus.PENDING })
   status: PatronMembershipStatus;
