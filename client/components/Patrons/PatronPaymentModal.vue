@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import type {
   BasePaymentData,
-  MembershipLevel,
-  PatronFormFields,
+  MembershipCreateResponse,
+  TipEventData,
 } from "~/types";
 
 const props = defineProps<{
-  form?: PatronFormFields;
-  level?: MembershipLevel;
+  data?: MembershipCreateResponse;
   slug?: string;
+  name?: string;
+  levelName?: string;
+  levelDuration?: number;
 }>();
 
 const emit = defineEmits<{
@@ -17,16 +19,63 @@ const emit = defineEmits<{
 }>();
 
 const active = defineModel<boolean>("active");
-const { dayjs } = useDate();
+const partialPaymentAmount = ref<string | undefined>(undefined);
+const showKeys = ref(true);
 
-// TODO: Static mock payment data, replace with the API response when it is available.
+const toast = useToast();
+
+const { init, disconnect, reconnect, connectionStatus } =
+  usePaymentSocket<TipEventData>({
+    onPatronMembershipPaymentEvent: (data) => {
+      if (!data.paidAt) {
+        partialPaymentAmount.value = data.paidAmount;
+        return;
+      }
+
+      partialPaymentAmount.value = undefined;
+      toast.add({
+        title: "Membership received successfully!",
+      });
+      disconnect();
+      emit("paid");
+    },
+  });
+
+const handleRetry = () => {
+  reconnect();
+};
+
+const cancelPayment = () => {
+  disconnect();
+  showKeys.value = true;
+  partialPaymentAmount.value = undefined;
+  emit("cancel");
+};
+
+const initSocket = () => {
+  init({
+    path: "patrons",
+    query: { membershipId: props.data?.membership?.id },
+  });
+};
+
+watch(active, (currentActive) => {
+  if (currentActive) {
+    showKeys.value = true;
+    initSocket();
+  } else {
+    disconnect();
+  }
+});
+
+onBeforeUnmount(() => disconnect());
+
 const basePaymentData = computed<BasePaymentData>(() => ({
-  amount: String(props.level?.price ?? ""),
-  paymentAddress: "MOCK_PATRON_PAYMENT_ADDRESS",
-  recipients: [],
-  url: undefined,
-  expiresAt: dayjs().add(20, "minute").toISOString(),
-  swap: undefined,
+  amount: props.data?.amount,
+  paymentAddress: props.data?.paymentAddress,
+  recipients: props.data?.recipients,
+  url: props.data?.url,
+  expiresAt: props.data?.expiresAt,
 }));
 
 provide("paymentModalProvideKey", {
@@ -36,18 +85,39 @@ provide("paymentModalProvideKey", {
 
 <template>
   <UModal v-model="active" preventClose>
-    <BasePaymentCard title="Become a Patron" @cancel="emit('cancel')">
-      <div class="mb-4 text-sm">
-        <p>
-          <span class="text-pale">Membership:</span>
-          {{ level?.name }} ({{ level?.duration }} days)
-        </p>
-        <p>
-          <span class="text-pale">Name:</span>
-          {{ form?.name }}
-        </p>
+    <BasePaymentCard title="Become a Patron" @cancel="cancelPayment">
+      <div class="flex mb-2" v-if="!showKeys">
+        <UButton variant="link" :padded="false" @click="showKeys = true">
+          <DirectionalArrow direction="backward" />
+          Show recovery key
+        </UButton>
       </div>
-      <BasePaymentContent :data="basePaymentData" :slug="slug" />
+
+      <PatronIdAndKey
+        v-if="showKeys"
+        :mnemonic="data?.mnemonic"
+        @saved="showKeys = false"
+      />
+
+      <template v-else>
+        <div class="mb-4 text-sm">
+          <p>
+            <span class="text-pale">Membership:</span>
+            {{ levelName }} ({{ levelDuration }} days)
+          </p>
+          <p>
+            <span class="text-pale">Name:</span>
+            {{ name }}
+          </p>
+        </div>
+        <BasePaymentContent
+          :data="basePaymentData"
+          :connectionStatus="connectionStatus"
+          :slug="slug"
+          :partialPaymentAmount="partialPaymentAmount"
+          @retry="handleRetry"
+        />
+      </template>
     </BasePaymentCard>
   </UModal>
 </template>

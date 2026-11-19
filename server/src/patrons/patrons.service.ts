@@ -32,6 +32,7 @@ import { PatronEntity } from './patron.entity';
 import { generatePatronKey } from './patron-key';
 import { PatronMembershipEntity } from './patron-membership.entity';
 import { PatronPageProfileEntity } from './patron-page-profile.entity';
+import { PatronsGateway } from './patrons.gateway';
 
 @Injectable()
 export class PatronsService {
@@ -51,6 +52,7 @@ export class PatronsService {
     private paymentsService: PaymentsService,
     private paymentFlowService: PaymentFlowService,
     private pageRecipientsService: PageRecipientsService,
+    private patronsGateway: PatronsGateway,
     private lwsService: LwsService,
     private pagesService: PagesService,
     private configService: ConfigService,
@@ -311,15 +313,27 @@ export class PatronsService {
       return;
     }
 
+    const amountInXmr = MoneroUtils.atomicUnitsToXmr(amount.toString());
+    const pageAmount = await this.pageRecipientsService.getPageAmount({
+      pageId: membership.pageId,
+      amount: amountInXmr,
+    });
+    const pageUnitAmount = MoneroUtils.xmrToAtomicUnits(pageAmount);
+
     const savedPayment = await this.paymentsService.updatePaidAmount(
       payment.id,
       amount,
+      pageUnitAmount ? pageUnitAmount.toString() : undefined,
     );
 
     if (!savedPayment.isPaid()) {
       this.logger.log(
         `Membership transaction is received but is lower than expected amount ${savedPayment.amount} - Current paid amount: ${savedPayment.paidAmount} - isPaid: ${savedPayment.isPaid()}`,
       );
+      this.logger.log(
+        `Sending partial membership socket event. Membership Id ${membership.id}`,
+      );
+      this.patronsGateway.notifyPayment(membership.id, savedPayment);
       return;
     }
 
@@ -343,6 +357,10 @@ export class PatronsService {
     this.logger.log(
       `Extended membership ${membership.id} until ${membership.durationEnd.toISOString()}`,
     );
+    this.logger.log(
+      `Sending membership socket event. Membership Id ${membership.id}`,
+    );
+    this.patronsGateway.notifyPayment(membership.id, savedPayment);
 
     try {
       await this.lwsService.deleteWebhook(payment.eventId);

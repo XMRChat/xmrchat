@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import useVuelidate from "@vuelidate/core";
-import type { MembershipLevel, PatronFormFields, PatronMember } from "~/types";
+import type {
+  MembershipCreateResponse,
+  MembershipLevel,
+  PatronFormFields,
+  PatronMember,
+} from "~/types";
 
-defineProps<{
+const props = defineProps<{
+  streamerId: string;
   pageName?: string;
   membershipLevels: MembershipLevel[];
   activeMembers: PatronMember[];
 }>();
 
 const emit = defineEmits<{
-  done: [PatronFormFields];
+  done: [{ created: MembershipCreateResponse; form: PatronFormFields }];
 }>();
 
+const { axios } = useApp();
 const { required, minLength, maxLength, alphanumericSpaces } = useValidations();
 
 interface State {
@@ -55,8 +62,24 @@ const handleSubmit = async () => {
   if (!valid) return;
   state.errorMessage = undefined;
 
-  // TODO: Create the membership with the API when it is available.
-  emit("done", { ...state.form });
+  try {
+    state.loading = true;
+    const { data } = await axios.post<MembershipCreateResponse>(
+      `/patrons/${props.streamerId}/memberships`,
+      {
+        membershipLevelId: state.form.membershipLevelId,
+        name: state.form.name,
+        email: state.form.email || undefined,
+        signal: state.form.signal || undefined,
+        simplex: state.form.simplex || undefined,
+      },
+    );
+    emit("done", { created: data, form: { ...state.form } });
+  } catch (error) {
+    state.errorMessage = getErrorMessage(error);
+  } finally {
+    state.loading = false;
+  }
 };
 
 defineExpose({

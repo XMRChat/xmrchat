@@ -13,6 +13,7 @@ import { PatronMessageEntity } from './patron-message.entity';
 import { PatronPageProfileEntity } from './patron-page-profile.entity';
 import { PatronsService } from './patrons.service';
 import { PatronsController } from './patrons.controller';
+import { PatronsGateway } from './patrons.gateway';
 
 @Module({
   imports: [
@@ -30,8 +31,8 @@ import { PatronsController } from './patrons.controller';
     LwsModule,
     PagesModule,
   ],
-  providers: [PatronsService],
-  exports: [TypeOrmModule, PatronsService],
+  providers: [PatronsService, PatronsGateway],
+  exports: [TypeOrmModule, PatronsService, PatronsGateway],
   controllers: [PatronsController],
 })
 export class PatronsModule {}

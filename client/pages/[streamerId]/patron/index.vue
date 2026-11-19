@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { PatronContent } from "#components";
-import type { MembershipLevel, PatronFormFields, PatronMember } from "~/types";
+import type {
+  MembershipCreateResponse,
+  MembershipLevel,
+  PatronFormFields,
+  PatronMember,
+} from "~/types";
 import { TipDisplayMode } from "~/types/enums";
 
 definePageMeta({
@@ -52,28 +57,35 @@ if (error.value) {
   throw createError(error.value);
 }
 
-const created = ref<PatronFormFields | undefined>(undefined);
+const created = ref<MembershipCreateResponse | undefined>(undefined);
+const form = ref<PatronFormFields | undefined>(undefined);
 const paymentModalActive = ref(false);
 
 const selectedLevel = computed(() =>
   data.value?.membershipLevels.find(
-    (l) => l.id === created.value?.membershipLevelId,
+    (l) => l.id === form.value?.membershipLevelId,
   ),
 );
 
-const handlePayment = (form: PatronFormFields) => {
+const handlePayment = (payload: {
+  created: MembershipCreateResponse;
+  form: PatronFormFields;
+}) => {
   paymentModalActive.value = true;
-  created.value = form;
+  created.value = payload.created;
+  form.value = payload.form;
 };
 
 const cancelPayment = () => {
   paymentModalActive.value = false;
   created.value = undefined;
+  form.value = undefined;
 };
 
 const handlePaid = () => {
   paymentModalActive.value = false;
   created.value = undefined;
+  form.value = undefined;
   contentRef.value?.reset();
 };
 
@@ -103,6 +115,7 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
         </p>
         <PatronContent
           ref="contentRef"
+          :streamerId="streamerId"
           :pageName="pageName"
           :membershipLevels="data.membershipLevels"
           :activeMembers="data.activeMembers"
@@ -110,8 +123,10 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
         />
 
         <PatronPaymentModal
-          :form="created"
-          :level="selectedLevel"
+          :data="created"
+          :name="form?.name"
+          :levelName="selectedLevel?.name"
+          :levelDuration="selectedLevel?.duration"
           :slug="streamerId"
           v-model:active="paymentModalActive"
           @cancel="cancelPayment"

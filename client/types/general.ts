@@ -340,6 +340,20 @@ export interface PatronFormFields {
   simplex?: string;
 }
 
+export interface PatronMembership {
+  id: number;
+}
+
+export interface MembershipCreateResponse {
+  amount: string;
+  paymentAddress: string;
+  membership: PatronMembership;
+  recipients: PageRecipientShare[];
+  url?: string;
+  expiresAt: string;
+  mnemonic: string;
+}
+
 export interface SuperDmMessage {
   id: number;
   senderType: SuperDmMessageSenderTypeEnum;

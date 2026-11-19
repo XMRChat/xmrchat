@@ -7,6 +7,7 @@ interface PaymentSocketOptions<T> {
   onPageTipEvent?: (...args: [T]) => any;
   onSwapStatusChangeEvent?: (...args: [Swap]) => any;
   onSuperDmPaymentEvent?: (...args: [T]) => any;
+  onPatronMembershipPaymentEvent?: (...args: [T]) => any;
 }
 
 interface TipPaymentInitParams {
@@ -88,6 +89,11 @@ export const usePaymentSocket = <T>(options?: PaymentSocketOptions<T>) => {
     socket.value.on("swap-status-change", handleSwapStatusChange);
 
     socket.value.on("super-dm-payment", handleSuperDmPaymentEvent);
+
+    socket.value.on(
+      "patron-membership-payment",
+      handlePatronMembershipPaymentEvent,
+    );
   };
 
   const handleConnect = () => {
@@ -117,6 +123,10 @@ export const usePaymentSocket = <T>(options?: PaymentSocketOptions<T>) => {
 
   const handleSuperDmPaymentEvent = (v: any) => {
     options?.onSuperDmPaymentEvent?.(v);
+  };
+
+  const handlePatronMembershipPaymentEvent = (v: any) => {
+    options?.onPatronMembershipPaymentEvent?.(v);
   };
 
   const disconnect = () => {
