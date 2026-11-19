@@ -103,6 +103,7 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
         </p>
         <PatronContent
           ref="contentRef"
+          :pageName="pageName"
           :membershipLevels="data.membershipLevels"
           :activeMembers="data.activeMembers"
           @done="handlePayment"

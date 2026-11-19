@@ -3,6 +3,7 @@ import useVuelidate from "@vuelidate/core";
 import type { MembershipLevel, PatronFormFields, PatronMember } from "~/types";
 
 defineProps<{
+  pageName?: string;
   membershipLevels: MembershipLevel[];
   activeMembers: PatronMember[];
 }>();
@@ -124,9 +125,14 @@ defineExpose({
           />
         </UFormGroup>
 
+        <p class="">
+          Receive messages from {{ pageName }}, welcome message and renewal
+          reminder 24 hours before expiration.
+        </p>
+
         <UFormGroup
           size="lg"
-          label="Email"
+          label="Email  (Optional)"
           :error="getValidationAttrs('email').error"
           name="email"
         >
@@ -138,7 +144,7 @@ defineExpose({
 
         <UFormGroup
           size="lg"
-          label="Signal"
+          label="Signal (Optional)"
           :error="getValidationAttrs('signal').error"
           name="signal"
         >
@@ -150,7 +156,7 @@ defineExpose({
 
         <UFormGroup
           size="lg"
-          label="SimpleX URL"
+          label="SimpleX URL (Optional)"
           :error="getValidationAttrs('simplex').error"
           name="simplex"
         >
