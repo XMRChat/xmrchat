@@ -53,6 +53,9 @@ export const useRouteLocation = () => {
     toSuperDm: (streamerId: Numberic, superDmId: Numberic) =>
       localeRoute(`/${streamerId}/super-dm/${superDmId}`),
 
+    toPatronCreate: (streamerId: Numberic) =>
+      localeRoute(`/${streamerId}/patron`),
+
     toStreamerTipGoal: () => localeRoute("/streamer/tip-goal"),
     toCreateStreamerTipGoal: () => localeRoute("/streamer/tip-goal/create"),
     toEditStreamerTipGoal: () => localeRoute(`/streamer/tip-goal/edit`),

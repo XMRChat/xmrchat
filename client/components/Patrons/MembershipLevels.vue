@@ -1,17 +1,22 @@
 <script setup lang="ts">
+import type { MembershipLevel } from "~/types";
+
 const { t } = useI18n();
 const { toCreateStreamerMembershipLevel, toEditStreamerMembershipLevel } =
   useRouteLocation();
+const { axios } = useApp();
 
-const membershipLevels = [
-  {
-    id: 1,
-    name: "Supporter",
-    description: "Supporting member",
-    price: "100000000000",
-    duration: 30,
+const { data, pending } = useLazyAsyncData(
+  async () => {
+    const { data } = await axios.get<{ membershipLevels: MembershipLevel[] }>(
+      `/patrons/membership-levels`
+    );
+    return data.membershipLevels;
   },
-];
+  {
+    server: false,
+  }
+);
 
 const columns = [
   {
@@ -46,8 +51,13 @@ const columns = [
         </UButton>
       </div>
     </div>
+    <UProgress
+      v-if="pending"
+      animation="carousel"
+      class="max-w-[280px] m-auto mb-4"
+    />
     <UTable
-      :rows="membershipLevels"
+      :rows="data || []"
       :columns="columns"
       class="border border-border rounded-md"
       :ui="{
@@ -55,7 +65,7 @@ const columns = [
       }"
     >
       <template #price-data="{ row }">
-        <span>{{ unitsToXmr(row.price) }} XMR</span>
+        <span>{{ row.price }} XMR</span>
       </template>
       <template #duration-data="{ row }">
         <span>{{ row.duration }} days</span>

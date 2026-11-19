@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useVuelidate from "@vuelidate/core";
+import type { MembershipLevel } from "~/types";
 
 interface State {
   form: {
@@ -13,6 +14,10 @@ interface State {
 
 const { required, maxLength, numberic, integer } = useValidations();
 const { toStreamerPatrons } = useRouteLocation();
+const { axios } = useApp();
+const route = useRoute();
+const id = computed(() => route.params.id as string);
+const toast = useToast();
 
 const state: State = reactive({
   form: {
@@ -24,13 +29,41 @@ const state: State = reactive({
   loading: false,
 });
 
+useLazyAsyncData(
+  async () => {
+    if (!id.value) return;
+    const { data } = await axios.get<{ membershipLevel: MembershipLevel }>(
+      `/patrons/membership-levels/${id.value}`
+    );
+    state.form.name = data.membershipLevel.name;
+    state.form.description = data.membershipLevel.description;
+    state.form.price = data.membershipLevel.price;
+    state.form.duration = data.membershipLevel.duration;
+  },
+  { server: false }
+);
+
 const handleSubmit = async () => {
   const valid = await v.value.$validate();
   if (!valid) return;
 
   state.loading = true;
   try {
+    const request = id.value
+      ? axios.put(`/patrons/membership-levels/${id.value}`, state.form)
+      : axios.post(`/patrons/membership-levels`, state.form);
+
+    await request;
+    toast.add({
+      description: id.value
+        ? "Membership level updated."
+        : "Membership level created.",
+    });
     await navigateTo(toStreamerPatrons());
+  } catch (error) {
+    toast.add({
+      description: getErrorMessage(error),
+    });
   } finally {
     state.loading = false;
   }

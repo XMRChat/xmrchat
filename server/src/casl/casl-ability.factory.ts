@@ -12,6 +12,7 @@ import { CohostInvitation } from 'src/cohost/cohost-invitations/entities/cohost-
 import { PageSetting } from 'src/page-settings/page-setting.entity';
 import { PageTipTier } from 'src/page-tip-tiers/page-tip-tier.entity';
 import { Page } from 'src/pages/page.entity';
+import { MembershipLevelEntity } from 'src/patrons/membership-level.entity';
 import { Action, PageSettingKey, RolesEnum } from 'src/shared/constants/enum';
 import { SuperDm } from 'src/super-dms/super-dm.entity';
 import { TipGoal } from 'src/tip-goals/tip-goal.entity';
@@ -30,6 +31,7 @@ type Subjects =
       | typeof PageTipTier
       | typeof TipReply
       | typeof TipGoal
+      | typeof MembershipLevelEntity
     >
   | 'notification'
   | 'cohost'
@@ -72,6 +74,9 @@ export class CaslAbilityFactory {
       // TIP REPLY ACTIONS
       can(Action.Manage, TipReply, { 'tip.pageId': pageResult.id } as any);
       can(Action.Manage, TipGoal, { pageId: pageResult.id });
+
+      // MEMBERSHIP LEVEL ACTIONS
+      can(Action.Manage, MembershipLevelEntity, { pageId: pageResult.id });
     }
 
     // OBS ACTIONS

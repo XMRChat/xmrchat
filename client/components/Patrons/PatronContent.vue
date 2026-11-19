@@ -1,0 +1,189 @@
+<script setup lang="ts">
+import useVuelidate from "@vuelidate/core";
+import type { MembershipLevel, PatronFormFields, PatronMember } from "~/types";
+
+defineProps<{
+  membershipLevels: MembershipLevel[];
+  activeMembers: PatronMember[];
+}>();
+
+const emit = defineEmits<{
+  done: [PatronFormFields];
+}>();
+
+const { required, minLength, maxLength, alphanumericSpaces } = useValidations();
+
+interface State {
+  form: PatronFormFields;
+  loading: boolean;
+  errorMessage?: string;
+}
+
+const state = reactive<State>({
+  form: {
+    membershipLevelId: undefined,
+    name: undefined,
+    email: undefined,
+    signal: undefined,
+    simplex: undefined,
+  },
+  loading: false,
+  errorMessage: undefined,
+});
+
+const v = useVuelidate<State["form"]>(
+  {
+    membershipLevelId: { required },
+    name: {
+      required,
+      minLength: minLength(2),
+      maxLength: maxLength(40),
+      alphanumericSpaces,
+    },
+    email: { maxLength: maxLength(255) },
+    signal: { maxLength: maxLength(255) },
+    simplex: { maxLength: maxLength(255) },
+  },
+  toRef(state, "form"),
+);
+
+const { getValidationAttrs } = useValidations(v);
+
+const handleSubmit = async () => {
+  const valid = await v.value.$validate();
+  if (!valid) return;
+  state.errorMessage = undefined;
+
+  // TODO: Create the membership with the API when it is available.
+  emit("done", { ...state.form });
+};
+
+defineExpose({
+  reset: () => {
+    v.value.$reset();
+    state.form = {
+      membershipLevelId: undefined,
+      name: undefined,
+      email: undefined,
+      signal: undefined,
+      simplex: undefined,
+    };
+  },
+});
+</script>
+
+<template>
+  <div class="pt-2 md:pt-5 grid gap-10">
+    <div>
+      <h2 class="text-lg font-medium mb-4">Membership Levels</h2>
+      <div class="grid gap-3">
+        <div
+          v-for="level in membershipLevels"
+          :key="level.id"
+          :class="[
+            'border rounded-md p-4 cursor-pointer flex items-center justify-between flex-wrap gap-2',
+            state.form.membershipLevelId === level.id
+              ? 'border-primary'
+              : 'border-border',
+          ]"
+          @click="state.form.membershipLevelId = level.id"
+        >
+          <div class="flex flex-col">
+            <span class="font-medium">{{ level.name }}</span>
+            <span v-if="level.description" class="text-sm text-pale">
+              {{ level.description }}
+            </span>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="font-medium">{{ level.price }} XMR</span>
+            <span class="text-sm text-pale">{{ level.duration }} days</span>
+          </div>
+        </div>
+        <NoItems v-if="!membershipLevels.length" />
+      </div>
+      <p
+        v-if="getValidationAttrs('membershipLevelId').error"
+        class="text-sm text-red-500 mt-2"
+      >
+        {{ getValidationAttrs("membershipLevelId").error }}
+      </p>
+    </div>
+
+    <GeneralForm @submit="handleSubmit">
+      <div class="grid gap-6">
+        <UFormGroup
+          size="lg"
+          :label="$t('name')"
+          :error="getValidationAttrs('name').error"
+          name="name"
+          help="Only letters, numbers and spaces. This name will only be usable by you while your membership is active."
+        >
+          <UInput
+            v-model="state.form.name"
+            @blur="getValidationAttrs('name').onBlur"
+          />
+        </UFormGroup>
+
+        <UFormGroup
+          size="lg"
+          label="Email"
+          :error="getValidationAttrs('email').error"
+          name="email"
+        >
+          <UInput
+            v-model="state.form.email"
+            @blur="getValidationAttrs('email').onBlur"
+          />
+        </UFormGroup>
+
+        <UFormGroup
+          size="lg"
+          label="Signal"
+          :error="getValidationAttrs('signal').error"
+          name="signal"
+        >
+          <UInput
+            v-model="state.form.signal"
+            @blur="getValidationAttrs('signal').onBlur"
+          />
+        </UFormGroup>
+
+        <UFormGroup
+          size="lg"
+          label="SimpleX URL"
+          :error="getValidationAttrs('simplex').error"
+          name="simplex"
+        >
+          <UInput
+            v-model="state.form.simplex"
+            @blur="getValidationAttrs('simplex').onBlur"
+          />
+        </UFormGroup>
+
+        <div v-if="state.errorMessage">
+          <UAlert
+            color="red"
+            :description="state.errorMessage"
+            title="Failed to start membership"
+          >
+          </UAlert>
+        </div>
+
+        <div class="flex gap-2">
+          <UButton
+            size="lg"
+            type="submit"
+            :loading="state.loading"
+            class="flex items-center gap-2 w-fit"
+          >
+            Become a Patron
+          </UButton>
+        </div>
+      </div>
+    </GeneralForm>
+
+    <PatronActiveMembers :members="activeMembers" />
+  </div>
+</template>
+
+<style scoped></style>

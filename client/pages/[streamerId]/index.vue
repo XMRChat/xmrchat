@@ -26,12 +26,26 @@ const { data, pending, refresh, error } = await useLazyAsyncData(
       `/tip-replies/${streamerId.value}/settings`,
     );
 
-    const [page, { data: superDmState }, { data: tipReplySettings }] =
-      await Promise.all([pageR, superDmStateR, tipReplySettingsR]);
+    const patronStateR = axios.get<{ active: boolean }>(
+      `/patrons/${streamerId.value}/state`,
+    );
+
+    const [
+      page,
+      { data: superDmState },
+      { data: tipReplySettings },
+      { data: patronState },
+    ] = await Promise.all([
+      pageR,
+      superDmStateR,
+      tipReplySettingsR,
+      patronStateR,
+    ]);
     return {
       page,
       superDmState,
       tipReplySettings,
+      patronState,
     };
   },
   {
@@ -83,6 +97,7 @@ useStreamerIdSeoMeta(computed(() => data.value?.page));
           :name="data.page.name"
           :links="data.page.links"
           :superDmActive="data.superDmState.active"
+          :patronActive="data.patronState.active"
           :streamerId="streamerId"
           :bio="data.page.bio"
           :tipGoal="data.page.tipGoal"

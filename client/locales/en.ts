@@ -190,6 +190,8 @@ export default {
     "Please send a minimum {minimumAmount} XMR to the following address for your xmrchat to be displayed.",
   superDmWalletMinimum:
     "Please send a minimum {minimumAmount} XMR to the following address for your SuperDM to be started.",
+  patronWalletAmount:
+    "Please send {minimumAmount} XMR to the following address for your membership to be started.",
   partialAmountReceived:
     "{partialAmount} received so far, please send remaining {remainingAmount}.",
   openInMyWallet: "Open in My Wallet",

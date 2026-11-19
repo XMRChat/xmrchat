@@ -319,6 +319,27 @@ export interface PageTipTier {
   sound?: UploadedFile;
 }
 
+export interface MembershipLevel {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  duration: number;
+  createdAt: string;
+}
+
+export interface PatronMember {
+  name: string;
+}
+
+export interface PatronFormFields {
+  membershipLevelId?: number;
+  name?: string;
+  email?: string;
+  signal?: string;
+  simplex?: string;
+}
+
 export interface SuperDmMessage {
   id: number;
   senderType: SuperDmMessageSenderTypeEnum;

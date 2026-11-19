@@ -143,6 +143,13 @@ export const useValidations = (generalV?: Ref<Validation>) => {
     matrixIdBase
   );
 
+  const alphanumericSpacesBase = helpers.regex(/^[a-zA-Z0-9 ]*$/);
+
+  const alphanumericSpaces = helpers.withMessage(
+    "Only letters, numbers and spaces are allowed.",
+    alphanumericSpacesBase
+  );
+
   const getValidationAttrs = (path: string, v?: MaybeRef<Validation>) => {
     v = unref(v || generalV);
     const instance = getProperty(v, path);
@@ -184,6 +191,7 @@ export const useValidations = (generalV?: Ref<Validation>) => {
     rumbleApiUrl,
     notStartingWithAt,
     matrixId,
+    alphanumericSpaces,
     getValidationAttrs,
     validate,
   };

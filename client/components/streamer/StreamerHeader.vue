@@ -11,6 +11,7 @@ const props = withDefaults(
     links?: ContentLink[];
     streamerId?: string;
     superDmActive?: boolean;
+    patronActive?: boolean;
     bio?: string;
     tipGoal?: TipGoal;
   }>(),
@@ -19,7 +20,7 @@ const props = withDefaults(
   },
 );
 
-const { toSuperDmCreate } = useRouteLocation();
+const { toSuperDmCreate, toPatronCreate } = useRouteLocation();
 const { liveStream, livePlatforms } = useLiveStreamPlayer(
   computed(() => props.liveStreams),
 );
@@ -45,19 +46,35 @@ const tipGoalActive = computed(() => props.tipGoal?.isActive);
             class="logo"
           />
 
-          <div v-if="superDmActive" class="relative mt-4">
-            <!-- <UBadge class="absolute -top-2 right-0 text-xs" size="xs">
-              NEW
-            </UBadge> -->
-            <UButton
-              :to="toSuperDmCreate(String(streamerId))"
-              size="sm"
-              type="button"
-              variant="outline"
-              icon="i-heroicons-chat-bubble-left-right"
-            >
-              SuperDM
-            </UButton>
+          <div
+            v-if="patronActive || superDmActive"
+            class="flex flex-wrap justify-center gap-2 mt-4"
+          >
+            <div v-if="patronActive" class="relative">
+              <UButton
+                :to="toPatronCreate(String(streamerId))"
+                size="sm"
+                type="button"
+                variant="outline"
+                icon="i-heroicons-star"
+              >
+                Patron
+              </UButton>
+            </div>
+            <div v-if="superDmActive" class="relative">
+              <!-- <UBadge class="absolute -top-2 right-0 text-xs" size="xs">
+                NEW
+              </UBadge> -->
+              <UButton
+                :to="toSuperDmCreate(String(streamerId))"
+                size="sm"
+                type="button"
+                variant="outline"
+                icon="i-heroicons-chat-bubble-left-right"
+              >
+                SuperDM
+              </UButton>
+            </div>
           </div>
         </div>
         <div class="name p-2 flex flex-col flex-1" v-if="showTitle">
