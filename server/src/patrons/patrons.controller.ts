@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   NotFoundException,
   Param,
   ParseIntPipe,
@@ -13,6 +14,10 @@ import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { IsPublic } from 'src/shared/decorators/is-public.decorator';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { User } from 'src/users/user.entity';
+import {
+  CreateMembershipDto,
+  MembershipCreateRO,
+} from './dtos/create-membership.dto';
 import {
   CreateMembershipLevelDto,
 } from './dtos/create-membership-level.dto';
@@ -62,6 +67,16 @@ export class PatronsController {
 
     const members = await this.patronsService.findActiveMembers(page);
     return { members };
+  }
+
+  @Post('/:pageSlug/memberships')
+  @IsPublic()
+  @Serialize(MembershipCreateRO)
+  async createMembership(
+    @Param('pageSlug') pageSlug: string,
+    @Body() dto: CreateMembershipDto,
+  ) {
+    return await this.patronsService.createMembership(pageSlug, dto);
   }
 
   @Get('/membership-levels')

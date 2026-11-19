@@ -14,12 +14,22 @@ import { PagesService } from 'src/pages/pages.service';
 import { Payment } from 'src/payments/payment.entity';
 import { PaymentsService } from 'src/payments/payments.service';
 import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
-import { Action, PatronMembershipStatus } from 'src/shared/constants';
+import {
+  Action,
+  PatronContactChannel,
+  PatronMembershipStatus,
+} from 'src/shared/constants';
+import { PageRecipientsService } from 'src/page-recipients/page-recipients.service';
+import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
 import { User } from 'src/users/user.entity';
-import { In, MoreThan, Repository } from 'typeorm';
+import { ILike, In, MoreThan, Repository } from 'typeorm';
+import { CreateMembershipDto } from './dtos/create-membership.dto';
 import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
 import { MembershipLevelEntity } from './membership-level.entity';
+import { PatronContactEntity } from './patron-contact.entity';
+import { PatronEntity } from './patron.entity';
+import { generatePatronKey } from './patron-key';
 import { PatronMembershipEntity } from './patron-membership.entity';
 import { PatronPageProfileEntity } from './patron-page-profile.entity';
 
@@ -29,6 +39,8 @@ export class PatronsService {
 
   private MAX_MEMBERSHIP_LEVELS = 5;
 
+  private PAYMENT_EXPIRES_IN_MS = 60 * 60 * 1000;
+
   constructor(
     @InjectRepository(PatronMembershipEntity)
     private membershipRepo: Repository<PatronMembershipEntity>,
@@ -37,6 +49,8 @@ export class PatronsService {
     @InjectRepository(PatronPageProfileEntity)
     private profileRepo: Repository<PatronPageProfileEntity>,
     private paymentsService: PaymentsService,
+    private paymentFlowService: PaymentFlowService,
+    private pageRecipientsService: PageRecipientsService,
     private lwsService: LwsService,
     private pagesService: PagesService,
     private configService: ConfigService,
@@ -82,6 +96,128 @@ export class PatronsService {
     return memberships
       .map((m) => profiles.find((p) => p.patronId === m.patronId))
       .filter((p): p is PatronPageProfileEntity => Boolean(p));
+  }
+
+  private getContacts(dto: CreateMembershipDto) {
+    return [
+      { channel: PatronContactChannel.EMAIL, destination: dto.email },
+      { channel: PatronContactChannel.SIGNAL, destination: dto.signal },
+      { channel: PatronContactChannel.SIMPLEX, destination: dto.simplex },
+    ]
+      .map((c) => ({ ...c, destination: c.destination?.trim() }))
+      .filter((c) => c.destination);
+  }
+
+  // A name can not be used if an active member of the page is using it.
+  private async validateMemberName(page: Page, name: string) {
+    const profiles = await this.profileRepo.find({
+      where: { page: { id: page.id }, name: ILike(name) },
+    });
+    if (!profiles.length) return;
+
+    const inUse = await this.membershipRepo.exists({
+      where: {
+        page: { id: page.id },
+        patron: { id: In(profiles.map((p) => p.patronId)) },
+        status: PatronMembershipStatus.ACTIVE,
+        durationEnd: MoreThan(new Date()),
+      },
+    });
+    if (inUse)
+      throw new BadRequestException(
+        'This name is already used by an active member.',
+      );
+  }
+
+  async createMembership(pageSlug: string, dto: CreateMembershipDto) {
+    const page = await this.pagesService.findByPath(pageSlug);
+    if (!page) throw new NotFoundException('Page is not found');
+
+    const level = await this.levelRepo.findOne({
+      where: { id: dto.membershipLevelId, page: { id: page.id } },
+    });
+    if (!level) throw new NotFoundException('Membership level is not found');
+
+    const name = dto.name.trim();
+    if (name.length < 2)
+      throw new BadRequestException('Name must be at least 2 characters.');
+    await this.validateMemberName(page, name);
+
+    const amountInXmr = MoneroUtils.atomicUnitsToXmr(level.price);
+
+    const { eventId, integratedAddress } =
+      await this.paymentFlowService.create({
+        amount: String(amountInXmr),
+        page,
+      });
+
+    const key = generatePatronKey();
+    const now = new Date();
+
+    const membership = await this.membershipRepo.manager.transaction(
+      async (manager) => {
+        const patron = await manager.save(
+          manager.create(PatronEntity, {
+            keyHash: key.keyHash,
+            keyHint: key.keyHint,
+          }),
+        );
+
+        await manager.save(
+          manager.create(PatronPageProfileEntity, {
+            patron: { id: patron.id },
+            page: { id: page.id },
+            name,
+          }),
+        );
+
+        const contacts = this.getContacts(dto).map((c) =>
+          manager.create(PatronContactEntity, {
+            patron: { id: patron.id },
+            channel: c.channel,
+            destination: c.destination,
+            enabled: true,
+            verified: false,
+          }),
+        );
+        if (contacts.length) await manager.save(contacts);
+
+        // Duration is set when the payment is received.
+        return manager.save(
+          manager.create(PatronMembershipEntity, {
+            patron: { id: patron.id },
+            page: { id: page.id },
+            plan: { id: level.id },
+            status: PatronMembershipStatus.PENDING,
+            durationStart: now,
+            durationEnd: now,
+          }),
+        );
+      },
+    );
+
+    await this.paymentsService.createPayment({
+      amount: level.price,
+      eventId,
+      membership: { id: membership.id },
+    });
+
+    const { recipients, url } =
+      await this.pageRecipientsService.handleRecipientsAndAmounts({
+        pageId: page.id,
+        amount: amountInXmr,
+        integratedAddress,
+      });
+
+    return {
+      amount: level.price,
+      paymentAddress: integratedAddress,
+      membership,
+      recipients,
+      url,
+      expiresAt: new Date(now.getTime() + this.PAYMENT_EXPIRES_IN_MS),
+      mnemonic: key.mnemonic,
+    };
   }
 
   async isPatronActive(page: Page) {

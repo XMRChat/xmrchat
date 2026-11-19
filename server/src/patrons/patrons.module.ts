@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LwsModule } from 'src/lws/lws.module';
+import { PageRecipientsModule } from 'src/page-recipients/page-recipients.module';
 import { PagesModule } from 'src/pages/pages.module';
+import { PaymentFlowModule } from 'src/payment-flow/payment-flow.module';
 import { PaymentsModule } from 'src/payments/payments.module';
 import { MembershipLevelEntity } from './membership-level.entity';
 import { PatronContactEntity } from './patron-contact.entity';
@@ -23,6 +25,8 @@ import { PatronsController } from './patrons.controller';
       PatronMessageEntity,
     ]),
     PaymentsModule,
+    PaymentFlowModule,
+    PageRecipientsModule,
     LwsModule,
     PagesModule,
   ],
