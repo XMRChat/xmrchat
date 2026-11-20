@@ -8,7 +8,14 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { seconds, Throttle } from '@nestjs/throttler';
+import { CurrentPatron } from 'src/shared/decorators/current-patron.decorator';
+import { PatronEntity } from './patron.entity';
+import { PatronAuthGuard } from './patron-auth.guard';
+import { PatronLoginDto, PatronLoginRO } from './dtos/patron-login.dto';
+import { PatronRO } from './dtos/patron.dto';
 import { PagesService } from 'src/pages/pages.service';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { IsPublic } from 'src/shared/decorators/is-public.decorator';
@@ -78,6 +85,23 @@ export class PatronsController {
     @Body() dto: CreateMembershipDto,
   ) {
     return await this.patronsService.createMembership(pageSlug, dto);
+  }
+
+  @Post('/login')
+  @IsPublic()
+  @Throttle({ default: { ttl: seconds(60), limit: 10 } })
+  @Serialize(PatronLoginRO)
+  async login(@Body() dto: PatronLoginDto) {
+    return await this.patronsService.login(dto.mnemonic);
+  }
+
+  @Get('/me')
+  @IsPublic()
+  @UseGuards(PatronAuthGuard)
+  @Serialize(PatronRO)
+  async me(@CurrentPatron() currentPatron: PatronEntity) {
+    const patron = await this.patronsService.getPatron(currentPatron.id);
+    return { patron };
   }
 
   @Get('/memberships/active')

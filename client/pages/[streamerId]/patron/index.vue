@@ -20,6 +20,8 @@ const { state: generalState } = useGeneralStore();
 const { savePatronKey } = usePatronKeys();
 const contentRef = ref<InstanceType<typeof PatronContent> | undefined>();
 
+const patronStore = usePatronStore();
+
 const { data, pending, error } = await useLazyAsyncData(
   `streamer-${streamerId.value}-patron`,
   async () => {
@@ -30,15 +32,12 @@ const { data, pending, error } = await useLazyAsyncData(
     const activeMembersRequest = axios.get<{ members: PatronMember[] }>(
       `/patrons/${streamerId.value}/active-members`,
     );
-    const [
-      page,
-      { data: membershipLevels },
-      { data: activeMembers },
-    ] = await Promise.all([
-      pageRequest,
-      membershipLevelsRequest,
-      activeMembersRequest,
-    ]);
+    const [page, { data: membershipLevels }, { data: activeMembers }] =
+      await Promise.all([
+        pageRequest,
+        membershipLevelsRequest,
+        activeMembersRequest,
+      ]);
     return {
       page,
       membershipLevels: membershipLevels.membershipLevels,
@@ -61,6 +60,7 @@ if (error.value) {
 const created = ref<MembershipCreateResponse | undefined>(undefined);
 const form = ref<PatronFormFields | undefined>(undefined);
 const paymentModalActive = ref(false);
+const loginModalActive = ref(false);
 
 const selectedLevel = computed(() =>
   data.value?.membershipLevels.find(
@@ -115,9 +115,16 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
           <span class="text-lg lg:text-2xl font-bold">{{ pageName }}</span>
         </div>
 
+        <div v-if="patronStore.token" class="pt-6">
+          <PatronMemberships
+            :patron="patronStore.patron"
+            @logout="patronStore.logout"
+          />
+        </div>
+
         <p class="text-sm text-pale pt-6">
-          Become a Patron of {{ pageName }} by choosing a membership level.
-          The name you choose can only be used by you while your membership is
+          Become a Patron of {{ pageName }} by choosing a membership level. The
+          name you choose can only be used by you while your membership is
           active, others are prevented from using it when sending tips.
         </p>
         <PatronContent
@@ -127,7 +134,10 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
           :membershipLevels="data.membershipLevels"
           :activeMembers="data.activeMembers"
           @done="handlePayment"
+          @login="loginModalActive = true"
         />
+
+        <PatronLoginModal v-model="loginModalActive" />
 
         <PatronPaymentModal
           :data="created"

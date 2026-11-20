@@ -6,6 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoneroUtils } from 'monero-ts';
 import { LwsService } from 'src/lws/lws.service';
@@ -29,10 +30,12 @@ import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
 import { MembershipLevelEntity } from './membership-level.entity';
 import { PatronContactEntity } from './patron-contact.entity';
 import { PatronEntity } from './patron.entity';
-import { generatePatronKey } from './patron-key';
+import { generatePatronKey, hashPatronMnemonic } from './patron-key';
 import { PatronMembershipEntity } from './patron-membership.entity';
 import { PatronPageProfileEntity } from './patron-page-profile.entity';
 import { PatronsGateway } from './patrons.gateway';
+
+type PatronJwtPayload = { patronId: string; type: 'patron' };
 
 @Injectable()
 export class PatronsService {
@@ -49,6 +52,9 @@ export class PatronsService {
     private levelRepo: Repository<MembershipLevelEntity>,
     @InjectRepository(PatronPageProfileEntity)
     private profileRepo: Repository<PatronPageProfileEntity>,
+    @InjectRepository(PatronEntity)
+    private patronRepo: Repository<PatronEntity>,
+    private jwtService: JwtService,
     private paymentsService: PaymentsService,
     private paymentFlowService: PaymentFlowService,
     private pageRecipientsService: PageRecipientsService,
@@ -90,9 +96,11 @@ export class PatronsService {
     });
 
     for (const membership of memberships) {
-      (membership as PatronMembershipEntity & {
-        profile?: PatronPageProfileEntity;
-      }).profile = profiles.find((p) => p.patronId === membership.patronId);
+      (
+        membership as PatronMembershipEntity & {
+          profile?: PatronPageProfileEntity;
+        }
+      ).profile = profiles.find((p) => p.patronId === membership.patronId);
     }
 
     return memberships;
@@ -210,11 +218,12 @@ export class PatronsService {
 
     const amountInXmr = MoneroUtils.atomicUnitsToXmr(level.price);
 
-    const { eventId, integratedAddress } =
-      await this.paymentFlowService.create({
+    const { eventId, integratedAddress } = await this.paymentFlowService.create(
+      {
         amount: String(amountInXmr),
         page,
-      });
+      },
+    );
 
     const key = generatePatronKey();
     const now = new Date();
@@ -283,6 +292,79 @@ export class PatronsService {
       expiresAt: new Date(now.getTime() + this.PAYMENT_EXPIRES_IN_MS),
       mnemonic: key.mnemonic,
     };
+  }
+
+  private get patronTokenSecret() {
+    return `${this.configService.get<string>('JWT_SECRET')}:patron`;
+  }
+
+  // Returns the patron of a valid patron token, null if the token is not valid.
+  async validatePatronToken(token?: unknown): Promise<PatronEntity | null> {
+    if (!token || typeof token !== 'string') return null;
+
+    let payload: PatronJwtPayload;
+    try {
+      payload = this.jwtService.verify<PatronJwtPayload>(token, {
+        secret: this.patronTokenSecret,
+      });
+    } catch {
+      return null;
+    }
+    if (payload?.type !== 'patron' || !payload.patronId) return null;
+
+    return this.patronRepo.findOne({ where: { id: payload.patronId } });
+  }
+
+  private async findPatron(id: string) {
+    const patron = await this.patronRepo.findOne({
+      where: { id },
+      relations: { memberships: { page: true, membershipLevel: true } },
+      order: { memberships: { durationEnd: 'DESC' } },
+    });
+    if (!patron) return null;
+
+    // Pending memberships are not paid yet.
+    patron.memberships = patron.memberships.filter(
+      (m) => m.status !== PatronMembershipStatus.PENDING,
+    );
+
+    const profiles = await this.profileRepo.find({
+      where: { patron: { id } },
+    });
+    for (const membership of patron.memberships) {
+      (
+        membership as PatronMembershipEntity & {
+          profile?: PatronPageProfileEntity;
+        }
+      ).profile = profiles.find((p) => p.pageId === membership.page.id);
+    }
+
+    return patron;
+  }
+
+  async login(mnemonic: string) {
+    const keyHash = hashPatronMnemonic(mnemonic);
+    if (!keyHash) throw new UnauthorizedException('Invalid recovery phrase.');
+
+    const patron = await this.patronRepo.findOne({ where: { keyHash } });
+    if (!patron) throw new UnauthorizedException('Patron is not found.');
+
+    const payload: PatronJwtPayload = { patronId: patron.id, type: 'patron' };
+    const token = this.jwtService.sign(payload, {
+      secret: this.patronTokenSecret,
+      expiresIn: '30d',
+    });
+
+    const patronResult = await this.findPatron(patron.id);
+
+    return { token, patron: patronResult };
+  }
+
+  async getPatron(id: string) {
+    const patron = await this.findPatron(id);
+    if (!patron) throw new UnauthorizedException('Patron is not found.');
+
+    return patron;
   }
 
   async isPatronActive(page: Page) {

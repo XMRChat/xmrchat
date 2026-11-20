@@ -367,6 +367,24 @@ export interface SavedPatronKey {
   mnemonic: string;
 }
 
+// Membership of a patron on a page. The name is the one used on that page.
+export interface PatronMembershipDetail extends StreamerMembership {
+  status: string;
+  page: StreamerPage;
+}
+
+export interface Patron {
+  memberships: PatronMembershipDetail[];
+}
+
+export interface PatronResponse {
+  patron: Patron;
+}
+
+export interface PatronLoginResponse extends PatronResponse {
+  token: string;
+}
+
 export interface SuperDmMessage {
   id: number;
   senderType: SuperDmMessageSenderTypeEnum;

@@ -1,5 +1,6 @@
 export default defineNuxtPlugin(() => {
   const authStore = useAuthStore();
+  const patronStore = usePatronStore();
   const nuxtApp = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
 
@@ -12,6 +13,7 @@ export default defineNuxtPlugin(() => {
     }
 
     config.headers.Authorization = `Bearer ${authStore.state.token}`;
+    if (patronStore.token) config.headers["X-Patron-Token"] = patronStore.token;
     config.headers["Accept-Language"] = nuxtApp.$i18n.locale.value;
 
     return config;

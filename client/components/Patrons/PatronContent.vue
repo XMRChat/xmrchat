@@ -16,9 +16,11 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   done: [{ created: MembershipCreateResponse; form: PatronFormFields }];
+  login: [];
 }>();
 
 const { axios } = useApp();
+const patronStore = usePatronStore();
 const { required, minLength, maxLength, alphanumericSpaces } = useValidations();
 
 interface State {
@@ -206,6 +208,14 @@ defineExpose({
             class="flex items-center gap-2 w-fit"
           >
             Become a Patron
+          </UButton>
+          <UButton
+            v-if="!patronStore.isLoggedIn"
+            size="lg"
+            variant="soft"
+            @click="emit('login')"
+          >
+            Patron login
           </UButton>
         </div>
       </div>

@@ -5,6 +5,8 @@ import type {
   MeResponse,
   Numberic,
   PageSetting,
+  PatronLoginResponse,
+  PatronResponse,
   SlugReservationResponse,
   StreamerPage,
   Tip,
@@ -23,6 +25,16 @@ export const useServices = () => {
 
   const login = async (params: any) => {
     const res = await axios.post<LoginResponse>("/auth/login", params);
+    return res.data;
+  };
+
+  const patronLogin = async (params: { mnemonic: string }) => {
+    const res = await axios.post<PatronLoginResponse>("/patrons/login", params);
+    return res.data;
+  };
+
+  const getPatron = async () => {
+    const res = await axios.get<PatronResponse>("/patrons/me");
     return res.data;
   };
 
@@ -194,6 +206,8 @@ export const useServices = () => {
   return {
     me,
     login,
+    patronLogin,
+    getPatron,
     signup,
     updatePassword,
     logout,

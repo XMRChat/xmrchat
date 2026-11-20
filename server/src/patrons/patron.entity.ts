@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PatronMembershipEntity } from './patron-membership.entity';
 
 @Entity({ name: 'patrons' })
 export class PatronEntity {
@@ -16,6 +18,9 @@ export class PatronEntity {
 
   @Column({ length: 4 })
   keyHint: string;
+
+  @OneToMany(() => PatronMembershipEntity, (m) => m.patron)
+  memberships: PatronMembershipEntity[];
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
