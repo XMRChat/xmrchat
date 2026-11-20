@@ -17,6 +17,7 @@ const { axios } = useApp();
 const streamerId = computed(() => route.params.streamerId as string);
 const { getStreamerPage } = useServices();
 const { state: generalState } = useGeneralStore();
+const { savePatronKey } = usePatronKeys();
 const contentRef = ref<InstanceType<typeof PatronContent> | undefined>();
 
 const { data, pending, error } = await useLazyAsyncData(
@@ -67,10 +68,16 @@ const selectedLevel = computed(() =>
   ),
 );
 
-const handlePayment = (payload: {
+const handlePayment = async (payload: {
   created: MembershipCreateResponse;
   form: PatronFormFields;
 }) => {
+  await savePatronKey({
+    pagePath: streamerId.value,
+    membershipId: payload.created.membership.id,
+    mnemonic: payload.created.mnemonic,
+  });
+
   paymentModalActive.value = true;
   created.value = payload.created;
   form.value = payload.form;

@@ -362,6 +362,11 @@ export interface MembershipCreateResponse {
   mnemonic: string;
 }
 
+export interface SavedPatronKey {
+  membershipId: number;
+  mnemonic: string;
+}
+
 export interface SuperDmMessage {
   id: number;
   senderType: SuperDmMessageSenderTypeEnum;
