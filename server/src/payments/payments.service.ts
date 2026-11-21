@@ -13,6 +13,7 @@ export class PaymentsService {
     tip?: { id: number };
     superDm?: { id: string };
     membership?: { id: number };
+    membershipLevel?: { id: number };
     eventId: string;
   }) {
     const created = this.repo.create(payload);
@@ -23,7 +24,12 @@ export class PaymentsService {
     if (!eventId) return;
     return this.repo.findOne({
       where: { eventId },
-      relations: { tip: true, superDm: true, membership: true },
+      relations: {
+        tip: true,
+        superDm: true,
+        membership: true,
+        membershipLevel: true,
+      },
     });
   }
 

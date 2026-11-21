@@ -12,6 +12,7 @@ import {
   RelationId,
 } from 'typeorm';
 import { SuperDm } from 'src/super-dms/super-dm.entity';
+import { MembershipLevelEntity } from 'src/patrons/membership-level.entity';
 import { PatronMembershipEntity } from 'src/patrons/patron-membership.entity';
 
 @Entity({ name: 'payments' })
@@ -61,6 +62,19 @@ export class Payment {
 
   @RelationId((p: Payment) => p.membership)
   membershipId?: number;
+
+  // Level being purchased for a patron membership payment. Applied when paid.
+  @ManyToOne(() => MembershipLevelEntity, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({
+    foreignKeyConstraintName: 'payments_membership_level_id_fkey',
+  })
+  membershipLevel?: MembershipLevelEntity;
+
+  @RelationId((p: Payment) => p.membershipLevel)
+  membershipLevelId?: number;
 
   @Column({ type: 'varchar', length: 32 })
   amount: string;

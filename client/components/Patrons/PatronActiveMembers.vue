@@ -9,10 +9,10 @@ defineProps<{
 <template>
   <div>
     <h2 class="text-lg font-medium mb-4">Active Members</h2>
-    <div v-if="members.length" class="flex flex-wrap gap-2">
-      <UBadge v-for="member in members" variant="subtle" size="lg">
-        {{ member.name }}
-      </UBadge>
+    <div v-if="members.length" class="grid gap-1">
+      <div v-for="(member, index) in members" :key="member.name">
+        {{ index + 1 }}. {{ member.name }}
+      </div>
     </div>
     <NoItems v-else />
   </div>

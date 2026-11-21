@@ -312,15 +312,12 @@ export class PatronsService {
           if (contacts.length) await manager.save(contacts);
         }
 
-        // One membership per page: reuse it and move to the new level.
-        // Status and duration are only changed when the payment is received.
+        // One membership per page. Level / status / duration change only when
+        // the payment is received (the intended level is stored on the payment).
         const current = await manager.findOne(PatronMembershipEntity, {
           where: { patron: { id: patron.id }, page: { id: page.id } },
         });
-        if (current) {
-          current.membershipLevel = level;
-          return manager.save(current);
-        }
+        if (current) return current;
 
         return manager.save(
           manager.create(PatronMembershipEntity, {
@@ -339,6 +336,7 @@ export class PatronsService {
       amount: level.price,
       eventId,
       membership: { id: membership.id },
+      membershipLevel: { id: level.id },
     });
 
     const { recipients, url } =
@@ -526,6 +524,24 @@ export class PatronsService {
       return;
     }
 
+    // Prefer the level stored on the payment (renewal); fall back to the one
+    // already on the membership (first purchase).
+    const level =
+      payment.membershipLevel ??
+      (payment.membershipLevelId
+        ? await this.levelRepo.findOne({
+            where: { id: payment.membershipLevelId },
+          })
+        : null) ??
+      membership.membershipLevel;
+
+    if (!level) {
+      this.logger.warn(
+        `Membership level is not found for payment ${payment.eventId}`,
+      );
+      return;
+    }
+
     const amountInXmr = MoneroUtils.atomicUnitsToXmr(amount.toString());
     const pageAmount = await this.pageRecipientsService.getPageAmount({
       pageId: membership.pageId,
@@ -551,15 +567,14 @@ export class PatronsService {
     }
 
     const now = new Date();
-    // Remaining days are carried over: the new level's duration is added on
-    // top of the current end date when the membership is still active.
+    // Remaining days are carried over: the purchased level's duration is added
+    // on top of the current end date when the membership is still active.
     const remaining = membership.status === PatronMembershipStatus.ACTIVE;
     const base = remaining ? membership.durationEnd : now;
     const durationEnd = new Date(base);
-    durationEnd.setUTCDate(
-      durationEnd.getUTCDate() + membership.membershipLevel.duration,
-    );
+    durationEnd.setUTCDate(durationEnd.getUTCDate() + level.duration);
 
+    membership.membershipLevel = level;
     membership.status = PatronMembershipStatus.ACTIVE;
     if (!remaining) {
       membership.durationStart = now;
@@ -569,7 +584,7 @@ export class PatronsService {
     await this.membershipRepo.save(membership);
 
     this.logger.log(
-      `Activated membership ${membership.id} (level ${membership.membershipLevelId}) until ${membership.durationEnd.toISOString()}`,
+      `Activated membership ${membership.id} (level ${level.id}) until ${membership.durationEnd.toISOString()}`,
     );
     this.logger.log(
       `Sending membership socket event. Membership Id ${membership.id}`,
