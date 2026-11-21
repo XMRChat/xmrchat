@@ -13,7 +13,7 @@ import {
 import { seconds, Throttle } from '@nestjs/throttler';
 import { CurrentPatron } from 'src/shared/decorators/current-patron.decorator';
 import { PatronEntity } from './patron.entity';
-import { PatronAuthGuard } from './patron-auth.guard';
+import { OptionalPatronAuthGuard, PatronAuthGuard } from './patron-auth.guard';
 import { PatronLoginDto, PatronLoginRO } from './dtos/patron-login.dto';
 import { PatronRO } from './dtos/patron.dto';
 import { PagesService } from 'src/pages/pages.service';
@@ -25,15 +25,16 @@ import {
   CreateMembershipDto,
   MembershipCreateRO,
 } from './dtos/create-membership.dto';
-import {
-  CreateMembershipLevelDto,
-} from './dtos/create-membership-level.dto';
+import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
 import {
   MembershipLevelRO,
   MembershipLevelsRO,
 } from './dtos/membership-level.dto';
 import { PatronMembersRO } from './dtos/patron-member.dto';
-import { StreamerMembershipsRO } from './dtos/streamer-membership.dto';
+import {
+  PatronPageMembershipsRO,
+  StreamerMembershipsRO,
+} from './dtos/streamer-membership.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
 import { PatronsService } from './patrons.service';
 
@@ -77,14 +78,34 @@ export class PatronsController {
     return { members };
   }
 
+  @Get('/:pageSlug/my-memberships')
+  @IsPublic()
+  @UseGuards(PatronAuthGuard)
+  @Serialize(PatronPageMembershipsRO)
+  async findMyMembershipsOnPage(
+    @Param('pageSlug') pageSlug: string,
+    @CurrentPatron() currentPatron: PatronEntity,
+  ) {
+    const page = await this.pagesService.findByPath(pageSlug);
+    if (!page) throw new NotFoundException('Page not found');
+
+    const memberships = await this.patronsService.findMyMembershipsOnPage(
+      currentPatron.id,
+      page,
+    );
+    return { memberships };
+  }
+
   @Post('/:pageSlug/memberships')
   @IsPublic()
+  @UseGuards(OptionalPatronAuthGuard)
   @Serialize(MembershipCreateRO)
   async createMembership(
     @Param('pageSlug') pageSlug: string,
     @Body() dto: CreateMembershipDto,
+    @CurrentPatron() patron?: PatronEntity,
   ) {
-    return await this.patronsService.createMembership(pageSlug, dto);
+    return await this.patronsService.createMembership(pageSlug, dto, patron);
   }
 
   @Post('/login')
@@ -107,16 +128,14 @@ export class PatronsController {
   @Get('/memberships/active')
   @Serialize(StreamerMembershipsRO)
   async findActiveMemberships(@CurrentUser() user: User) {
-    const memberships =
-      await this.patronsService.findActiveMemberships(user);
+    const memberships = await this.patronsService.findActiveMemberships(user);
     return { memberships };
   }
 
   @Get('/memberships/expired')
   @Serialize(StreamerMembershipsRO)
   async findExpiredMemberships(@CurrentUser() user: User) {
-    const memberships =
-      await this.patronsService.findExpiredMemberships(user);
+    const memberships = await this.patronsService.findExpiredMemberships(user);
     return { memberships };
   }
 

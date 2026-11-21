@@ -12,10 +12,28 @@ export class PatronMembershipDetailDto extends StreamerMembershipDto {
   page: PageDto;
 }
 
+export class PatronContactDto {
+  @Expose()
+  channel: string;
+
+  @Expose()
+  destination: string;
+
+  @Expose()
+  enabled: boolean;
+
+  @Expose()
+  verified: boolean;
+}
+
 export class PatronDto {
   @Expose()
   @Type(() => PatronMembershipDetailDto)
   memberships: PatronMembershipDetailDto[];
+
+  @Expose()
+  @Type(() => PatronContactDto)
+  contacts: PatronContactDto[];
 }
 
 export class PatronRO {

@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import type { Patron, PatronMembershipDetail } from "~/types";
+import type { PatronPageMembership } from "~/types";
 
 defineProps<{
-  patron?: Patron;
+  memberships: PatronPageMembership[];
 }>();
 
 const emit = defineEmits<{
   logout: [];
 }>();
 
-const isActive = (m: PatronMembershipDetail) =>
-  m.status === "active" && new Date(m.durationEnd) > new Date();
+const isActive = (m: PatronPageMembership) => m.status === "active";
 </script>
 
 <template>
@@ -18,25 +17,23 @@ const isActive = (m: PatronMembershipDetail) =>
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
         <p class="text-sm text-pale">Logged in as Patron</p>
-        <h2 class="text-lg font-medium">Your memberships</h2>
+        <h2 class="text-lg font-medium">Your membership on this page</h2>
       </div>
       <UButton variant="soft" color="gray" @click="emit('logout')">
         Log out
       </UButton>
     </div>
 
-    <NoItems v-if="!patron?.memberships.length" />
+    <NoItems v-if="!memberships.length" />
 
     <div
-      v-for="m in patron?.memberships"
+      v-for="m in memberships"
       :key="m.id"
       class="flex items-center justify-between flex-wrap gap-2 text-sm"
     >
       <div class="flex flex-col">
-        <span class="font-medium">{{ m.page.name || m.page.path }}</span>
-        <span class="text-pale">
-          {{ m.name }} · {{ m.membershipLevel?.name }}
-        </span>
+        <span class="font-medium">{{ m.name }}</span>
+        <span class="text-pale">{{ m.membershipLevel?.name }}</span>
       </div>
       <div class="flex flex-col items-end gap-1">
         <UBadge :color="isActive(m) ? 'primary' : 'gray'" variant="subtle">

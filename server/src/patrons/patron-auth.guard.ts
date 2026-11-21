@@ -27,3 +27,23 @@ export class PatronAuthGuard implements CanActivate {
     return true;
   }
 }
+
+/**
+ * Use this guard on public routes that behave differently for a logged in
+ * patron. It sets request.patron when the patron token is valid and never
+ * rejects the request, a missing or invalid token is treated as logged out.
+ */
+@Injectable()
+export class OptionalPatronAuthGuard implements CanActivate {
+  constructor(private patronsService: PatronsService) {}
+
+  async canActivate(context: ExecutionContext) {
+    const request = context.switchToHttp().getRequest();
+    const token = request.headers?.[PATRON_TOKEN_HEADER];
+
+    const patron = await this.patronsService.validatePatronToken(token);
+
+    request.patron = patron ?? undefined;
+    return true;
+  }
+}

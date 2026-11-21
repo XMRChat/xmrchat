@@ -5,6 +5,7 @@ import type {
   MembershipLevel,
   PatronFormFields,
   PatronMember,
+  PatronPageMembership,
 } from "~/types";
 import { TipDisplayMode } from "~/types/enums";
 
@@ -15,7 +16,7 @@ definePageMeta({
 const route = useRoute();
 const { axios } = useApp();
 const streamerId = computed(() => route.params.streamerId as string);
-const { getStreamerPage } = useServices();
+const { getStreamerPage, getMyPageMemberships } = useServices();
 const { state: generalState } = useGeneralStore();
 const { savePatronKey } = usePatronKeys();
 const contentRef = ref<InstanceType<typeof PatronContent> | undefined>();
@@ -53,6 +54,28 @@ const { data, pending, error } = await useLazyAsyncData(
   },
 );
 
+const { data: pageMemberships, refresh: refreshPageMemberships } =
+  await useLazyAsyncData(
+    `streamer-${streamerId.value}-patron-memberships`,
+    async () => {
+      if (!patronStore.token) return [] as PatronPageMembership[];
+      const { memberships } = await getMyPageMemberships(streamerId.value);
+      return memberships;
+    },
+    { server: false },
+  );
+
+const hasActiveMembership = computed(() =>
+  (pageMemberships.value || []).some((m) => m.status === "active"),
+);
+
+watch(
+  () => patronStore.token,
+  () => {
+    refreshPageMemberships();
+  },
+);
+
 if (error.value) {
   throw createError(error.value);
 }
@@ -72,11 +95,13 @@ const handlePayment = async (payload: {
   created: MembershipCreateResponse;
   form: PatronFormFields;
 }) => {
-  await savePatronKey({
-    pagePath: streamerId.value,
-    membershipId: payload.created.membership.id,
-    mnemonic: payload.created.mnemonic,
-  });
+  // No mnemonic when the logged in patron is reused, they already have a key.
+  if (payload.created.mnemonic)
+    await savePatronKey({
+      pagePath: streamerId.value,
+      membershipId: payload.created.membership.id,
+      mnemonic: payload.created.mnemonic,
+    });
 
   paymentModalActive.value = true;
   created.value = payload.created;
@@ -94,6 +119,7 @@ const handlePaid = () => {
   created.value = undefined;
   form.value = undefined;
   contentRef.value?.reset();
+  refreshPageMemberships();
 };
 
 defineOgImage(false);
@@ -117,7 +143,7 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
 
         <div v-if="patronStore.token" class="pt-6">
           <PatronMemberships
-            :patron="patronStore.patron"
+            :memberships="pageMemberships || []"
             @logout="patronStore.logout"
           />
         </div>
@@ -133,6 +159,8 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
           :pageName="pageName"
           :membershipLevels="data.membershipLevels"
           :activeMembers="data.activeMembers"
+          :existingName="pageMemberships?.[0]?.name"
+          :hasActiveMembership="hasActiveMembership"
           @done="handlePayment"
           @login="loginModalActive = true"
         />

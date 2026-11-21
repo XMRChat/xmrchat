@@ -359,7 +359,8 @@ export interface MembershipCreateResponse {
   recipients: PageRecipientShare[];
   url?: string;
   expiresAt: string;
-  mnemonic: string;
+  // Only set when a new patron is created, not when a logged in patron is reused.
+  mnemonic?: string;
 }
 
 export interface SavedPatronKey {
@@ -373,8 +374,24 @@ export interface PatronMembershipDetail extends StreamerMembership {
   page: StreamerPage;
 }
 
+export interface PatronPageMembership extends StreamerMembership {
+  status: string;
+}
+
+export interface PatronPageMembershipsResponse {
+  memberships: PatronPageMembership[];
+}
+
+export interface PatronContact {
+  channel: string;
+  destination: string;
+  enabled: boolean;
+  verified: boolean;
+}
+
 export interface Patron {
   memberships: PatronMembershipDetail[];
+  contacts: PatronContact[];
 }
 
 export interface PatronResponse {

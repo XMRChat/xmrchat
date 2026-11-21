@@ -6,6 +6,7 @@ import type {
   Numberic,
   PageSetting,
   PatronLoginResponse,
+  PatronPageMembershipsResponse,
   PatronResponse,
   SlugReservationResponse,
   StreamerPage,
@@ -35,6 +36,13 @@ export const useServices = () => {
 
   const getPatron = async () => {
     const res = await axios.get<PatronResponse>("/patrons/me");
+    return res.data;
+  };
+
+  const getMyPageMemberships = async (pageSlug: string) => {
+    const res = await axios.get<PatronPageMembershipsResponse>(
+      `/patrons/${pageSlug}/my-memberships`,
+    );
     return res.data;
   };
 
@@ -208,6 +216,7 @@ export const useServices = () => {
     login,
     patronLogin,
     getPatron,
+    getMyPageMemberships,
     signup,
     updatePassword,
     logout,

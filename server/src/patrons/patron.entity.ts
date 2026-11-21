@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PatronContactEntity } from './patron-contact.entity';
 import { PatronMembershipEntity } from './patron-membership.entity';
 
 @Entity({ name: 'patrons' })
@@ -21,6 +22,9 @@ export class PatronEntity {
 
   @OneToMany(() => PatronMembershipEntity, (m) => m.patron)
   memberships: PatronMembershipEntity[];
+
+  @OneToMany(() => PatronContactEntity, (c) => c.patron)
+  contacts: PatronContactEntity[];
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

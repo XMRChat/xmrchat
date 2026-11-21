@@ -66,7 +66,8 @@ export class MembershipCreateRO {
   @Expose()
   expiresAt: Date;
 
-  // Only returned once on creation, the server only stores its hash.
+  // Only returned once when a new patron is created, the server only stores
+  // its hash. It is not returned when a logged in patron is reused.
   @Expose()
-  mnemonic: string;
+  mnemonic?: string;
 }

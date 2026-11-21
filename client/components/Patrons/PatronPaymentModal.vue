@@ -20,7 +20,10 @@ const emit = defineEmits<{
 
 const active = defineModel<boolean>("active");
 const partialPaymentAmount = ref<string | undefined>(undefined);
-const showKeys = ref(true);
+// The recovery key is only shown for a new patron. A logged in patron is
+// reused and already has their key.
+const hasKey = computed(() => !!props.data?.mnemonic);
+const showKeys = ref(hasKey.value);
 
 const toast = useToast();
 
@@ -47,7 +50,7 @@ const handleRetry = () => {
 
 const cancelPayment = () => {
   disconnect();
-  showKeys.value = true;
+  showKeys.value = hasKey.value;
   partialPaymentAmount.value = undefined;
   emit("cancel");
 };
@@ -61,7 +64,7 @@ const initSocket = () => {
 
 watch(active, (currentActive) => {
   if (currentActive) {
-    showKeys.value = true;
+    showKeys.value = hasKey.value;
     initSocket();
   } else {
     disconnect();
@@ -86,7 +89,7 @@ provide("paymentModalProvideKey", {
 <template>
   <UModal v-model="active" preventClose>
     <BasePaymentCard title="Become a Patron" @cancel="cancelPayment">
-      <div class="flex mb-2" v-if="!showKeys">
+      <div class="flex mb-2" v-if="!showKeys && hasKey">
         <UButton variant="link" :padded="false" @click="showKeys = true">
           <DirectionalArrow direction="backward" />
           Show recovery key

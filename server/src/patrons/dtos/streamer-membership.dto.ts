@@ -25,3 +25,14 @@ export class StreamerMembershipsRO {
   @Type(() => StreamerMembershipDto)
   memberships: StreamerMembershipDto[];
 }
+
+export class PatronPageMembershipDto extends StreamerMembershipDto {
+  @Expose()
+  status: string;
+}
+
+export class PatronPageMembershipsRO {
+  @Expose()
+  @Type(() => PatronPageMembershipDto)
+  memberships: PatronPageMembershipDto[];
+}

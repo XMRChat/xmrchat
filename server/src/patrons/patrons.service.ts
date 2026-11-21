@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoneroUtils } from 'monero-ts';
 import { LwsService } from 'src/lws/lws.service';
@@ -23,7 +24,7 @@ import {
 import { PageRecipientsService } from 'src/page-recipients/page-recipients.service';
 import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
 import { User } from 'src/users/user.entity';
-import { ILike, In, LessThanOrEqual, MoreThan, Repository } from 'typeorm';
+import { ILike, In, LessThanOrEqual, Repository } from 'typeorm';
 import { CreateMembershipDto } from './dtos/create-membership.dto';
 import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
@@ -114,7 +115,6 @@ export class PatronsService {
       where: {
         page: { id: page.id },
         status: PatronMembershipStatus.ACTIVE,
-        durationEnd: MoreThan(new Date()),
       },
       relations: { membershipLevel: true },
       order: { durationStart: 'ASC' },
@@ -123,23 +123,31 @@ export class PatronsService {
     return this.attachProfiles(memberships, page.id);
   }
 
+  // Marks paid memberships whose duration has ended
+  @Cron(CronExpression.EVERY_5_MINUTES)
+  async expireMemberships() {
+    const result = await this.membershipRepo.update(
+      {
+        status: PatronMembershipStatus.ACTIVE,
+        durationEnd: LessThanOrEqual(new Date()),
+      },
+      { status: PatronMembershipStatus.EXPIRED },
+    );
+
+    if (result.affected) {
+      this.logger.log(`Expired ${result.affected} patron memberships.`);
+    }
+  }
+
   async findExpiredMemberships(user: User) {
     const page = await this.pagesService.findMyPage(user);
     if (!page) throw new NotFoundException('Page is not found');
 
-    const now = new Date();
     const memberships = await this.membershipRepo.find({
-      where: [
-        {
-          page: { id: page.id },
-          status: PatronMembershipStatus.EXPIRED,
-        },
-        {
-          page: { id: page.id },
-          status: PatronMembershipStatus.ACTIVE,
-          durationEnd: LessThanOrEqual(now),
-        },
-      ],
+      where: {
+        page: { id: page.id },
+        status: PatronMembershipStatus.EXPIRED,
+      },
       relations: { membershipLevel: true },
       order: { durationEnd: 'DESC' },
     });
@@ -147,12 +155,28 @@ export class PatronsService {
     return this.attachProfiles(memberships, page.id);
   }
 
+  // Memberships of a logged in patron on one page (excludes unpaid pending).
+  async findMyMembershipsOnPage(patronId: string, page: Page) {
+    const memberships = await this.membershipRepo.find({
+      where: {
+        patron: { id: patronId },
+        page: { id: page.id },
+      },
+      relations: { membershipLevel: true },
+      order: { durationEnd: 'DESC' },
+    });
+
+    const paid = memberships.filter(
+      (m) => m.status !== PatronMembershipStatus.PENDING,
+    );
+    return this.attachProfiles(paid, page.id);
+  }
+
   async findActiveMembers(page: Page) {
     const memberships = await this.membershipRepo.find({
       where: {
         page: { id: page.id },
         status: PatronMembershipStatus.ACTIVE,
-        durationEnd: MoreThan(new Date()),
       },
       order: { durationStart: 'ASC' },
     });
@@ -182,10 +206,17 @@ export class PatronsService {
   }
 
   // A name can not be used if an active member of the page is using it.
-  private async validateMemberName(page: Page, name: string) {
-    const profiles = await this.profileRepo.find({
-      where: { page: { id: page.id }, name: ILike(name) },
-    });
+  // The patron that already has a membership on this page can keep their name.
+  private async validateMemberName(
+    page: Page,
+    name: string,
+    excludePatronId?: string,
+  ) {
+    const profiles = (
+      await this.profileRepo.find({
+        where: { page: { id: page.id }, name: ILike(name) },
+      })
+    ).filter((p) => p.patronId !== excludePatronId);
     if (!profiles.length) return;
 
     const inUse = await this.membershipRepo.exists({
@@ -193,7 +224,6 @@ export class PatronsService {
         page: { id: page.id },
         patron: { id: In(profiles.map((p) => p.patronId)) },
         status: PatronMembershipStatus.ACTIVE,
-        durationEnd: MoreThan(new Date()),
       },
     });
     if (inUse)
@@ -202,7 +232,14 @@ export class PatronsService {
       );
   }
 
-  async createMembership(pageSlug: string, dto: CreateMembershipDto) {
+  // When `existingPatron` is set, reuse that patron (no new recovery key or
+  // contacts). An existing membership on this page is updated to the new
+  // level; remaining days are applied when the payment is received.
+  async createMembership(
+    pageSlug: string,
+    dto: CreateMembershipDto,
+    existingPatron?: PatronEntity,
+  ) {
     const page = await this.pagesService.findByPath(pageSlug);
     if (!page) throw new NotFoundException('Page is not found');
 
@@ -214,7 +251,7 @@ export class PatronsService {
     const name = dto.name.trim();
     if (name.length < 2)
       throw new BadRequestException('Name must be at least 2 characters.');
-    await this.validateMemberName(page, name);
+    await this.validateMemberName(page, name, existingPatron?.id);
 
     const amountInXmr = MoneroUtils.atomicUnitsToXmr(level.price);
 
@@ -225,38 +262,66 @@ export class PatronsService {
       },
     );
 
-    const key = generatePatronKey();
+    // The recovery key is only generated for a new patron.
+    const key = existingPatron ? undefined : generatePatronKey();
     const now = new Date();
 
     const membership = await this.membershipRepo.manager.transaction(
       async (manager) => {
-        const patron = await manager.save(
-          manager.create(PatronEntity, {
-            keyHash: key.keyHash,
-            keyHint: key.keyHint,
-          }),
-        );
+        // Use existing Patron or create new one.
+        const patron =
+          existingPatron ??
+          (await manager.save(
+            manager.create(PatronEntity, {
+              keyHash: key.keyHash,
+              keyHint: key.keyHint,
+            }),
+          ));
 
-        await manager.save(
-          manager.create(PatronPageProfileEntity, {
-            patron: { id: patron.id },
-            page: { id: page.id },
-            name,
-          }),
-        );
+        // A patron has one profile (name) per page.
+        const profile = await manager.findOne(PatronPageProfileEntity, {
+          where: { patron: { id: patron.id }, page: { id: page.id } },
+        });
+        if (profile) {
+          if (profile.name !== name) {
+            profile.name = name;
+            await manager.save(profile);
+          }
+        } else {
+          await manager.save(
+            manager.create(PatronPageProfileEntity, {
+              patron: { id: patron.id },
+              page: { id: page.id },
+              name,
+            }),
+          );
+        }
 
-        const contacts = this.getContacts(dto).map((c) =>
-          manager.create(PatronContactEntity, {
-            patron: { id: patron.id },
-            channel: c.channel,
-            destination: c.destination,
-            enabled: true,
-            verified: false,
-          }),
-        );
-        if (contacts.length) await manager.save(contacts);
+        // Contacts are only set when creating a new patron. Existing patrons
+        // change them later on a separate route.
+        if (!existingPatron) {
+          const contacts = this.getContacts(dto).map((c) =>
+            manager.create(PatronContactEntity, {
+              patron: { id: patron.id },
+              channel: c.channel,
+              destination: c.destination,
+              enabled: true,
+              verified: false,
+            }),
+          );
+          if (contacts.length) await manager.save(contacts);
+        }
 
-        // Duration is set when the payment is received.
+        // One membership per page: reuse it and move to the new level.
+        // Status and duration are only changed when the payment is received.
+        const current = await manager.findOne(PatronMembershipEntity, {
+          where: { patron: { id: patron.id }, page: { id: page.id } },
+        });
+        if (current) {
+          current.membershipLevel = level;
+          return manager.save(current);
+        }
+
         return manager.save(
           manager.create(PatronMembershipEntity, {
             patron: { id: patron.id },
@@ -290,7 +355,7 @@ export class PatronsService {
       recipients,
       url,
       expiresAt: new Date(now.getTime() + this.PAYMENT_EXPIRES_IN_MS),
-      mnemonic: key.mnemonic,
+      mnemonic: key?.mnemonic,
     };
   }
 
@@ -318,7 +383,10 @@ export class PatronsService {
   private async findPatron(id: string) {
     const patron = await this.patronRepo.findOne({
       where: { id },
-      relations: { memberships: { page: true, membershipLevel: true } },
+      relations: {
+        memberships: { page: true, membershipLevel: true },
+        contacts: true,
+      },
       order: { memberships: { durationEnd: 'DESC' } },
     });
     if (!patron) return null;
@@ -483,18 +551,17 @@ export class PatronsService {
     }
 
     const now = new Date();
-    const stillActive =
-      membership.status === PatronMembershipStatus.ACTIVE &&
-      membership.durationEnd > now;
-
-    const base = stillActive ? membership.durationEnd : now;
+    // Remaining days are carried over: the new level's duration is added on
+    // top of the current end date when the membership is still active.
+    const remaining = membership.status === PatronMembershipStatus.ACTIVE;
+    const base = remaining ? membership.durationEnd : now;
     const durationEnd = new Date(base);
     durationEnd.setUTCDate(
       durationEnd.getUTCDate() + membership.membershipLevel.duration,
     );
 
     membership.status = PatronMembershipStatus.ACTIVE;
-    if (!stillActive) {
+    if (!remaining) {
       membership.durationStart = now;
     }
     membership.durationEnd = durationEnd;
@@ -502,7 +569,7 @@ export class PatronsService {
     await this.membershipRepo.save(membership);
 
     this.logger.log(
-      `Extended membership ${membership.id} until ${membership.durationEnd.toISOString()}`,
+      `Activated membership ${membership.id} (level ${membership.membershipLevelId}) until ${membership.durationEnd.toISOString()}`,
     );
     this.logger.log(
       `Sending membership socket event. Membership Id ${membership.id}`,

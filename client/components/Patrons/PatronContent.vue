@@ -12,6 +12,9 @@ const props = defineProps<{
   pageName?: string;
   membershipLevels: MembershipLevel[];
   activeMembers: PatronMember[];
+  // Prefill name when the patron already has a membership on this page.
+  existingName?: string;
+  hasActiveMembership?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -59,6 +62,14 @@ const v = useVuelidate<State["form"]>(
 
 const { getValidationAttrs } = useValidations(v);
 
+watch(
+  () => props.existingName,
+  (name) => {
+    if (name && !state.form.name) state.form.name = name;
+  },
+  { immediate: true },
+);
+
 const handleSubmit = async () => {
   const valid = await v.value.$validate();
   if (!valid) return;
@@ -66,14 +77,19 @@ const handleSubmit = async () => {
 
   try {
     state.loading = true;
+    // Contact fields are only for a new patron. Logged in patrons keep theirs.
     const { data } = await axios.post<MembershipCreateResponse>(
       `/patrons/${props.streamerId}/memberships`,
       {
         membershipLevelId: state.form.membershipLevelId,
         name: state.form.name,
-        email: state.form.email || undefined,
-        signal: state.form.signal || undefined,
-        simplex: state.form.simplex || undefined,
+        ...(patronStore.isLoggedIn
+          ? {}
+          : {
+              email: state.form.email || undefined,
+              signal: state.form.signal || undefined,
+              simplex: state.form.simplex || undefined,
+            }),
       },
     );
     emit("done", { created: data, form: { ...state.form } });
@@ -150,46 +166,48 @@ defineExpose({
           />
         </UFormGroup>
 
-        <p class="">
-          Receive messages from {{ pageName }}, welcome message and renewal
-          reminder 24 hours before expiration.
-        </p>
+        <template v-if="!patronStore.isLoggedIn">
+          <p>
+            Receive messages from {{ pageName }}, welcome message and renewal
+            reminder 24 hours before expiration.
+          </p>
 
-        <UFormGroup
-          size="lg"
-          label="Email  (Optional)"
-          :error="getValidationAttrs('email').error"
-          name="email"
-        >
-          <UInput
-            v-model="state.form.email"
-            @blur="getValidationAttrs('email').onBlur"
-          />
-        </UFormGroup>
+          <UFormGroup
+            size="lg"
+            label="Email  (Optional)"
+            :error="getValidationAttrs('email').error"
+            name="email"
+          >
+            <UInput
+              v-model="state.form.email"
+              @blur="getValidationAttrs('email').onBlur"
+            />
+          </UFormGroup>
 
-        <UFormGroup
-          size="lg"
-          label="Signal (Optional)"
-          :error="getValidationAttrs('signal').error"
-          name="signal"
-        >
-          <UInput
-            v-model="state.form.signal"
-            @blur="getValidationAttrs('signal').onBlur"
-          />
-        </UFormGroup>
+          <UFormGroup
+            size="lg"
+            label="Signal (Optional)"
+            :error="getValidationAttrs('signal').error"
+            name="signal"
+          >
+            <UInput
+              v-model="state.form.signal"
+              @blur="getValidationAttrs('signal').onBlur"
+            />
+          </UFormGroup>
 
-        <UFormGroup
-          size="lg"
-          label="SimpleX URL (Optional)"
-          :error="getValidationAttrs('simplex').error"
-          name="simplex"
-        >
-          <UInput
-            v-model="state.form.simplex"
-            @blur="getValidationAttrs('simplex').onBlur"
-          />
-        </UFormGroup>
+          <UFormGroup
+            size="lg"
+            label="SimpleX URL (Optional)"
+            :error="getValidationAttrs('simplex').error"
+            name="simplex"
+          >
+            <UInput
+              v-model="state.form.simplex"
+              @blur="getValidationAttrs('simplex').onBlur"
+            />
+          </UFormGroup>
+        </template>
 
         <div v-if="state.errorMessage">
           <UAlert
@@ -207,7 +225,9 @@ defineExpose({
             :loading="state.loading"
             class="flex items-center gap-2 w-fit"
           >
-            Become a Patron
+            {{
+              hasActiveMembership ? "Renew membership" : "Become a Patron"
+            }}
           </UButton>
           <UButton
             v-if="!patronStore.isLoggedIn"
