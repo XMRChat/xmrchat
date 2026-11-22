@@ -385,7 +385,7 @@ export class PatronsService {
     const patron = await this.patronRepo.findOne({
       where: { id },
       relations: {
-        memberships: { page: true, membershipLevel: true },
+        memberships: { page: { logo: true }, membershipLevel: true },
         contacts: true,
       },
       order: { memberships: { durationEnd: 'DESC' } },

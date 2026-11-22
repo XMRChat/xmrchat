@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useVuelidate from "@vuelidate/core";
 import type { Patron } from "~/types";
+import { PatronMembershipStatus } from "~/types/enums";
 
 const props = defineProps<{
   patron?: Patron;
@@ -11,14 +12,16 @@ const emit = defineEmits<{
 }>();
 
 const { updateContacts } = usePatronStore();
+const { getPatronMembershipStatus } = useConstants();
+const { dayjs } = useDate();
+const { toStreamer } = useRouteLocation();
 const { maxLength } = useValidations();
 const toast = useToast();
 
-const isActive = (status: string) => status === "active";
+const isActive = (status: string) => status === PatronMembershipStatus.ACTIVE;
 
 const destinationOf = (channel: string) =>
-  props.patron?.contacts?.find((c) => c.channel === channel)?.destination ||
-  "";
+  props.patron?.contacts?.find((c) => c.channel === channel)?.destination || "";
 
 const state = reactive({
   form: {
@@ -80,7 +83,7 @@ const handleUpdateContacts = async () => {
     />
 
     <div class="flex justify-end mb-10">
-      <UButton variant="soft" color="gray" @click="emit('logout')">
+      <UButton variant="soft" color="red" @click="emit('logout')">
         Log out
       </UButton>
     </div>
@@ -95,31 +98,46 @@ const handleUpdateContacts = async () => {
         <NoItems v-if="!patron?.memberships?.length" />
 
         <div v-else class="grid gap-4">
-          <div
+          <UCard
             v-for="m in patron?.memberships"
-            :key="m.id"
-            class="flex items-center justify-between flex-wrap gap-2 text-sm"
+            :ui="{ body: { padding: 'p-4 sm:p-4' } }"
           >
-            <div class="flex flex-col">
-              <span class="font-medium">{{
-                m.page?.name || m.page?.path
-              }}</span>
-              <span>{{ m.name }}</span>
-              <span class="text-pale">{{ m.membershipLevel?.name }}</span>
+            <div class="flex justify-between flex-wrap gap-2 w-full">
+              <div class="flex items-center gap-3">
+                <GeneralImage
+                  :url="m.page?.logo?.thumbnail || m.page?.logo?.url"
+                  variant="logo"
+                  class="w-12 h-12"
+                />
+                <div class="flex flex-col">
+                  <UButton
+                    :to="toStreamer(m.page?.path)"
+                    variant="link"
+                    class="font-medium"
+                    :padded="false"
+                  >
+                    {{ m.page?.name || m.page?.path }}
+                  </UButton>
+                  <span>Patron name: {{ m.name }}</span>
+                  <span class="text-pale">{{ m.membershipLevel?.name }}</span>
+                </div>
+              </div>
+              <div class="flex ms-auto">
+                <div class="flex flex-col items-end gap-1">
+                  <UBadge
+                    :color="getPatronMembershipStatus(m.status)?.color as any"
+                    variant="subtle"
+                  >
+                    {{ getPatronMembershipStatus(m.status)?.label || m.status }}
+                  </UBadge>
+                  <div class="text-pale mt-auto">
+                    {{ isActive(m.status) ? "Expires" : "Ended" }}
+                    {{ dayjs(m.durationEnd).format("L LT") }}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="flex flex-col items-end gap-1">
-              <UBadge
-                :color="isActive(m.status) ? 'primary' : 'gray'"
-                variant="subtle"
-              >
-                {{ isActive(m.status) ? "Active" : "Inactive" }}
-              </UBadge>
-              <span class="text-pale">
-                {{ isActive(m.status) ? "Expires" : "Ended" }}
-                {{ new Date(m.durationEnd).toLocaleString() }}
-              </span>
-            </div>
-          </div>
+          </UCard>
         </div>
       </div>
 

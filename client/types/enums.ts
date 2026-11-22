@@ -140,3 +140,10 @@ export enum TipSourceEnum {
   XMRCHAT = "xmrchat",
   XMRPOD = "xmrpod",
 }
+
+export enum PatronMembershipStatus {
+  PENDING = "pending",
+  ACTIVE = "active",
+  EXPIRED = "expired",
+  CANCELLED = "cancelled",
+}

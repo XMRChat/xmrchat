@@ -7,6 +7,7 @@ import {
   MoneroNetworkTypeEnum,
   NotificationChannelEnum,
   NotificationPreferenceType,
+  PatronMembershipStatus,
   TipSourceEnum,
 } from "~/types/enums";
 
@@ -430,6 +431,30 @@ export const useConstants = () => {
     return TIP_SOURCES[v];
   };
 
+  const PATRON_MEMBERSHIP_STATUS = {
+    [PatronMembershipStatus.PENDING]: {
+      label: "Pending",
+      color: "yellow",
+    },
+    [PatronMembershipStatus.ACTIVE]: {
+      label: "Active",
+      color: "primary",
+    },
+    [PatronMembershipStatus.EXPIRED]: {
+      label: "Expired",
+      color: "gray",
+    },
+    [PatronMembershipStatus.CANCELLED]: {
+      label: "Cancelled",
+      color: "gray",
+    },
+  };
+
+  const getPatronMembershipStatus = (v?: string) => {
+    if (!v) return undefined;
+    return PATRON_MEMBERSHIP_STATUS[v as PatronMembershipStatus];
+  };
+
   return {
     getContentLink,
     CONTENT_LINKS,
@@ -449,5 +474,7 @@ export const useConstants = () => {
     getNetworkConfig,
     TIP_SOURCES,
     getTipSource,
+    PATRON_MEMBERSHIP_STATUS,
+    getPatronMembershipStatus,
   };
 };
