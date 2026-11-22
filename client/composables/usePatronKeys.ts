@@ -19,5 +19,11 @@ export const usePatronKeys = () => {
     return (await idb.get<SavedPatronKey[]>(PATRON_KEYS_IDB_KEY)) || [];
   };
 
-  return { savePatronKey, getPatronSavedKeys };
+  const removePatronSavedKey = async (params: { mnemonic: string }) => {
+    const keys = (await idb.get<SavedPatronKey[]>(PATRON_KEYS_IDB_KEY)) || [];
+    const next = keys.filter((k) => k.mnemonic !== params.mnemonic);
+    await idb.set(PATRON_KEYS_IDB_KEY, next);
+  };
+
+  return { savePatronKey, getPatronSavedKeys, removePatronSavedKey };
 };
