@@ -3,8 +3,11 @@ import type { Patron } from "~/types";
 export const usePatronStore = defineStore(
   "patron",
   () => {
-    const { patronLogin: patronLoginApi, getPatron: getPatronApi } =
-      useServices();
+    const {
+      patronLogin: patronLoginApi,
+      getPatron: getPatronApi,
+      updatePatronContacts: updatePatronContactsApi,
+    } = useServices();
 
     const token = ref<string | undefined>(undefined);
     const patronData = ref<Patron | undefined>(undefined);
@@ -36,6 +39,16 @@ export const usePatronStore = defineStore(
       patronData.value = res.patron;
     };
 
+    const updateContacts = async (params: {
+      email?: string;
+      signal?: string;
+      simplex?: string;
+    }) => {
+      const res = await updatePatronContactsApi(params);
+      patronData.value = res.patron;
+      return res;
+    };
+
     return {
       token,
       patron,
@@ -43,6 +56,7 @@ export const usePatronStore = defineStore(
       getMe,
       login,
       logout,
+      updateContacts,
     };
   },
   {

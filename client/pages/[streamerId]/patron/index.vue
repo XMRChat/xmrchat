@@ -19,6 +19,7 @@ const streamerId = computed(() => route.params.streamerId as string);
 const { getStreamerPage, getMyPageMemberships } = useServices();
 const { state: generalState } = useGeneralStore();
 const { savePatronKey } = usePatronKeys();
+const { toPatronAccount } = useRouteLocation();
 const contentRef = ref<InstanceType<typeof PatronContent> | undefined>();
 
 const patronStore = usePatronStore();
@@ -128,13 +129,18 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
   <div class="inner pt-4 !max-w-[800px]">
     <PendingView :pending="pending" :error="error">
       <template v-if="data">
-        <div class="flex items-center gap-2 pt-6">
-          <GeneralImage
-            :url="data.page.logo.url"
-            variant="logo"
-            class="logo w-20 h-20"
-          />
-          <span class="text-lg lg:text-2xl font-bold">{{ pageName }}</span>
+        <div class="flex items-center justify-between gap-4 flex-wrap pt-6">
+          <div class="flex items-center gap-2">
+            <GeneralImage
+              :url="data.page.logo.url"
+              variant="logo"
+              class="logo w-20 h-20"
+            />
+            <span class="text-lg lg:text-2xl font-bold">{{ pageName }}</span>
+          </div>
+          <UButton variant="soft" :to="toPatronAccount()">
+            My Patron Account
+          </UButton>
         </div>
 
         <div v-if="patronStore.token" class="pt-6">

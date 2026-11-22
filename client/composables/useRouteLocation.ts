@@ -55,6 +55,7 @@ export const useRouteLocation = () => {
 
     toPatronCreate: (streamerId: Numberic) =>
       localeRoute(`/${streamerId}/patron`),
+    toPatronAccount: () => localeRoute("/patron"),
 
     toStreamerTipGoal: () => localeRoute("/streamer/tip-goal"),
     toCreateStreamerTipGoal: () => localeRoute("/streamer/tip-goal/create"),

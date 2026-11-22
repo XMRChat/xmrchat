@@ -28,6 +28,7 @@ import { ILike, In, LessThanOrEqual, Repository } from 'typeorm';
 import { CreateMembershipDto } from './dtos/create-membership.dto';
 import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
+import { UpdatePatronContactsDto } from './dtos/update-patron-contacts.dto';
 import { MembershipLevelEntity } from './membership-level.entity';
 import { PatronContactEntity } from './patron-contact.entity';
 import { PatronEntity } from './patron.entity';
@@ -55,6 +56,8 @@ export class PatronsService {
     private profileRepo: Repository<PatronPageProfileEntity>,
     @InjectRepository(PatronEntity)
     private patronRepo: Repository<PatronEntity>,
+    @InjectRepository(PatronContactEntity)
+    private contactRepo: Repository<PatronContactEntity>,
     private jwtService: JwtService,
     private paymentsService: PaymentsService,
     private paymentFlowService: PaymentFlowService,
@@ -431,6 +434,55 @@ export class PatronsService {
     if (!patron) throw new UnauthorizedException('Patron is not found.');
 
     return patron;
+  }
+
+  // Upserts email / signal / simplex. Empty values remove that channel.
+  // Changing a destination resets verification on that contact.
+  async updateContacts(patronId: string, dto: UpdatePatronContactsDto) {
+    const desired = [
+      { channel: PatronContactChannel.EMAIL, destination: dto.email },
+      { channel: PatronContactChannel.SIGNAL, destination: dto.signal },
+      { channel: PatronContactChannel.SIMPLEX, destination: dto.simplex },
+    ].map((c) => ({
+      channel: c.channel,
+      destination: c.destination?.trim() || '',
+    }));
+
+    const existing = await this.contactRepo.find({
+      where: { patron: { id: patronId } },
+    });
+
+    for (const item of desired) {
+      const current = existing.find((c) => c.channel === item.channel);
+
+      if (!item.destination) {
+        if (current) await this.contactRepo.remove(current);
+        continue;
+      }
+
+      if (current) {
+        if (current.destination !== item.destination) {
+          current.destination = item.destination;
+          current.verified = false;
+          current.verificationCode = null;
+          current.verificationExpiresAt = null;
+        }
+        current.enabled = true;
+        await this.contactRepo.save(current);
+      } else {
+        await this.contactRepo.save(
+          this.contactRepo.create({
+            patron: { id: patronId },
+            channel: item.channel,
+            destination: item.destination,
+            enabled: true,
+            verified: false,
+          }),
+        );
+      }
+    }
+
+    return this.getPatron(patronId);
   }
 
   async isPatronActive(page: Page) {

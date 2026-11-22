@@ -39,6 +39,15 @@ export const useServices = () => {
     return res.data;
   };
 
+  const updatePatronContacts = async (params: {
+    email?: string;
+    signal?: string;
+    simplex?: string;
+  }) => {
+    const res = await axios.put<PatronResponse>("/patrons/me/contacts", params);
+    return res.data;
+  };
+
   const getMyPageMemberships = async (pageSlug: string) => {
     const res = await axios.get<PatronPageMembershipsResponse>(
       `/patrons/${pageSlug}/my-memberships`,
@@ -216,6 +225,7 @@ export const useServices = () => {
     login,
     patronLogin,
     getPatron,
+    updatePatronContacts,
     getMyPageMemberships,
     signup,
     updatePassword,

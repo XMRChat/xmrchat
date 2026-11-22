@@ -36,6 +36,7 @@ import {
   StreamerMembershipsRO,
 } from './dtos/streamer-membership.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
+import { UpdatePatronContactsDto } from './dtos/update-patron-contacts.dto';
 import { PatronsService } from './patrons.service';
 
 @Controller('patrons')
@@ -122,6 +123,21 @@ export class PatronsController {
   @Serialize(PatronRO)
   async me(@CurrentPatron() currentPatron: PatronEntity) {
     const patron = await this.patronsService.getPatron(currentPatron.id);
+    return { patron };
+  }
+
+  @Put('/me/contacts')
+  @IsPublic()
+  @UseGuards(PatronAuthGuard)
+  @Serialize(PatronRO)
+  async updateContacts(
+    @CurrentPatron() currentPatron: PatronEntity,
+    @Body() dto: UpdatePatronContactsDto,
+  ) {
+    const patron = await this.patronsService.updateContacts(
+      currentPatron.id,
+      dto,
+    );
     return { patron };
   }
 
