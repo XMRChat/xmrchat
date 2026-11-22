@@ -1,24 +1,22 @@
 import type { SavedPatronKey } from "~/types";
 
+const PATRON_KEYS_IDB_KEY = "patron-keys";
+
 export const usePatronKeys = () => {
   const idb = useIdb();
 
-  const savePatronKey = async (params: {
-    pagePath: string;
-    membershipId: number;
-    mnemonic: string;
-  }) => {
+  const savePatronKey = async (params: { mnemonic: string }) => {
     const savedKeys =
-      (await idb.get<SavedPatronKey[]>(`patron-${params.pagePath}`)) || [];
+      (await idb.get<SavedPatronKey[]>(PATRON_KEYS_IDB_KEY)) || [];
 
-    const keys = savedKeys.filter((k) => k.membershipId !== params.membershipId);
-    keys.push({ membershipId: params.membershipId, mnemonic: params.mnemonic });
+    if (savedKeys.some((k) => k.mnemonic === params.mnemonic)) return;
 
-    await idb.set(`patron-${params.pagePath}`, keys);
+    savedKeys.push({ mnemonic: params.mnemonic });
+    await idb.set(PATRON_KEYS_IDB_KEY, savedKeys);
   };
 
-  const getPatronSavedKeys = async (params: { pagePath: string }) => {
-    return await idb.get<SavedPatronKey[]>(`patron-${params.pagePath}`);
+  const getPatronSavedKeys = async () => {
+    return await idb.get<SavedPatronKey[]>(PATRON_KEYS_IDB_KEY);
   };
 
   return { savePatronKey, getPatronSavedKeys };

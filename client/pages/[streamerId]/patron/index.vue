@@ -97,11 +97,7 @@ const handlePayment = async (payload: {
 }) => {
   // No mnemonic when the logged in patron is reused, they already have a key.
   if (payload.created.mnemonic)
-    await savePatronKey({
-      pagePath: streamerId.value,
-      membershipId: payload.created.membership.id,
-      mnemonic: payload.created.mnemonic,
-    });
+    await savePatronKey({ mnemonic: payload.created.mnemonic });
 
   paymentModalActive.value = true;
   created.value = payload.created;

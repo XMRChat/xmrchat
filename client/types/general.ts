@@ -364,7 +364,6 @@ export interface MembershipCreateResponse {
 }
 
 export interface SavedPatronKey {
-  membershipId: number;
   mnemonic: string;
 }
 
