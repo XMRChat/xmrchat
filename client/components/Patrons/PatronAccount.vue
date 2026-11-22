@@ -118,8 +118,8 @@ const handleUpdateContacts = async () => {
                   >
                     {{ m.page?.name || m.page?.path }}
                   </UButton>
-                  <span>Patron name: {{ m.name }}</span>
-                  <span class="text-pale">{{ m.membershipLevel?.name }}</span>
+                  <span>Patron name: {{ m.memberName }}</span>
+                  <span class="text-pale">{{ m.name }}</span>
                 </div>
               </div>
               <div class="flex ms-auto">

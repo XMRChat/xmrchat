@@ -39,6 +39,12 @@ export class PatronMembershipEntity {
   @RelationId((m: PatronMembershipEntity) => m.membershipLevel)
   membershipLevelId: number;
 
+  @Column()
+  name: string;
+
+  @Column()
+  description: string;
+
   @Column({ default: PatronMembershipStatus.PENDING })
   status: PatronMembershipStatus;
 

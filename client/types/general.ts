@@ -334,7 +334,9 @@ export interface PatronMember {
 
 export interface StreamerMembership {
   id: number;
+  memberName: string;
   name: string;
+  description: string;
   membershipLevel: MembershipLevel;
   durationStart: string;
   durationEnd: string;

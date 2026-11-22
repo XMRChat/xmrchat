@@ -32,8 +32,8 @@ const isActive = (m: PatronPageMembership) => m.status === "active";
       class="flex items-center justify-between flex-wrap gap-2 text-sm"
     >
       <div class="flex flex-col">
-        <span class="font-medium">{{ m.name }}</span>
-        <span class="text-pale">{{ m.membershipLevel?.name }}</span>
+        <span class="font-medium">{{ m.memberName }}</span>
+        <span class="text-pale">{{ m.name }}</span>
       </div>
       <div class="flex flex-col items-end gap-1">
         <UBadge :color="isActive(m) ? 'primary' : 'gray'" variant="subtle">

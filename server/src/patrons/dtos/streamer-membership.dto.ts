@@ -7,7 +7,13 @@ export class StreamerMembershipDto {
 
   @Expose()
   @Transform(({ obj }) => obj.profile?.name)
+  memberName: string;
+
+  @Expose()
   name: string;
+
+  @Expose()
+  description: string;
 
   @Expose()
   @Type(() => MembershipLevelDto)

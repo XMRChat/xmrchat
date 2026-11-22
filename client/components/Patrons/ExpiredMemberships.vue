@@ -18,11 +18,11 @@ const { data, pending } = useLazyAsyncData(
 
 const columns = [
   {
-    key: "name",
+    key: "memberName",
     label: t("name"),
   },
   {
-    key: "membershipLevel",
+    key: "name",
     label: "Membership Level",
   },
   {
@@ -52,9 +52,6 @@ const columns = [
         td: { base: 'whitespace-normal text-text dark:text-text' },
       }"
     >
-      <template #membershipLevel-data="{ row }">
-        <span>{{ row.membershipLevel?.name }}</span>
-      </template>
       <template #durationStart-data="{ row }">
         <span>{{ new Date(row.durationStart).toLocaleString() }}</span>
       </template>

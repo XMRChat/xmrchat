@@ -327,6 +327,8 @@ export class PatronsService {
             patron: { id: patron.id },
             page: { id: page.id },
             membershipLevel: { id: level.id },
+            name: level.name,
+            description: level.description,
             status: PatronMembershipStatus.PENDING,
             durationStart: now,
             durationEnd: now,
@@ -627,6 +629,8 @@ export class PatronsService {
     durationEnd.setUTCDate(durationEnd.getUTCDate() + level.duration);
 
     membership.membershipLevel = level;
+    membership.name = level.name;
+    membership.description = level.description;
     membership.status = PatronMembershipStatus.ACTIVE;
     if (!remaining) {
       membership.durationStart = now;
