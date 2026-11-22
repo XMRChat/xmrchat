@@ -49,7 +49,7 @@ watch(model, () => {
 </script>
 
 <template>
-  <UModal v-model="model">
+  <UModal v-model="model" :ui="{ container: 'items-center' }">
     <UCard>
       <template #header>
         <h2 class="text-lg font-medium">Patron login</h2>
