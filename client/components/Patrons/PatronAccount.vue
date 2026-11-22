@@ -147,38 +147,40 @@ const handleUpdateContacts = async () => {
           How creators can reach you about your memberships.
         </p>
 
-        <div class="grid gap-4 max-w-xl">
-          <UFormGroup
-            label="Email (Optional)"
-            :error="getValidationAttrs('email').error"
-          >
-            <UInput
-              v-model="state.form.email"
-              @blur="getValidationAttrs('email').onBlur"
-            />
-          </UFormGroup>
+        <div class="">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <UFormGroup
+              label="Email (Optional)"
+              :error="getValidationAttrs('email').error"
+            >
+              <UInput
+                v-model="state.form.email"
+                @blur="getValidationAttrs('email').onBlur"
+              />
+            </UFormGroup>
 
-          <UFormGroup
-            label="Signal (Optional)"
-            :error="getValidationAttrs('signal').error"
-          >
-            <UInput
-              v-model="state.form.signal"
-              @blur="getValidationAttrs('signal').onBlur"
-            />
-          </UFormGroup>
+            <UFormGroup
+              label="Signal (Optional)"
+              :error="getValidationAttrs('signal').error"
+            >
+              <UInput
+                v-model="state.form.signal"
+                @blur="getValidationAttrs('signal').onBlur"
+              />
+            </UFormGroup>
 
-          <UFormGroup
-            label="SimpleX URL (Optional)"
-            :error="getValidationAttrs('simplex').error"
-          >
-            <UInput
-              v-model="state.form.simplex"
-              @blur="getValidationAttrs('simplex').onBlur"
-            />
-          </UFormGroup>
+            <UFormGroup
+              label="SimpleX URL (Optional)"
+              :error="getValidationAttrs('simplex').error"
+            >
+              <UInput
+                v-model="state.form.simplex"
+                @blur="getValidationAttrs('simplex').onBlur"
+              />
+            </UFormGroup>
+          </div>
 
-          <div>
+          <div class="mt-4">
             <UButton :loading="state.loading" @click="handleUpdateContacts">
               Update contacts
             </UButton>
