@@ -147,3 +147,8 @@ export enum PatronMembershipStatus {
   EXPIRED = "expired",
   CANCELLED = "cancelled",
 }
+
+export enum PatronMessageStatus {
+  SCHEDULED = "scheduled",
+  SENT = "sent",
+}

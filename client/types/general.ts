@@ -14,6 +14,7 @@ import type {
   CohostInvitationStatusEnum,
   SuperDmMessageSenderTypeEnum,
   TipSourceEnum,
+  PatronMessageStatus,
 } from "./enums";
 
 export type Numberic = string | number;
@@ -326,6 +327,15 @@ export interface MembershipLevel {
   price: number;
   duration: number;
   createdAt: string;
+}
+
+export interface PatronMessage {
+  id: number;
+  body: string;
+  sendDatetime: string;
+  status: PatronMessageStatus;
+  createdAt: string;
+  membershipLevels: MembershipLevel[];
 }
 
 export interface PatronMember {

@@ -6,9 +6,8 @@
     />
     <div class="flex flex-col gap-20">
       <MembershipLevels />
-      <!-- <UDivider class="my-10" /> -->
+      <PatronMessages />
       <ActiveMemberships />
-      <!-- <UDivider class="my-10" /> -->
       <ExpiredMemberships />
     </div>
   </div>
