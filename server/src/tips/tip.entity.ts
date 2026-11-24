@@ -45,6 +45,9 @@ export class Tip {
   @Column({ nullable: true })
   source?: TipSourceEnum;
 
+  @Column({ nullable: true })
+  patronLevelName?: string;
+
   @ManyToOne(() => Page, { onDelete: 'CASCADE' })
   @JoinColumn({ foreignKeyConstraintName: 'tips_page_id_fkey' })
   page: Page;

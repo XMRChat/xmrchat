@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateTipDto } from './dtos/create-tip.dto';
 import { TipsService } from './tips.service';
 import { IsPublic } from 'src/shared/decorators/is-public.decorator';
@@ -10,16 +18,23 @@ import { TipDto, TipDtoRO } from './dtos/tip.dto';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { User } from 'src/users/user.entity';
 import { UpdateTipDto } from './dtos/update-tip.dto';
+import { OptionalPatronAuthGuard } from 'src/patrons/patron-auth.guard';
+import { CurrentPatron } from 'src/shared/decorators/current-patron.decorator';
+import { PatronEntity } from 'src/patrons/patron.entity';
 
 @Controller('tips')
 export class TipsController {
   constructor(private tipsService: TipsService) {}
 
   @IsPublic()
+  @UseGuards(OptionalPatronAuthGuard)
   @Serialize(TipDtoRO)
   @Post('')
-  createTip(@Body() body: CreateTipDto) {
-    return this.tipsService.createTip(body);
+  createTip(
+    @Body() body: CreateTipDto,
+    @CurrentPatron() patron?: PatronEntity,
+  ) {
+    return this.tipsService.createTip(body, patron);
   }
 
   @Get('/page/:slug')

@@ -36,6 +36,8 @@ import { getDefaultMessageLength, getTipTier } from 'src/shared/utils';
 import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
 import { TipsBroadcastGateway } from 'src/tips-broadcast/tips-broadcast.gateway';
 import { getErrorMessage } from 'src/shared/utils/errors';
+import { PatronsService } from 'src/patrons/patrons.service';
+import { PatronEntity } from 'src/patrons/patron.entity';
 
 @Injectable()
 export class TipsService {
@@ -54,6 +56,7 @@ export class TipsService {
     private casl: CaslAbilityFactory,
     private paymentFlowService: PaymentFlowService,
     private tipsBroadcastGateway: TipsBroadcastGateway,
+    private patronsService: PatronsService,
     @InjectRepository(Tip) private repo: Repository<Tip>,
   ) {}
 
@@ -133,7 +136,7 @@ export class TipsService {
     return this.repo.save(savedTip);
   }
 
-  async createTip(payload: CreateTipDto) {
+  async createTip(payload: CreateTipDto, patron?: PatronEntity) {
     const page = await this.pagesService.findByPath(payload.path);
 
     if (!page) throw new NotFoundException('Page is not found.');
@@ -219,6 +222,10 @@ export class TipsService {
     //   inputCoin = res.coin;
     // }
 
+    const patronLevelName = patron
+      ? await this.patronsService.findActivePatronLevelName(patron.id, page.id)
+      : undefined;
+
     // Create and save tip record
     const createdTip = this.repo.create({
       message: payload.message,
@@ -228,6 +235,7 @@ export class TipsService {
         baseSwap?.details?.expiresAt || new Date(Date.now() + 60 * 60 * 1000),
       page: { id: page.id },
       source: payload.source,
+      patronLevelName: patronLevelName || undefined,
     });
 
     const tip = await this.repo.save(createdTip);

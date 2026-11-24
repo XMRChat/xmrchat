@@ -38,6 +38,9 @@ export class BaseTipDto {
   source?: TipSourceEnum;
 
   @Expose()
+  patronLevelName?: string;
+
+  @Expose()
   @Type(() => PaymentDto)
   payment: PaymentDto;
 

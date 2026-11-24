@@ -15,6 +15,7 @@ import { TipMessageModule } from 'src/tip-message/tip-message.module';
 import { PageRecipientsModule } from 'src/page-recipients/page-recipients.module';
 import { PaymentFlowModule } from 'src/payment-flow/payment-flow.module';
 import { TipsBroadcastModule } from 'src/tips-broadcast/tips-broadcast.module';
+import { PatronsModule } from 'src/patrons/patrons.module';
 
 @Module({
   controllers: [TipsController],
@@ -32,6 +33,7 @@ import { TipsBroadcastModule } from 'src/tips-broadcast/tips-broadcast.module';
     PageRecipientsModule,
     PaymentFlowModule,
     TipsBroadcastModule,
+    PatronsModule,
   ],
   exports: [TipsService, TipsGateway],
 })

@@ -180,6 +180,19 @@ export class PatronsService {
     return this.attachProfiles(paid, page.id);
   }
 
+  async findActivePatronLevelName(patronId: string, pageId: number) {
+    const membership = await this.membershipRepo.findOne({
+      where: {
+        patron: { id: patronId },
+        page: { id: pageId },
+        status: PatronMembershipStatus.ACTIVE,
+      },
+      relations: { membershipLevel: true },
+    });
+    if (!membership) return null;
+    return membership.name || membership.membershipLevel?.name || null;
+  }
+
   async findActiveMembers(page: Page) {
     const memberships = await this.membershipRepo.find({
       where: {
