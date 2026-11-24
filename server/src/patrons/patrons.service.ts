@@ -20,6 +20,7 @@ import {
   Action,
   PatronContactChannel,
   PatronMembershipStatus,
+  PatronMessageStatus,
 } from 'src/shared/constants';
 import { PageRecipientsService } from 'src/page-recipients/page-recipients.service';
 import { PaymentFlowService } from 'src/payment-flow/payment-flow.service';
@@ -27,6 +28,7 @@ import { User } from 'src/users/user.entity';
 import { ILike, In, LessThanOrEqual, Repository } from 'typeorm';
 import { CreateMembershipDto } from './dtos/create-membership.dto';
 import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
+import { CreatePatronMessageDto } from './dtos/create-patron-message.dto';
 import { UpdateMembershipLevelDto } from './dtos/update-membership-level.dto';
 import { UpdatePatronContactsDto } from './dtos/update-patron-contacts.dto';
 import { MembershipLevelEntity } from './membership-level.entity';
@@ -34,6 +36,7 @@ import { PatronContactEntity } from './patron-contact.entity';
 import { PatronEntity } from './patron.entity';
 import { generatePatronKey, hashPatronMnemonic } from './patron-key';
 import { PatronMembershipEntity } from './patron-membership.entity';
+import { PatronMessageEntity } from './patron-message.entity';
 import { PatronPageProfileEntity } from './patron-page-profile.entity';
 import { PatronsGateway } from './patrons.gateway';
 
@@ -58,6 +61,8 @@ export class PatronsService {
     private patronRepo: Repository<PatronEntity>,
     @InjectRepository(PatronContactEntity)
     private contactRepo: Repository<PatronContactEntity>,
+    @InjectRepository(PatronMessageEntity)
+    private messageRepo: Repository<PatronMessageEntity>,
     private jwtService: JwtService,
     private paymentsService: PaymentsService,
     private paymentFlowService: PaymentFlowService,
@@ -556,6 +561,67 @@ export class PatronsService {
     });
 
     return this.levelRepo.save(created);
+  }
+
+  async findPatronMessages(user: User) {
+    const page = await this.pagesService.findMyPage(user);
+    if (!page) throw new NotFoundException('Page is not found');
+
+    return this.messageRepo.find({
+      where: { page: { id: page.id } },
+      relations: { membershipLevels: true },
+      order: { createdAt: 'DESC' },
+    });
+  }
+
+  async createPatronMessage(dto: CreatePatronMessageDto, user: User) {
+    const page = await this.pagesService.findMyPage(user);
+    if (!page) throw new NotFoundException('Page is not found');
+
+    let membershipLevels: MembershipLevelEntity[] = [];
+    const levelIds = [...new Set(dto.membershipLevelIds ?? [])];
+
+    if (levelIds.length) {
+      membershipLevels = await this.levelRepo.find({
+        where: {
+          id: In(levelIds),
+          page: { id: page.id },
+        },
+      });
+
+      if (membershipLevels.length !== levelIds.length) {
+        throw new BadRequestException(
+          'One or more membership levels are invalid for this page.',
+        );
+      }
+    }
+
+    const sendDatetime = dto.sendDatetime
+      ? new Date(dto.sendDatetime)
+      : new Date();
+
+    const created = this.messageRepo.create({
+      page: { id: page.id },
+      body: dto.body,
+      sendDatetime,
+      status: PatronMessageStatus.SCHEDULED,
+      membershipLevels,
+    });
+
+    return this.messageRepo.save(created);
+  }
+
+  async deletePatronMessage(id: number, user: User) {
+    const message = await this.messageRepo.findOne({ where: { id } });
+    if (!message) throw new NotFoundException('Patron message is not found');
+
+    const ability = await this.casl.createForUser(user);
+    if (!ability.can(Action.Manage, message))
+      throw new UnauthorizedException(
+        'You are not authorized to delete this message.',
+      );
+
+    await this.messageRepo.remove(message);
   }
 
   async handleMembershipPayment(payment: Payment, amount: number) {

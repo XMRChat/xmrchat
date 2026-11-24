@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Header,
   NotFoundException,
@@ -26,11 +27,16 @@ import {
   MembershipCreateRO,
 } from './dtos/create-membership.dto';
 import { CreateMembershipLevelDto } from './dtos/create-membership-level.dto';
+import { CreatePatronMessageDto } from './dtos/create-patron-message.dto';
 import {
   MembershipLevelRO,
   MembershipLevelsRO,
 } from './dtos/membership-level.dto';
 import { PatronMembersRO } from './dtos/patron-member.dto';
+import {
+  PatronMessageRO,
+  PatronMessagesRO,
+} from './dtos/patron-message.dto';
 import {
   PatronPageMembershipsRO,
   StreamerMembershipsRO,
@@ -192,5 +198,31 @@ export class PatronsController {
   ) {
     await this.patronsService.updateMembershipLevel(id, dto, user);
     return { message: 'Membership level updated.' };
+  }
+
+  @Get('/messages')
+  @Serialize(PatronMessagesRO)
+  async findPatronMessages(@CurrentUser() user: User) {
+    const messages = await this.patronsService.findPatronMessages(user);
+    return { messages };
+  }
+
+  @Post('/messages')
+  @Serialize(PatronMessageRO)
+  async createPatronMessage(
+    @Body() dto: CreatePatronMessageDto,
+    @CurrentUser() user: User,
+  ) {
+    const message = await this.patronsService.createPatronMessage(dto, user);
+    return { message };
+  }
+
+  @Delete('/messages/:id')
+  async deletePatronMessage(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: User,
+  ) {
+    await this.patronsService.deletePatronMessage(id, user);
+    return { message: 'Patron message deleted.' };
   }
 }

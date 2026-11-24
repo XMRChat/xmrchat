@@ -211,3 +211,8 @@ export enum PatronContactChannel {
   SIGNAL = 'signal',
   SIMPLEX = 'simplex',
 }
+
+export enum PatronMessageStatus {
+  SCHEDULED = 'scheduled',
+  SENT = 'sent',
+}

@@ -13,6 +13,7 @@ import { PageSetting } from 'src/page-settings/page-setting.entity';
 import { PageTipTier } from 'src/page-tip-tiers/page-tip-tier.entity';
 import { Page } from 'src/pages/page.entity';
 import { MembershipLevelEntity } from 'src/patrons/membership-level.entity';
+import { PatronMessageEntity } from 'src/patrons/patron-message.entity';
 import { Action, PageSettingKey, RolesEnum } from 'src/shared/constants/enum';
 import { SuperDm } from 'src/super-dms/super-dm.entity';
 import { TipGoal } from 'src/tip-goals/tip-goal.entity';
@@ -32,6 +33,7 @@ type Subjects =
       | typeof TipReply
       | typeof TipGoal
       | typeof MembershipLevelEntity
+      | typeof PatronMessageEntity
     >
   | 'notification'
   | 'cohost'
@@ -77,6 +79,9 @@ export class CaslAbilityFactory {
 
       // MEMBERSHIP LEVEL ACTIONS
       can(Action.Manage, MembershipLevelEntity, { pageId: pageResult.id });
+
+      // PATRON MESSAGE ACTIONS
+      can(Action.Manage, PatronMessageEntity, { pageId: pageResult.id });
     }
 
     // OBS ACTIONS
