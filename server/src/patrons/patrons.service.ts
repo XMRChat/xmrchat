@@ -46,7 +46,7 @@ type PatronJwtPayload = { patronId: string; type: 'patron' };
 export class PatronsService {
   private logger = new Logger(PatronsService.name);
 
-  private MAX_MEMBERSHIP_LEVELS = 5;
+  private MAX_MEMBERSHIP_LEVELS = 1;
 
   private PAYMENT_EXPIRES_IN_MS = 60 * 60 * 1000;
 
