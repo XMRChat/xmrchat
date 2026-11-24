@@ -14,6 +14,8 @@ const props = defineProps<{
   streamerPage?: StreamerPage | null;
   superDmActive?: boolean;
   tipReplySettings?: TipReplySettings;
+  // Prefill name when a logged in patron has a membership on this page.
+  patronName?: string;
 }>();
 
 const { required, minLength, maxLength, minValue } = useValidations();
@@ -96,6 +98,14 @@ const v = useVuelidate<State["form"]>(
 );
 
 const { getValidationAttrs } = useValidations(v);
+
+watch(
+  () => props.patronName,
+  (name) => {
+    if (name && !state.form.name) state.form.name = name;
+  },
+  { immediate: true },
+);
 
 const handleSubmit = async () => {
   v.value.$touch();

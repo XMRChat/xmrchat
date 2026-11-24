@@ -24,7 +24,7 @@ const contentRef = ref<InstanceType<typeof PatronContent> | undefined>();
 
 const patronStore = usePatronStore();
 
-const { data, pending, error } = await useLazyAsyncData(
+const { data, pending, error, refresh } = await useLazyAsyncData(
   `streamer-${streamerId.value}-patron`,
   async () => {
     const pageRequest = getStreamerPage(streamerId.value);
@@ -117,6 +117,8 @@ const handlePaid = () => {
   form.value = undefined;
   contentRef.value?.reset();
   refreshPageMemberships();
+  refresh();
+  patronStore.getMe();
 };
 
 defineOgImage(false);

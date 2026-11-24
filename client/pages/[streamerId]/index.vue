@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { TipContent } from "#components";
 import type { TipCreationResponse, TipReplySettings } from "~/types";
-import { TipDisplayMode } from "~/types/enums";
+import { PatronMembershipStatus, TipDisplayMode } from "~/types/enums";
 
 definePageMeta({
   hideHeaderLogin: true,
@@ -13,6 +13,7 @@ const streamerId = computed(() => route.params.streamerId as string);
 const { getStreamerPage } = useServices();
 const { state: generalState } = useGeneralStore();
 const contentRef = ref<InstanceType<typeof TipContent> | undefined>();
+const patronStore = usePatronStore();
 
 const { data, pending, refresh, error } = await useLazyAsyncData(
   `streamer-${streamerId.value}`,
@@ -56,6 +57,17 @@ const { data, pending, refresh, error } = await useLazyAsyncData(
     },
   },
 );
+
+const patronMemberName = computed(() => {
+  const memberships =
+    patronStore.patron?.memberships.filter(
+      (m) => m.page.path === streamerId.value,
+    ) || [];
+  const active = memberships.find(
+    (m) => m.status === PatronMembershipStatus.ACTIVE,
+  );
+  return (active || memberships[0])?.memberName;
+});
 
 if (error.value) {
   throw createError(error.value);
@@ -108,6 +120,7 @@ useStreamerIdSeoMeta(computed(() => data.value?.page));
           :streamerPage="data.page"
           :superDmActive="data.superDmState.active"
           :tipReplySettings="data.tipReplySettings.settings"
+          :patronName="patronMemberName"
           @done="handlePayment"
         />
         <TipPaymentModal
