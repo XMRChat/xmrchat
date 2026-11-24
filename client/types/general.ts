@@ -142,6 +142,7 @@ export interface Tip {
   pageTipTier?: PageTipTier;
   tipReplies?: TipReply[];
   source?: TipSourceEnum;
+  patronLevelName?: string;
 }
 
 export interface TipTier {

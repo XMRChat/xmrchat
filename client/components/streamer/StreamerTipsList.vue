@@ -359,6 +359,13 @@ const handleDelete = async (tipReply: TipReply) => {
       <template #name-data="{ row }">
         <div class="flex items-center gap-1">
           <TipSourceIcon v-if="row.source" :source="row.source" />
+          <UTooltip
+            v-if="row.patronLevelName"
+            :text="row.patronLevelName"
+            :popper="{ placement: 'top' }"
+          >
+            <UIcon name="i-heroicons-star" class="w-4 h-4" />
+          </UTooltip>
           <div v-if="row.private && !showPrivateNameAndMessage">
             <p class="text-pale">{{ t("private.title") }}</p>
           </div>

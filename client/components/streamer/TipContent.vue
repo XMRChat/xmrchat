@@ -99,13 +99,13 @@ const v = useVuelidate<State["form"]>(
 
 const { getValidationAttrs } = useValidations(v);
 
-watch(
-  () => props.patronName,
-  (name) => {
-    if (name && !state.form.name) state.form.name = name;
-  },
-  { immediate: true },
-);
+onMounted(() => {
+  updatePatronName(props.patronName);
+});
+
+const updatePatronName = (name?: string) => {
+  if (name && !state.form.name) state.form.name = name;
+};
 
 const handleSubmit = async () => {
   v.value.$touch();

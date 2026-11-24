@@ -85,6 +85,13 @@ watch(
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-1 pb-1">
             <TipSourceIcon v-if="item.source" :source="item.source" />
+            <UTooltip
+              v-if="item.patronLevelName"
+              :text="item.patronLevelName"
+              :popper="{ placement: 'top' }"
+            >
+              <UIcon name="i-heroicons-star" class="w-4 h-4" />
+            </UTooltip>
             <p
               class="text-base font-medium"
               :class="{ 'opacity-80': item.private }"
