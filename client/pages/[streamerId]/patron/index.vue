@@ -150,11 +150,17 @@ const pageName = computed(() => data.value?.page.name || data.value?.page.path);
           />
         </div>
 
-        <p class="text-sm text-pale pt-6">
-          Become a Patron of {{ pageName }} by choosing a membership level. The
-          name you choose can only be used by you while your membership is
-          active, others are prevented from using it when sending tips.
-        </p>
+        <div class="text-sm text-pale pt-6">
+          <p v-if="hasActiveMembership">
+            Thank you for being a Patron of {{ pageName }}! You can extend your
+            membership or update your Patron name below.
+          </p>
+          <p v-else>
+            Become a Patron of {{ pageName }} by choosing a membership level.
+            The name you choose can only be used by you while your membership is
+            active, others are prevented from using it when sending tips.
+          </p>
+        </div>
         <PatronContent
           ref="contentRef"
           :streamerId="streamerId"
