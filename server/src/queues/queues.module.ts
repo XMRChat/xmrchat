@@ -12,7 +12,8 @@ import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
       { name: 'live-stream' },
       { name: 'xmrpod-push' },
       { name: 'notifications-daily-summary' },
-      { name: 'link-verification-validation' }
+      { name: 'link-verification-validation' },
+      { name: 'patron-messages' },
     ),
 
     BullBoardModule.forFeature({
@@ -39,7 +40,11 @@ import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
       name: 'link-verification-validation',
       adapter: BullMQAdapter,
     }),
+    BullBoardModule.forFeature({
+      name: 'patron-messages',
+      adapter: BullMQAdapter,
+    }),
   ],
   exports: [BullModule],
 })
-export class QueuesModule { }
+export class QueuesModule {}

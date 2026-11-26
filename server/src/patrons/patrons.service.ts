@@ -5,10 +5,12 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Queue } from 'bullmq';
 import { MoneroUtils } from 'monero-ts';
 import { LwsService } from 'src/lws/lws.service';
 import { Page } from 'src/pages/page.entity';
@@ -72,6 +74,7 @@ export class PatronsService {
     private pagesService: PagesService,
     private configService: ConfigService,
     private casl: CaslAbilityFactory,
+    @InjectQueue('patron-messages') private patronMessagesQueue: Queue,
   ) {}
 
   async findAllMembershipLevels(user: User) {
@@ -621,7 +624,16 @@ export class PatronsService {
       membershipLevels,
     });
 
-    return this.messageRepo.save(created);
+    const saved = await this.messageRepo.save(created);
+
+    const delay = Math.max(0, sendDatetime.getTime() - Date.now());
+    await this.patronMessagesQueue.add(
+      'send-patron-message',
+      { messageId: saved.id },
+      { delay, jobId: `patron-message-${saved.id}` },
+    );
+
+    return saved;
   }
 
   async deletePatronMessage(id: number, user: User) {
@@ -633,6 +645,10 @@ export class PatronsService {
       throw new UnauthorizedException(
         'You are not authorized to delete this message.',
       );
+
+    if (message.status === PatronMessageStatus.SCHEDULED) {
+      await this.patronMessagesQueue.remove(`patron-message-${id}`);
+    }
 
     await this.messageRepo.remove(message);
   }

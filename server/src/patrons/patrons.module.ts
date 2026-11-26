@@ -5,11 +5,13 @@ import { PageRecipientsModule } from 'src/page-recipients/page-recipients.module
 import { PagesModule } from 'src/pages/pages.module';
 import { PaymentFlowModule } from 'src/payment-flow/payment-flow.module';
 import { PaymentsModule } from 'src/payments/payments.module';
+import { QueuesModule } from 'src/queues/queues.module';
 import { MembershipLevelEntity } from './membership-level.entity';
 import { PatronContactEntity } from './patron-contact.entity';
 import { PatronEntity } from './patron.entity';
 import { PatronMembershipEntity } from './patron-membership.entity';
 import { PatronMessageEntity } from './patron-message.entity';
+import { PatronMessageProcessor } from './patron-message.processor';
 import { PatronPageProfileEntity } from './patron-page-profile.entity';
 import { PatronsService } from './patrons.service';
 import { PatronsController } from './patrons.controller';
@@ -30,8 +32,9 @@ import { PatronsGateway } from './patrons.gateway';
     PageRecipientsModule,
     LwsModule,
     PagesModule,
+    QueuesModule,
   ],
-  providers: [PatronsService, PatronsGateway],
+  providers: [PatronsService, PatronsGateway, PatronMessageProcessor],
   exports: [TypeOrmModule, PatronsService, PatronsGateway],
   controllers: [PatronsController],
 })
