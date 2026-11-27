@@ -9,6 +9,7 @@ import ko from "./locales/ko";
 import ar from "./locales/ar";
 import cs from "./locales/cs";
 import fa from "./locales/fa";
+import vi from "./locales/vi";
 
 export default defineI18nConfig(() => ({
   legacy: false,
@@ -24,5 +25,6 @@ export default defineI18nConfig(() => ({
     ar,
     cs,
     fa,
+    vi
   },
 }));
